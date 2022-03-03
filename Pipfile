@@ -5,6 +5,11 @@ name = "pypi"
 
 [packages]
 google-api-python-client = "*"
+levenshtein = "*"
+pandas = "*"
+tweepy = "*"
+openpyxl = "*"
+seaborn = "*"
 
 [dev-packages]
 
