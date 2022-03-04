@@ -25,13 +25,24 @@ youtube = build(
     'v3',
     developerKey=API_KEY
 )
+playlistKey = 'PL0DCF7F78614F3AE6'
 
+channelId = youtube.playlistItems().list(part='snippet',
+                                         fields='items/snippet/channelId',
+                                         playlistId=playlistKey,
+                                         maxResults=1).execute()['items'][0]['snippet']['channelId']
+print(channelId)
+channelInfo = youtube.channels().list(
+    part='id,snippet,brandingSettings,contentDetails,statistics,topicDetails',
+    id=channelId).execute()
+pprint(channelInfo)
+exit(0)
 nextPageToken = ''
 videoId = []
 while True:
     playlist = youtube.playlistItems().list(part='snippet',
                                             fields='items/snippet/resourceId/videoId,nextPageToken',
-                                            playlistId='PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur',
+                                            playlistId=playlistKey,
                                             maxResults=50,
                                             pageToken=nextPageToken).execute()
 
@@ -68,5 +79,11 @@ for Id in videoId:
 
 print((datetime.date.today() - datetime.date(2022, 1, 1)).days)
 
-wb = openpyxl.Workbook()
+metadata = {
+    'channel': ''
+}
+get_dict = {
 
+}
+
+wb = openpyxl.Workbook()
