@@ -10,6 +10,7 @@ pandas = "*"
 tweepy = "*"
 openpyxl = "*"
 seaborn = "*"
+styleframe = "*"
 
 [dev-packages]
 
