@@ -1,12 +1,10 @@
 import json
 import os
 import re
-import time
 import unicodedata
-from pandas import DataFrame
+import numpy
 from googleapiclient.discovery import build
 from pprint import pprint
-import tweepy
 import datetime
 import pandas
 import openpyxl
@@ -41,13 +39,34 @@ process_list = [
     ['PL8m86iV3p-nRdW2cckAwqruBKuzrxoVvW', 'BEYOOOOONDS'],
     ['PLcu1vvKzbBMk1i4k-DF3q5ii0007W-zh7', 'こぶしファクトリー'],
     ['PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', 'つばきファクトリー'],
+    ['PLhDVFhoEVU3l3X0obfPzdD5OHTbnv7Oio', 'カントリー・ガールズ'],
+    ['PLFMni9aeqKTyLxgYVGR9y7zO28Ip5q6Kb', '道重さゆみ'],
+    ['PL6A59UsSlG7ex5t5QBIbi4PPviUrZr43p', '宮本佳林'],
+    ['PL4CUK5GhdtMnB4ByVY_X3smojU2uY6fAB', 'PINK CRES.'],
+    ['PLFMni9aeqKTw_nNHBiGWfPLT-VMdMez97', 'COVERS - One on One -'],
+    ['PLPHwLN81i8cqlVTlXWre1Z7daRXXoa_h_', 'Bitter & Sweet'],
+    ['PLFMni9aeqKTwRBEifr0wecspeZPZ24AEN', 'ブラザーズ5'],
+    ['PLFMni9aeqKTx6FGeICQu6AMh_h7XaiWrB', 'シャ乱Q'],
+    ['PLFMni9aeqKTxAMChTm-sad305266kliMy', 'LoVendoЯ'],
+    ['PLFMni9aeqKTzQ054kNN0VAn_TC8HVIPvA', '田﨑あさひ'],
+    ['PLFMni9aeqKTx6nJoI4lDcXIW0RnkIj-WC', '吉川友'],
+    ['PL106616353F82EF27', '中島卓偉'],
+    ['PLFMni9aeqKTxaQnGrEBaf20ZtWGc2FGGt', 'KAN'],
+    ['PLFMni9aeqKTwLp-YS0TdSAJNFp2QdF5et', 'HANGRY&ANGRY'],
+    ['PLFMni9aeqKTxigXADUo3SSCv1CdjMk8ua', 'SATOYAMA SATOUMI movement'],
+    ['PLFMni9aeqKTyw-UpUPRSEJtD0QfjasWhH', '松原健之'],
+    ['PLFMni9aeqKTz7uYHYKB-b_7SRo7dxKmeL', '上々軍団'],
+    ['OLAK5uy_m-IDdDas3oTbaeCG8B-EMeQTe7uwW0wcw', '真野恵里菜']
+]
+
+process_list = [
     ['PLhDVFhoEVU3l3X0obfPzdD5OHTbnv7Oio', 'カントリー・ガールズ']
 ]
 count = 0
 
 title_regex_one = r"[\(（]([a-zA-Z\s\[\]\'\"”””“\.…,\/　!！=。’[°C]・:〜\-])*[\)）]"
 title_regex_two = r"Promotion Edit"
-title_regex_three = r"[\[\(（]([a-zA-Z\s”\[［\]］\.\/’\'&。:〜”“0-9\-=\?!×#~,　（）])*[\]\)）]"
+title_regex_three = r"[\[\(（]([a-zA-Z\s”\[［\]］\.\/’\'\"&。:〜”“0-9\-=\?!×#~,　（）])*[\]\)）]"
 title_regex_four = r''  # r"ショート|Short|short|Version|Ver.|Ver|バージョン|Dance|ダンス|リリック.*|"
 
 
@@ -55,14 +74,14 @@ def trim_title(text):
     return re.sub(title_regex_four, '',
                   re.sub(title_regex_three, '',
                          re.sub(title_regex_two, '',
-                                re.sub(title_regex_one, '', unicodedata.normalize('NFKC', text)))))
+                                re.sub(title_regex_one, '', unicodedata.normalize('NFKC', text),
+                                       re.IGNORECASE), re.IGNORECASE), re.IGNORECASE), re.IGNORECASE)
 
 
 def get_view_count_and_data(Id):
     global count
     video_info_raw = youtube.videos().list(part='statistics,snippet',
-                                           fields='items(snippet(title,thumbnails(high,maxres)),'
-                                                  'statistics/viewCount)',
+                                           fields='items(snippet/title,statistics/viewCount)',
                                            id=Id).execute()['items']
     video_info = json.loads(unicodedata.normalize('NFKC', json.dumps(video_info_raw)))
 
@@ -70,16 +89,15 @@ def get_view_count_and_data(Id):
         return None
     count += 1
     print(count, end='\t')
-    print('https://youtu,be/' + Id, end='\t')
-    print(video_info[0]['snippet']['title'])
-    if 'maxres' in video_info[0]['snippet']['thumbnails']:
-        thumb = video_info[0]['snippet']['thumbnails']['maxres']
-        # print('maxres')
-    else:
-        thumb = video_info[0]['snippet']['thumbnails']['high']
+    print('https://youtu.be/' + Id, end='\t')
+    print(trim_title(video_info[0]['snippet']['title']))
+    # if 'maxres' in video_info[0]['snippet']['thumbnails']:
+    #     thumb = video_info[0]['snippet']['thumbnails']['maxres']
+    #     # print('maxres')
+    # else:
+    #     thumb = video_info[0]['snippet']['thumbnails']['high']
 
-    data = [[thumb['url'], thumb['width'], thumb['height']],
-            unicodedata.normalize('NFKC', video_info[0]['snippet']['title']),
+    data = [unicodedata.normalize('NFKC', video_info[0]['snippet']['title']),
             video_info[0]['statistics']['viewCount'],
             'https://youtu.be/' + Id]
     return data
@@ -144,10 +162,11 @@ def process_channel(artistName, playlistKey):
         # pprint(data)
         if data is None:
             continue
-        image, title, viewCount, url = data
+        title, viewCount, url = data
         if url not in dataframe.index.tolist():
             dataframe.loc[url] = 0
-            dataframe.at[url, 'タイトル'] = trim_title(title)
+
+        dataframe.at[url, 'タイトル'] = trim_title(title)
 
         dataframe.at[url, today] = int(viewCount)
     if 0 in dataframe.columns:
@@ -159,6 +178,8 @@ def process_channel(artistName, playlistKey):
         if 'Sheet' in workbook.sheetnames and len(workbook.sheetnames) != 1:
             workbook.remove(workbook['Sheet'])
         workbook.save(workbookName)
+
+        dataframe.replace(0, numpy.NaN)
 
     with pandas.ExcelWriter(workbookName, mode='a', if_sheet_exists='replace') as writer:
         dataframe.to_excel(writer, sheet_name=artistName)
@@ -173,10 +194,10 @@ def process_channel(artistName, playlistKey):
             sheet.column_dimensions[row.column_letter].width = 14
         sheet.column_dimensions['C'].width = 12
         sheet.column_dimensions['A'].width = 45
-        sheet.column_dimensions['B'].width = 100
+        sheet.column_dimensions['B'].width = 60
     workbook.save(workbookName)
 
-    print(pandas.read_excel('save.xlsx', sheet_name=artistName, index_col=0))
+    # print(pandas.read_excel('save.xlsx', sheet_name=artistName, index_col=0))
 
 
 for processes in process_list:
