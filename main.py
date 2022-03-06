@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import time
 import unicodedata
 from pandas import DataFrame
@@ -9,7 +10,6 @@ import tweepy
 import datetime
 import pandas
 import openpyxl
-from styleframe import StyleFrame
 
 pandas.options.display.max_rows = None
 pandas.options.display.max_columns = None
@@ -27,46 +27,39 @@ youtube = build(
     'v3',
     developerKey=API_KEY
 )
-playlistKey = 'PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh'
-artistName = '鈴木愛理'
+_playlistKey = 'PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh'
+_artistName = '鈴木愛理'
 workbookName = 'save.xlsx'
+process_list = [
+    ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理'],
+    ['PLAAEA82D2950BC77D', 'モーニング娘。'],
+    ['PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur', 'Juice=Juice'],
+    ['PL04DB1D3D596D47E7', ' ℃-ute '],
+    ['PL0DCF7F78614F3AE6', 'アンジュルム'],
+    ['PLF0E7D2433E255B81', 'Buono!'],
+    ['OLAK5uy_l_xKCyQPw4uXQd3mnw0yShaZm3AOANkQI', 'Berryz工房'],
+    ['PL8m86iV3p-nRdW2cckAwqruBKuzrxoVvW', 'BEYOOOOONDS'],
+    ['PLcu1vvKzbBMk1i4k-DF3q5ii0007W-zh7', 'こぶしファクトリー'],
+    ['PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', 'つばきファクトリー'],
+    ['PLhDVFhoEVU3l3X0obfPzdD5OHTbnv7Oio', 'カントリー・ガールズ']
+]
+count = 0
 
-testint = 0
+title_regex_one = r"[\(（]([a-zA-Z\s\[\]\'\"”””“\.…,\/　!！=。’[°C]・:〜\-])*[\)）]"
+title_regex_two = r"Promotion Edit"
+title_regex_three = r"[\[\(（]([a-zA-Z\s”\[［\]］\.\/’\'&。:〜”“0-9\-=\?!×#~,　（）])*[\]\)）]"
+title_regex_four = r''  # r"ショート|Short|short|Version|Ver.|Ver|バージョン|Dance|ダンス|リリック.*|"
 
 
-def get_today_count(video_ids):
-    global testint
-    return_data = []
-    for video_id in video_ids:
-
-        video_info = youtube.videos().list(part='statistics,snippet',
-                                           fields='items(snippet(title,thumbnails(high,maxres)),'
-                                                  'statistics/viewCount)',
-                                           id=video_id).execute()
-        video_info = json.loads(unicodedata.normalize('NFKC', json.dumps(video_info)))['items']
-        # print(video_info)
-        if not video_info:
-            continue
-        testint += 1
-        print(testint, end='\t')
-        print(video_info[0]['snippet']['title'])
-        if 'maxres' in video_info[0]['snippet']['thumbnails']:
-            thumb = video_info[0]['snippet']['thumbnails']['maxres']
-            # print('maxres')
-        else:
-            thumb = video_info[0]['snippet']['thumbnails']['high']
-            # print('high')
-        # pprint(video_info[0]["snippet"]["thumbnails"])
-        return_data.append([[thumb['url'], thumb['width'], thumb['height']],
-                            unicodedata.normalize('NFKC', video_info[0]['snippet']['title']),
-                            video_info[0]['statistics']['viewCount'],
-                            'https://youtu.be/' + video_id])
-
-    return return_data
+def trim_title(text):
+    return re.sub(title_regex_four, '',
+                  re.sub(title_regex_three, '',
+                         re.sub(title_regex_two, '',
+                                re.sub(title_regex_one, '', unicodedata.normalize('NFKC', text)))))
 
 
 def get_view_count_and_data(Id):
-    global testint
+    global count
     video_info_raw = youtube.videos().list(part='statistics,snippet',
                                            fields='items(snippet(title,thumbnails(high,maxres)),'
                                                   'statistics/viewCount)',
@@ -75,8 +68,9 @@ def get_view_count_and_data(Id):
 
     if not video_info:
         return None
-    testint += 1
-    print(testint, end='\t')
+    count += 1
+    print(count, end='\t')
+    print('https://youtu,be/' + Id, end='\t')
     print(video_info[0]['snippet']['title'])
     if 'maxres' in video_info[0]['snippet']['thumbnails']:
         thumb = video_info[0]['snippet']['thumbnails']['maxres']
@@ -113,27 +107,52 @@ def extract_playlist(playlist_key):
     return return_videoId
 
 
-def save_data(save_dataframe, name):
+def process_channel(artistName, playlistKey):
+    channelInfo = youtube.channels().list(
+        part='snippet,brandingSettings,statistics',
+        fields='items(snippet/thumbnails/high,'
+               'brandingSettings/image,'
+               'statistics(subscriberCount,videoCount,viewCount))',
+        id=youtube.playlistItems().list(part='snippet',
+                                        fields='items/snippet/channelId',
+                                        playlistId=playlistKey,
+                                        maxResults=1).execute()['items'][0]['snippet']['channelId']).execute()
+    pprint(channelInfo)
+
+    # exit(0)
+
     today = str(datetime.date.today())
-    dataframe = pandas.DataFrame([0])
+    if os.path.isfile(workbookName):
+        workbook = openpyxl.load_workbook(workbookName)
+    else:
+        workbook = openpyxl.Workbook()
+
+    if artistName not in workbook.sheetnames:
+        dataframe = pandas.DataFrame([0])
+    else:
+        dataframe = pandas.read_excel('save.xlsx', sheet_name=artistName, index_col=0)
+
     if 'タイトル' not in dataframe.columns:
         dataframe['タイトル'] = ''
+
     if today not in dataframe.columns:
         dataframe[today] = 0
 
-    for data in save_dataframe:
-        url = str(data[3])
-        if data[3] not in dataframe.index.tolist():
+    for Id in extract_playlist(playlist_key=playlistKey):
+        # print(Id)
+        data = get_view_count_and_data(Id=Id)
+        # pprint(data)
+        if data is None:
+            continue
+        image, title, viewCount, url = data
+        if url not in dataframe.index.tolist():
             dataframe.loc[url] = 0
-        # print(dataframe)
-        dataframe.at[url, 'タイトル'] = data[1]
-        dataframe.at[url, today] = int(data[2])
+            dataframe.at[url, 'タイトル'] = trim_title(title)
 
-    dataframe.drop(0, axis=0, inplace=True)
-    dataframe.drop(0, axis=1, inplace=True)
-
-    # print(dataframe)
-    print((datetime.date.today() - datetime.date(2021, 1, 1)).days)
+        dataframe.at[url, today] = int(viewCount)
+    if 0 in dataframe.columns:
+        dataframe.drop(0, axis=0, inplace=True)
+        dataframe.drop(0, axis=1, inplace=True)
 
     if not os.path.isfile(workbookName):
         workbook = openpyxl.Workbook()
@@ -142,7 +161,7 @@ def save_data(save_dataframe, name):
         workbook.save(workbookName)
 
     with pandas.ExcelWriter(workbookName, mode='a', if_sheet_exists='replace') as writer:
-        dataframe.to_excel(writer, sheet_name=name)
+        dataframe.to_excel(writer, sheet_name=artistName)
 
     workbook = openpyxl.load_workbook(workbookName)
     if 'Sheet' in workbook.sheetnames and len(workbook.sheetnames) != 1:
@@ -157,27 +176,9 @@ def save_data(save_dataframe, name):
         sheet.column_dimensions['B'].width = 100
     workbook.save(workbookName)
 
+    print(pandas.read_excel('save.xlsx', sheet_name=artistName, index_col=0))
 
-channelInfo = youtube.channels().list(
-    part='snippet,brandingSettings,statistics',
-    fields='items(snippet/thumbnails/high,'
-           'brandingSettings/image,'
-           'statistics(subscriberCount,videoCount,viewCount))',
-    id=youtube.playlistItems().list(part='snippet',
-                                    fields='items/snippet/channelId',
-                                    playlistId=playlistKey,
-                                    maxResults=1).execute()['items'][0]['snippet']['channelId']).execute()
-pprint(channelInfo)
 
-# exit(0)
-
-videoId = extract_playlist(playlist_key=playlistKey)
-
-current_data = get_today_count(videoId)
-
-save_data(current_data, artistName)
-
-for Id in extract_playlist(playlist_key=playlistKey):
-    print(Id)
-    data = get_view_count_and_data(Id=Id)
-    pprint(data)
+for processes in process_list:
+    count = 0
+    process_channel(artistName=processes[1], playlistKey=processes[0])
