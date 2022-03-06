@@ -5,7 +5,6 @@ import openpyxl
 import pandas
 import sqlite3
 
-connector = sqlite3.connect('save.sqlite')
 workbook = openpyxl.load_workbook('save.xlsx')
 
 now = time.time()
@@ -19,9 +18,11 @@ print('\n\n\n')
 
 now = time.time()
 for page in workbook.sheetnames:
+    connector = sqlite3.connect('save.sqlite')
     dataframe = pandas.read_sql("SELECT * FROM '{}'".format(page), connector)
+    connector.close()
     print(page)
     # print(dataframe)
 
 print(time.time() - now)
-connector.close()
+
