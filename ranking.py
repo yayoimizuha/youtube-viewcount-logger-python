@@ -1,7 +1,7 @@
 import datetime
 import os.path
 import time
-
+from pprint import pprint
 import openpyxl
 import pandas
 import sqlite3
@@ -85,7 +85,7 @@ for name in process_list:
     dataframe = pandas.read_sql("SELECT * FROM '{name}'".format(name=name[1]), db, index_col='index')
     print('\n\n\n')
     dataframe.replace(0, None, inplace=True)
-    sortFrame = pandas.DataFrame(columns=['artist name', 'title', 'view count', 'last update'])
+    sortFrame = pandas.DataFrame(columns=['index', 'artist name', 'title', 'view count', 'last update'])
     for index in dataframe.index:
         Slice = pandas.Series.copy(dataframe.loc[index])
         Slice.dropna(inplace=True)
@@ -97,7 +97,7 @@ for name in process_list:
         print(index, name[1], Slice.at['タイトル'], end='\t')
         if len(Slice) == 2:
             print(Slice.iat[-1], Slice.axes[-1][-1])
-            sortFrame.loc[index] = [name[1], Slice.at['タイトル'], Slice.iat[-1], Slice.axes[-1][-1]]
+            sortFrame.loc[index] = [index, name[1], Slice.at['タイトル'], Slice.iat[-1], Slice.axes[-1][-1]]
         else:
             delta = (datetime.date.fromisoformat(dataframe.axes[-1][-1]) - datetime.date.fromisoformat(
                 dataframe.axes[-1][-2])).days
@@ -105,12 +105,12 @@ for name in process_list:
             countDelta = Slice.iat[-1] - Slice.iat[-2]
             print(int(countDelta / delta), Slice.axes[-1][-1])
 
-            sortFrame.loc[index] = [name[1], Slice.at['タイトル'], int(countDelta / delta), Slice.axes[-1][-1]]
+            sortFrame.loc[index] = [index, name[1], Slice.at['タイトル'], int(countDelta / delta), Slice.axes[-1][-1]]
         # print(dataframe.loc[index].axes)
         # print(len(dataframe.loc[index]))
         # print(dataframe.loc[index].iat[-1])
         # print()
     print('\n\n\n\n')
-    print(sortFrame.sort_values('view count', ascending=False)[0:3])
+    pprint(sortFrame.sort_values('view count', ascending=False)[0:3].values.tolist(), indent=4)
 
 print(str(time.time() - now) + 's')
