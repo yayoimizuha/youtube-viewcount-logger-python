@@ -1,5 +1,6 @@
 import datetime
 import os
+import pprint
 
 import tweepy
 
@@ -16,4 +17,10 @@ auth = tweepy.OAuth1UserHandler(
 )
 
 api = tweepy.API(auth)
-response = api.update_status("test tweet.\n" + str(datetime.datetime.now()))
+
+
+def tweet(text=None):
+    if text is None:
+        text = "test tweet.\n" + str(datetime.datetime.now())
+    response = api.update_status(text)
+    pprint.pprint(response)

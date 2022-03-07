@@ -68,9 +68,9 @@ process_list = [
     ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂']
 ]
 
-process_list = [
-    ['PL04DB1D3D596D47E7', '℃-ute']
-]
+# process_list = [
+#     ['PL59O0JbKsFLp-RYKpMhN_pooj_bJckLL7', 'アップアップガールズ(仮)']
+# ]
 count = 0
 
 
@@ -84,11 +84,15 @@ def trim_title(text, artist_name):
         return re.sub(r'\(.*\)', '', text)
     if artist_name == 'COVERS - One on One -':
         return text
+    if artist_name == 'アップアップガールズ(仮)':
+        tmp = re.sub(r'【MUSIC VIDEO】|\([A-z\s\[\]\-！!].*\)|ミュージック|イメージ|ビデオ|\[.*?\]', '', text,
+                     re.IGNORECASE)
+        return re.sub(r'UP|GIRLS|kakko|KARI|MV|MUSIC|VIDEO|（MV）', '', tmp, re.IGNORECASE | re.MULTILINE)
     if artist_name == 'シャ乱Q':
         return re.sub(r'[v|(].*', '', unicodedata.normalize('NFKC', text))
     if artist_name == 'つんく♂' or artist_name == '℃-ute' or artist_name == 'Berryz工房' or artist_name == 'Buono!' \
             or artist_name == 'PINK CRES.' or artist_name == 'こぶしファクトリー' or artist_name == 'ブラザーズ5' \
-             or artist_name == '真野恵里菜' or artist_name == '鈴木愛理':
+            or artist_name == '真野恵里菜' or artist_name == '鈴木愛理':
         return re.sub(r'\(.*', '', unicodedata.normalize('NFKC', text))
     if artist_name == 'Bitter & Sweet':
         return re.sub(r'\(.*?\)', '', unicodedata.normalize('NFKC', text))
@@ -222,6 +226,7 @@ def process_channel(artistName, playlistKey):
     dataframe.to_sql(artistName, connector, if_exists='replace')
     connector.close()
     with pandas.ExcelWriter(workbookName, mode='a', if_sheet_exists='replace') as writer:
+        pass
         dataframe.to_excel(writer, sheet_name=artistName)
 
     workbook = openpyxl.load_workbook(workbookName)
