@@ -68,9 +68,9 @@ process_list = [
     ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂']
 ]
 
-# process_list = [
-#     ['PLXok3xPFmG2ASK8fo_GEwdk7JQALn0P_o', '高橋愛・田中れいな・夏焼雅'],
-# ]
+process_list = [
+    ['PL04DB1D3D596D47E7', '℃-ute']
+]
 count = 0
 
 
@@ -88,13 +88,14 @@ def trim_title(text, artist_name):
         return re.sub(r'[v|(].*', '', unicodedata.normalize('NFKC', text))
     if artist_name == 'つんく♂' or artist_name == '℃-ute' or artist_name == 'Berryz工房' or artist_name == 'Buono!' \
             or artist_name == 'PINK CRES.' or artist_name == 'こぶしファクトリー' or artist_name == 'ブラザーズ5' \
-            or artist_name == 'モーニング娘。' or artist_name == '真野恵里菜' or artist_name == '鈴木愛理':
+             or artist_name == '真野恵里菜' or artist_name == '鈴木愛理':
         return re.sub(r'\(.*', '', unicodedata.normalize('NFKC', text))
     if artist_name == 'Bitter & Sweet':
         return re.sub(r'\(.*?\)', '', unicodedata.normalize('NFKC', text))
     if artist_name == 'HANGRY&ANGRY':
         return unicodedata.normalize('NFKC', text).replace('VIDEO CLIP', '')
-    if artist_name == 'Juice=Juice' or artist_name == 'アンジュルム' or artist_name == '高橋愛・田中れいな・夏焼雅':
+    if artist_name == 'Juice=Juice' or artist_name == 'アンジュルム' or artist_name == '高橋愛・田中れいな・夏焼雅' \
+            or artist_name == 'BEYOOOOONDS' or artist_name == 'モーニング娘。':
         return re.sub(r'\(.*?\)|\[.*?]|MV|Promotion|Edit', '', unicodedata.normalize('NFKC', text))
     if artist_name == 'LoVendoЯ':
         return re.sub(r'\(.*|\[.*', '', unicodedata.normalize('NFKC', text))
