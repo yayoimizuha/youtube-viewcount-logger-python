@@ -20,7 +20,7 @@ on:
     branches: [ test ]
 
 jobs:
-  build:
+  job:
     timeout-minutes: 15
 
     runs-on: ubuntu-latest
