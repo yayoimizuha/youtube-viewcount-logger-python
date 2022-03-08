@@ -27,8 +27,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-
       - name: Set up Python 3.10
         uses: actions/setup-python@v2
         with:
@@ -43,6 +41,7 @@ jobs:
         run: |
           pipenv run auto-run > ./out.txt
         continue-on-error: true
+      - name: generate log
       - run: |
           result="$(cat ./out.txt)"
           result="${result//'%'/'%25'}"
