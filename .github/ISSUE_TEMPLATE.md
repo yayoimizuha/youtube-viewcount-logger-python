@@ -1,4 +1,8 @@
 ---
-title: Someone bugs occured
-labels: bug, error
+title: scheduled action: action failed.
+labels: error,bug
 ---
+
+```
+{{ env.result }}
+```

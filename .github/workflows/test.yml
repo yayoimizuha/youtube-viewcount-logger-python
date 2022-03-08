@@ -40,14 +40,21 @@ jobs:
           pipenv install
       - name: get today data
         id: auto-run
+        run: |
+          pipenv run auto-run > ./out.txt
         continue-on-error: true
-        run: |
-          pipenv run auto-run
+      - run: |
+          result="$(cat ./out.txt)"
+          result="${result//'%'/'%25'}"
+          result="${result//$'\n'/'%0A'}"
+          result="${result//$'\r'/'%0D'}"
+          echo "result=${result}" >> $GITHUB_ENV
+
+        
       - name: Error Handling
-        if: ${{ steps.auto-run.outcome == 'failure' }}
-        run: |
-          echo "Error"
       - uses: JasonEtco/create-an-issue@v2
+        if: steps.auto-run.outcome == 'failure'
         env: 
           GITHUB_TOKEN: ${{ github.token }}
-
+          result: ${{ env.result }}
+        
