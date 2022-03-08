@@ -11,6 +11,7 @@ tweepy = "*"
 openpyxl = "*"
 seaborn = "*"
 styleframe = "*"
+pygithub = "*"
 
 [dev-packages]
 
