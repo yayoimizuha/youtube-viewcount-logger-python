@@ -38,6 +38,8 @@ jobs:
           pip install pipenv
           pipenv install
       - name: get today data
+        run: |
+          echo ""
       - id: auto-run
         run: |
           pipenv run auto-run > ./out.txt
