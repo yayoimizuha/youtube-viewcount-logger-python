@@ -41,6 +41,9 @@ jobs:
           echo ""
       - id: auto-run
         run: |
+          echo "aaaaaaaaaaaaaaaaaaaaaaaaaa" > ./out.txt
+          mkdir test
+          mkdir test
           pipenv run auto-run > ./out.txt
         continue-on-error: true
       - name: generate log
