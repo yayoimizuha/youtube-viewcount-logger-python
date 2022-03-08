@@ -3,6 +3,14 @@
 
 name: Daily get UP-FRONT & Hello!Project YouTube view count
 
+env:
+  ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
+  ACCESS_TOKEN_SECRET: ${{secrets.ACCESS_TOKEN_SECRET}}
+  API_KEY: ${{secrets.API_KEY}}
+  API_SECRET: ${{secrets.API_SECRET}}
+  YTV3_API_KEY: ${{secrets.YTV3_API_KEY}}
+
+
 on:
   schedule:
     - cron: '8 00 * * *'
