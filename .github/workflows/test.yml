@@ -39,7 +39,6 @@ jobs:
       - id: auto-run
         name: get today data
         run: |
-          exit 1
           pipenv run auto-run 2>&1 | tee ./out.txt
         continue-on-error: true
 
