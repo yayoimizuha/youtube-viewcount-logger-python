@@ -39,10 +39,7 @@ jobs:
       - id: auto-run
         name: get today data
         run: |
-          echo "aaaaaaaaaaaaaaaaaaaaaaaaaa" > ./out.txt
-          mkdir test
-          mkdir test
-          # pipenv run auto-run > ./out.txt
+          pipenv run auto-run > ./out.txt
         continue-on-error: true
       - name: generate log
         run: |
