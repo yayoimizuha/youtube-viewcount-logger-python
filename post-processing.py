@@ -14,6 +14,16 @@ body_text = """{date}
 
 gh = Github(os.environ['GITHUB_TOKEN'])
 repo = gh.get_repo('yayoimizuha/youtube-viewcount-logger-python')
-issue = repo.create_issue(title='UP-FRONT YouTube View Counter GitHub Actions was failed',
-                          body=body_text)
+
+error_label = repo.get_label('error')
+bug_label = repo.get_label('bug')
+help_wanted_label = repo.get_label('help_wanted')
+
+if os.environ['DEBUG'] == 'True':
+    issue = repo.create_issue(title='Fetch debug log',
+                              body=body_text, labels=[help_wanted_label])
+else:
+    issue = repo.create_issue(title='UP-FRONT YouTube View Counter GitHub Actions was failed',
+                              body=body_text, labels=[error_label, bug_label])
+
 print(issue)

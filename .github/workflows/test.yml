@@ -42,23 +42,26 @@ jobs:
           pipenv run auto-run 2>&1 | tee ./out.txt
         continue-on-error: true
 
-      - name: push updates
-        run: |
-          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          if (git diff --shortstat | grep '[0-9]'); then \
-            git add save.sqlite save.xlsx; \
-            git commit -m "Daily updates"; \
-            git push origin HEAD:${GITHUB_REF}; \
-          fi
-          
-          
-          
+          #      - name: push updates
+          #        run: |
+          #          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+          #          git config --global user.name "${GITHUB_ACTOR}"
+          #          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          #          if (git diff --shortstat | grep '[0-9]'); then \
+          #            git add save.sqlite save.xlsx; \
+          #            git commit -m "Daily updates"; \
+          #            git push origin HEAD:${GITHUB_REF}; \
+          #          fi
 
+
+
+      - name: Add debug info
+        run: |
+          pipenv run post-processing
 
       - name: Error Handling
         if: steps.auto-run.outcome == 'failure'
         run: |
           pipenv run post-processing
           exit 1
+      
