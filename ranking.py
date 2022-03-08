@@ -128,7 +128,10 @@ for name in process_list:
     print(len(gen_tweet_text(tweet_data).encode('utf-8')))
     print(gen_tweet_text(tweet_data))
     try:
-        status = tweet(text=gen_tweet_text(tweet_data))
+        if os.environ['DEBUG'] != 'False':
+            status = tweet(text=gen_tweet_text(tweet_data))
+        else:
+            print(gen_tweet_text(tweet_data))
     except tweepy.TweepyException as e:
         pprint(e, width=100)
 

@@ -16,7 +16,7 @@ pandas.options.display.width = 6000
 pandas.options.display.max_colwidth = 6000
 pandas.options.display.colheader_justify = 'left'
 
-API_KEY = os.getenv('API_KEY', default='')
+API_KEY = os.getenv('YTV3_API_KEY', default='')
 
 if API_KEY == '':
     print('No API Key.')
@@ -223,11 +223,12 @@ def process_channel(artistName, playlistKey):
         dataframe.replace(0, numpy.NaN)
 
     connector = sqlite3.connect(os.path.join('save.sqlite'))
-    dataframe.to_sql(artistName, connector, if_exists='replace')
+    if os.environ['DEBUG'] != 'False':
+        dataframe.to_sql(artistName, connector, if_exists='replace')
     connector.close()
     with pandas.ExcelWriter(workbookName, mode='a', if_sheet_exists='replace') as writer:
-        pass
-        dataframe.to_excel(writer, sheet_name=artistName)
+        if os.environ['DEBUG'] != 'False':
+            dataframe.to_excel(writer, sheet_name=artistName)
 
     workbook = openpyxl.load_workbook(workbookName)
     if 'Sheet' in workbook.sheetnames and len(workbook.sheetnames) != 1:
