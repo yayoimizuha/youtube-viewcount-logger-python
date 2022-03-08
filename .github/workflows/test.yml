@@ -39,7 +39,7 @@ jobs:
           pip install pipenv
           pipenv install
       - name: get today data
-        id: auto-run
+      - id: auto-run
         run: |
           pipenv run auto-run > ./out.txt
         continue-on-error: true
