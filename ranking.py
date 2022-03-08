@@ -131,7 +131,7 @@ for name in process_list:
         if os.environ['DEBUG'] == 'False':
             status = tweet(text=gen_tweet_text(tweet_data))
         else:
-            print(gen_tweet_text(tweet_data))
+            pass
     except tweepy.TweepyException as e:
         pprint(e, width=100)
 
