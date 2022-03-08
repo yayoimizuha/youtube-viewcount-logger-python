@@ -52,6 +52,11 @@ jobs:
           result="${result//$'\r'/'%0D'}"
           echo "result=${result}" >> $GITHUB_ENV
 
+      - name: set time to env
+        env:
+          TZ: 'Asia/Tokyo'
+        run: echo "CURRENT_DATETIME=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+
         
       - name: Error Handling
         uses: JasonEtco/create-an-issue@v2
@@ -59,6 +64,7 @@ jobs:
         env: 
           GITHUB_TOKEN: ${{ github.token }}
           result: ${{ env.result }}
+          CURRENT_DATETIME: ${{ env.CURRENT_DATETIME }}
       - run: |
           exit 1
       
