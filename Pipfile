@@ -18,4 +18,4 @@ styleframe = "*"
 python_version = "3.10"
 
 [scripts]
-auto-run = 'python main.py && python ranking.py'
+auto-run = "bash -c 'python main.py && python ranking.py'"
