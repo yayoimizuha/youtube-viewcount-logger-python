@@ -55,7 +55,9 @@ jobs:
 
 
 
-
+      - name: Add debug info
+        run: |
+          pipenv run post-processing
 
       - name: Error Handling
         if: steps.auto-run.outcome == 'failure'
@@ -63,6 +65,3 @@ jobs:
           pipenv run post-processing
           exit 1
       
-      - name: Add debug info
-        run: |
-          pipenv run post-processing
