@@ -16,8 +16,11 @@ on:
   schedule:
     - cron: '8 00 * * *'
 
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 jobs:
-  build:
+  job:
+    timeout-minutes: 15
 
     runs-on: ubuntu-latest
 
@@ -32,6 +35,36 @@ jobs:
           python -m pip install --upgrade pip
           pip install pipenv
           pipenv install
-      - name: get today data
+      - id: auto-run
+        name: get today data
         run: |
-          pipenv run auto-run
+          pipenv run auto-run > ./out.txt
+        continue-on-error: true
+      - name: generate log
+        run: |
+          result="$(cat ./out.txt)"
+          result="${result//'%'/'%25'}"
+          result="${result//$'\n'/'%0A'}"
+          result="${result//$'\r'/'%0D'}"
+          echo "result=${result}" >> $GITHUB_ENV
+
+      - name: set time to env
+        env:
+          TZ: 'Asia/Tokyo'
+        run: echo "CURRENT_DATETIME=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+
+        
+      - name: Error Handling
+        uses: JasonEtco/create-an-issue@v2
+        if: steps.auto-run.outcome == 'failure'
+        env: 
+          GITHUB_TOKEN: ${{ github.token }}
+          result: ${{ env.result }}
+          CURRENT_DATETIME: ${{ env.CURRENT_DATETIME }}
+
+      - name: exit with 1 when error occured
+        if: steps.auto-run.outcome == 'failure'
+        run: |
+          exit 1
+      
+        
