@@ -9,6 +9,7 @@ env:
   API_KEY: ${{secrets.API_KEY}}
   API_SECRET: ${{secrets.API_SECRET}}
   YTV3_API_KEY: ${{secrets.YTV3_API_KEY}}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DEBUG: True
 permissions: 
   contents: read
