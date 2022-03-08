@@ -27,6 +27,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: JasonEtco/create-an-issue@v2
       - name: Set up Python 3.10
         uses: actions/setup-python@v2
         with:
@@ -51,7 +52,6 @@ jobs:
 
         
       - name: Error Handling
-        uses: JasonEtco/create-an-issue@v2
         if: steps.auto-run.outcome == 'failure'
         env: 
           GITHUB_TOKEN: ${{ github.token }}
