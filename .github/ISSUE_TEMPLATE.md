@@ -1,5 +1,5 @@
 ---
-title: scheduled action: action failed.
+title: scheduled action： action failed.
 labels: error,bug
 ---
 
