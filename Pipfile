@@ -20,3 +20,4 @@ python_version = "3.10"
 
 [scripts]
 auto-run = "bash -c 'python main.py && python ranking.py'"
+post-processing = "bash -c 'python post-processing.py'"
