@@ -39,7 +39,7 @@ jobs:
       - id: auto-run
         name: get today data
         run: |
-          pipenv run auto-run > ./out.txt
+          pipenv run auto-run 2>&1 | tee ./out.txt
         continue-on-error: true
       - name: generate log
         run: |
