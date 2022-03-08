@@ -11,7 +11,9 @@ env:
   YTV3_API_KEY: ${{secrets.YTV3_API_KEY}}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DEBUG: True
-
+permissions: 
+  contents: read
+  issues: write
 
 on:
   push:
@@ -24,6 +26,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
+
       - name: Set up Python 3.10
         uses: actions/setup-python@v2
         with:
@@ -34,5 +38,15 @@ jobs:
           pip install pipenv
           pipenv install
       - name: get today data
+        id: auto-run
+        continue-on-error: true
         run: |
           pipenv run auto-run
+      - name: Error Handling
+        if: ${{ steps.auto-run.outcome == 'failure' }}
+        run: |
+          echo "Error"
+      - uses: JasonEtco/create-an-issue@v2
+        env: 
+          GITHUB_TOKEN: ${{ github.token }}
+
