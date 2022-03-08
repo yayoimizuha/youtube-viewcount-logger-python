@@ -1,3 +1,4 @@
 Pipfile.lock
 save.xlsx
 .idea/*
+__pycache__
