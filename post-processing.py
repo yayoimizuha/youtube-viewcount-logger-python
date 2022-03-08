@@ -17,7 +17,7 @@ repo = gh.get_repo('yayoimizuha/youtube-viewcount-logger-python')
 
 error_label = repo.get_label('error')
 bug_label = repo.get_label('bug')
-help_wanted_label = repo.get_label('help_wanted')
+help_wanted_label = repo.get_label('help wanted')
 
 if os.environ['DEBUG'] == 'True':
     issue = repo.create_issue(title='Fetch debug log',
