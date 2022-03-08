@@ -42,7 +42,7 @@ jobs:
           pipenv run auto-run > ./out.txt
         continue-on-error: true
       - name: generate log
-      - run: |
+        run: |
           result="$(cat ./out.txt)"
           result="${result//'%'/'%25'}"
           result="${result//$'\n'/'%0A'}"
