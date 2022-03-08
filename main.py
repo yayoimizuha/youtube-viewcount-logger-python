@@ -223,11 +223,11 @@ def process_channel(artistName, playlistKey):
         dataframe.replace(0, numpy.NaN)
 
     connector = sqlite3.connect(os.path.join('save.sqlite'))
-    if os.environ['DEBUG'] != 'False':
+    if os.environ['DEBUG'] == 'False':
         dataframe.to_sql(artistName, connector, if_exists='replace')
     connector.close()
     with pandas.ExcelWriter(workbookName, mode='a', if_sheet_exists='replace') as writer:
-        if os.environ['DEBUG'] != 'False':
+        if os.environ['DEBUG'] == 'False':
             dataframe.to_excel(writer, sheet_name=artistName)
 
     workbook = openpyxl.load_workbook(workbookName)
