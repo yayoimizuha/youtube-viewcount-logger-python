@@ -12,6 +12,7 @@ openpyxl = "*"
 seaborn = "*"
 styleframe = "*"
 pygithub = "*"
+firebase-admin = "*"
 
 [dev-packages]
 
