@@ -12,7 +12,7 @@ bucket = storage.bucket()
 blob = bucket.blob(blob_name=str(str(datetime.datetime.now()) + '_log.txt'))
 blob_url = ''
 with open('out.txt', mode='rb') as f:
-    blob.upload_from_file(file_obj=f.read(), content_type='text/plain')
+    blob.upload_from_file(file_obj=f, content_type='text/plain')
     blob.make_public()
     blob_url = blob.public_url
     print(blob_url)
