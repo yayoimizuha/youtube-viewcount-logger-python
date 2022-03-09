@@ -19,7 +19,7 @@ error_label = repo.get_label('error')
 bug_label = repo.get_label('bug')
 help_wanted_label = repo.get_label('help wanted')
 
-if os.environ['DEBUG'] == 'True':
+if os.environ['DEBUG'] == 'YES':
     issue = repo.create_issue(title='Fetch debug log',
                               body=body_text, labels=[help_wanted_label])
 else:
@@ -27,3 +27,4 @@ else:
                               body=body_text, labels=[error_label, bug_label])
 
 print(issue)
+bool('True')
