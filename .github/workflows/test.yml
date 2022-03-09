@@ -11,6 +11,8 @@ env:
   YTV3_API_KEY: ${{secrets.YTV3_API_KEY}}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DEBUG: YES
+  FIREBASE_CREDENTIAL: ${{ secrets.FIREBASE_CREDENTIAL }}
+
 permissions:
   contents: read
   issues: write
