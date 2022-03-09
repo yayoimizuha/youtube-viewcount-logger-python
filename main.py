@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import sys
 import unicodedata
 import numpy
 from googleapiclient.discovery import build
@@ -133,6 +134,8 @@ def get_view_count_and_data(Id, artist_name):
     print(count, end='\t')
     print('https://youtu.be/' + Id, end='\t')
     print(trim_title(video_info[0]['snippet']['title'], artist_name))
+    sys.stdout.flush()
+    sys.stderr.flush()
     # if 'maxres' in video_info[0]['snippet']['thumbnails']:
     #     thumb = video_info[0]['snippet']['thumbnails']['maxres']
     #     # print('maxres')

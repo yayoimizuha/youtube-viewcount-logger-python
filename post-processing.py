@@ -7,7 +7,7 @@ from firebase_admin import credentials, firestore, storage
 from github import Github
 
 credential = credentials.Certificate(json.loads(os.environ['FIREBASE_CREDENTIAL']))
-firebase_admin.initialize_app(credential, {'storageBucket': 'gs://viewcount-logger-20043.appspot.com'})
+firebase_admin.initialize_app(credential, {'storageBucket': 'viewcount-logger-20043.appspot.com'})
 bucket = storage.bucket()
 blob = bucket.blob(blob_name=str(str(datetime.datetime.now()) + '_log.txt'))
 blob_url = ''
