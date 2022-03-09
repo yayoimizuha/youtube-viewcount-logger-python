@@ -10,7 +10,7 @@ body_text = """{date}
 ```
 {content}
 ```""".format(date=str(datetime.datetime.now().isoformat()),
-              content=file)
+              content=file[len(file) - 30000:-1])
 
 gh = Github(os.environ['GITHUB_TOKEN'])
 repo = gh.get_repo('yayoimizuha/youtube-viewcount-logger-python')
