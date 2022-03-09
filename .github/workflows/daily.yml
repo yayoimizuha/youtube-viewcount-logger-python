@@ -49,7 +49,7 @@ jobs:
           if (git diff --shortstat | grep '[0-9]'); then \
             git add save.sqlite save.xlsx; \
             git commit -m "Daily updates"; \
-            git push origin HEAD:${GITHUB_REF}; \
+            git push origin HEAD:${GITHUB_REF} -f ; \
           fi
 
 
