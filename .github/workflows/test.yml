@@ -12,6 +12,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DEBUG: YES
   FIREBASE_CREDENTIAL: ${{ secrets.FIREBASE_CREDENTIAL }}
+  TZ: 'Asia/Tokyo'
 
 permissions:
   contents: read
