@@ -11,12 +11,14 @@ firebase_admin.initialize_app(credential, {'storageBucket': 'gs://viewcount-logg
 bucket = storage.bucket()
 blob = bucket.blob(blob_name=str(str(datetime.datetime.now()) + '_log.txt'))
 blob_url = ''
-with open('out.txt', mode='r') as f:
-    file = f.read()
-    blob.upload_from_file(file_obj=file, content_type='text/plain')
+with open('out.txt', mode='rb') as f:
+    blob.upload_from_file(file_obj=f.read(), content_type='text/plain')
     blob.make_public()
     blob_url = blob.public_url
     print(blob_url)
+
+with open('out.txt', mode='r') as f:
+    file = f.read()
 
 body_text = """{date}
 [{url}]({url})
