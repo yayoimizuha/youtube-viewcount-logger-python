@@ -11,6 +11,8 @@ env:
   YTV3_API_KEY: ${{secrets.YTV3_API_KEY}}
   DEBUG: NO
   FIREBASE_CREDENTIAL: ${{ secrets.FIREBASE_CREDENTIAL }}
+  TZ: 'Asia/Tokyo'
+
 
 
 on:
