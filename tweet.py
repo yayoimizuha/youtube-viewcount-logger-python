@@ -21,6 +21,6 @@ api = tweepy.API(auth)
 
 def tweet(text=None):
     if text is None:
-        text = "test tweet.\n" + str(datetime.datetime.now())
+        text = "@null\n test tweet.\n" + str(datetime.datetime.now())
     response = api.update_status(text)
     pprint.pprint(response)

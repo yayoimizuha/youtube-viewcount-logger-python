@@ -2,7 +2,7 @@ import datetime
 import json
 import os
 import firebase_admin
-from firebase_admin import credentials, firestore, storage
+from firebase_admin import credentials, storage
 
 from github import Github
 
