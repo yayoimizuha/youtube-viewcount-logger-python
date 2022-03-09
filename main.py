@@ -17,6 +17,7 @@ pandas.options.display.max_colwidth = 6000
 pandas.options.display.colheader_justify = 'left'
 
 API_KEY = os.getenv('YTV3_API_KEY', default='')
+print(os.environ['DEBUG'], type(os.environ['DEBUG']))
 
 if API_KEY == '':
     print('No API Key.')
