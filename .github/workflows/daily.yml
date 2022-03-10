@@ -50,6 +50,7 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           if (git diff --shortstat | grep '[0-9]'); then \
+            git status; \
             git add save.sqlite save.xlsx; \
             git commit -m "Daily updates"; \
             git push origin HEAD:${GITHUB_REF} -f ; \
@@ -61,5 +62,10 @@ jobs:
         run: |
           pipenv run post-processing
           exit 1
+
+      - name: Upload Log
+        if: steps.auto-run.outcome != 'failure'
+        run: |
+          pipenv run upload-log
       
         
