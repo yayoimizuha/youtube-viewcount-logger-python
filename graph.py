@@ -1,3 +1,4 @@
+import os.path
 import sqlite3
 
 import matplotlib.lines
@@ -6,7 +7,10 @@ import pandas
 import seaborn as sns
 import time
 import matplotlib.pyplot as plt
-from matplotlib import font_manager
+import japanize_matplotlib
+import matplotlib.ticker as ptick
+
+sns.set_palette('colorblind')
 
 process_list = [
     ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理'],
@@ -47,6 +51,10 @@ process_list = [
     ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団'],
     ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂']
 ]
+# process_list = [
+#     ['PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur', 'Juice=Juice']
+# ]
+
 now = time.time()
 db = sqlite3.connect('save.sqlite')
 for name in process_list:
@@ -54,14 +62,28 @@ for name in process_list:
     print('\n\n\n')
     dataframe.replace('hide', 0, inplace=True)
     dataframe.replace(0, numpy.NaN, inplace=True)
+
     print(dataframe)
+
     print(dataframe.transpose())
     dataframe = dataframe.transpose()
     print(dataframe.index[1])
     dataframe.drop(index='index', axis=0, inplace=True)
     dataframe = dataframe.astype(float)
     print(dataframe)
-    matplotlib.lines.Line2D(dataframe.to_numpy())
+    dataframe.interpolate(inplace=True)
+    sns.color_palette(n_colors=len(dataframe.columns))
+    if None in dataframe.columns:
+        dataframe.drop(columns=[None], inplace=True)
+    plt.rcParams["figure.figsize"] = (16, 9)
+    dataframe.plot()
+    fs = int(2160 / (len(dataframe.columns) * 6))
+    if fs >= 12:
+        fs = 12
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs)
+    plt.tight_layout()
+
+    # plt.figure(dpi=300)
+    plt.savefig(os.path.join(os.getcwd(), 'images', name[1] + '.png'), dpi=240)
     plt.show()
-    plt.close('all')
-    break
+    print(dataframe.columns)

@@ -13,6 +13,7 @@ seaborn = "*"
 styleframe = "*"
 pygithub = "*"
 firebase-admin = "*"
+japanize-matplotlib = "*"
 
 [dev-packages]
 
