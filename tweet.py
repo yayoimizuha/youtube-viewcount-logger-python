@@ -1,4 +1,5 @@
 import datetime
+import glob
 import os
 import pprint
 
@@ -19,7 +20,16 @@ auth = tweepy.OAuth1UserHandler(
 api = tweepy.API(auth)
 
 
-def tweet(text=None):
+def tweet(text=None, name=None):
+    if name is not None:
+        images = glob.glob(os.path.join('images', '*.png'))
+        print(images)
+        print("aaa")
+        media_ids = [api.media_upload(i).media_id_string for i in images]
+        response = api.update_status(text, media_ids=media_ids)
+        pprint.pprint(response)
+        return
+
     if text is None:
         text = "@null\n test tweet.\n" + str(datetime.datetime.now())
     response = api.update_status(text)

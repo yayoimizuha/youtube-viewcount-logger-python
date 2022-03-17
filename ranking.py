@@ -129,7 +129,7 @@ for name in process_list:
     print(gen_tweet_text(tweet_data))
     try:
         if os.environ['DEBUG'] == 'NO':
-            status = tweet(text=gen_tweet_text(tweet_data))
+            status = tweet(text=gen_tweet_text(tweet_data), name=name[1])
         else:
             status = tweet(text=None)
     except tweepy.TweepyException as e:

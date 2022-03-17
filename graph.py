@@ -8,9 +8,12 @@ import seaborn as sns
 import time
 import matplotlib.pyplot as plt
 import japanize_matplotlib
-import matplotlib.ticker as ptick
+from matplotlib import spines
 
+sns.set()
 sns.set_palette('colorblind')
+# sns.set_context("paper")
+japanize_matplotlib.japanize()
 
 process_list = [
     ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理'],
@@ -63,9 +66,9 @@ for name in process_list:
     dataframe.replace('hide', 0, inplace=True)
     dataframe.replace(0, numpy.NaN, inplace=True)
 
-    print(dataframe)
+    # print(dataframe)
 
-    print(dataframe.transpose())
+    # print(dataframe.transpose())
     dataframe = dataframe.transpose()
     print(dataframe.index[1])
     dataframe.drop(index='index', axis=0, inplace=True)
@@ -73,17 +76,44 @@ for name in process_list:
     print(dataframe)
     dataframe.interpolate(inplace=True)
     sns.color_palette(n_colors=len(dataframe.columns))
+
     if None in dataframe.columns:
         dataframe.drop(columns=[None], inplace=True)
-    plt.rcParams["figure.figsize"] = (16, 9)
-    dataframe.plot()
+
     fs = int(2160 / (len(dataframe.columns) * 6))
     if fs >= 12:
         fs = 12
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs)
-    plt.tight_layout()
 
+    if len(dataframe.columns) >= 120:
+        plt.rcParams["figure.figsize"] = (26, 9)
+        dataframe.plot()
+        fs *= 3
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs, ncol=3)
+    elif len(dataframe.columns) >= 60:
+        plt.rcParams["figure.figsize"] = (21, 9)
+        dataframe.plot()
+        fs *= 2
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs, ncol=2)
+    elif len(dataframe.columns) >= 0:
+        plt.rcParams["figure.figsize"] = (16, 9)
+        ax = dataframe.plot(grid=True)
+        ax.spines["top"].set_visible(True)
+        ax.spines["top"].set_linewidth(12)
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs)
+    plt.xlabel('日付')
+    plt.ylabel('再生回数(回)')
+    plt.title(name[1])
+    plt.grid(linestyle='dashed', color='lightcyan')
+    # plt.tick_params(labelbottom=True)
+    plt.axhline(y=0, color='black')
+    plt.axvline(x=0, color='black')
+    # plt.plot([dataframe[0], dataframe[0]], [0, 0], "red", linestyle='dashed')
+
+    plt.gca().spines['bottom'].set_visible(True)
+    plt.ticklabel_format(style='plain', axis='y')
+    plt.tight_layout()
     # plt.figure(dpi=300)
-    plt.savefig(os.path.join(os.getcwd(), 'images', name[1] + '.png'), dpi=240)
-    plt.show()
-    print(dataframe.columns)
+    plt.savefig(os.path.join(os.getcwd(), 'images', name[1] + '_1.png'), dpi=240)
+    # plt.show()
+    # print(dataframe.columns)
+
