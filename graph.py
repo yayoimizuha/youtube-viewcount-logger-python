@@ -15,6 +15,12 @@ sns.set_palette('colorblind')
 # sns.set_context("paper")
 japanize_matplotlib.japanize()
 
+pandas.options.display.max_rows = None
+pandas.options.display.max_columns = None
+pandas.options.display.width = 6000
+pandas.options.display.max_colwidth = 6000
+pandas.options.display.colheader_justify = 'left'
+
 process_list = [
     ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理'],
     ['PLAAEA82D2950BC77D', 'モーニング娘。'],
@@ -55,7 +61,7 @@ process_list = [
     ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂']
 ]
 # process_list = [
-#     ['PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur', 'Juice=Juice']
+#    ['PL106616353F82EF27', '中島卓偉']
 # ]
 
 now = time.time()
@@ -64,7 +70,19 @@ for name in process_list:
     dataframe = pandas.read_sql("SELECT * FROM '{name}'".format(name=name[1]), db, index_col='タイトル')
     print('\n\n\n')
     dataframe.replace('hide', 0, inplace=True)
+    print(dataframe.columns[-1])
+    for rows in dataframe.columns:
+        if rows == 'index':
+            pass
+        elif (dataframe[rows] == 0).all():
+            dataframe.drop(rows, axis=1, inplace=True)
+            print(rows)
+        else:
+            break
+    print(dataframe)
     dataframe.replace(0, numpy.NaN, inplace=True)
+
+    dataframe.sort_values(dataframe.columns[-1], inplace=True, ascending=True, na_position='first')
 
     # print(dataframe)
 
@@ -80,26 +98,41 @@ for name in process_list:
     if None in dataframe.columns:
         dataframe.drop(columns=[None], inplace=True)
 
-    fs = int(2160 / (len(dataframe.columns) * 6))
+    str_len_lim = 25
+    list_len = 0
+    for string in dataframe.columns:
+        dataframe.rename(
+            columns={string: '\n'.join([string[i:i + str_len_lim] for i in range(0, len(string), str_len_lim)])},
+            inplace=True)
+        list_len += len([string[i:i + str_len_lim] for i in range(0, len(string), str_len_lim)])
+    print(list_len, len(dataframe.columns))
+    fs = int(2160 / (list_len * 6))
+    print(fs)
     if fs >= 12:
         fs = 12
+    if fs <= 2:
+        fs = 2
 
-    if len(dataframe.columns) >= 120:
+    if list_len >= 120:
         plt.rcParams["figure.figsize"] = (26, 9)
-        dataframe.plot()
+        dataframe.plot(zorder=1)
         fs *= 3
-        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs, ncol=3)
-    elif len(dataframe.columns) >= 60:
+        handles, labels = plt.gca().get_legend_handles_labels()
+        plt.legend(handles[::-1], labels[::-1],
+                   bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs, ncol=3)
+    elif list_len >= 60:
         plt.rcParams["figure.figsize"] = (21, 9)
-        dataframe.plot()
+        dataframe.plot(zorder=1)
         fs *= 2
-        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs, ncol=2)
-    elif len(dataframe.columns) >= 0:
+        handles, labels = plt.gca().get_legend_handles_labels()
+        plt.legend(handles[::-1], labels[::-1],
+                   bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs, ncol=2)
+    elif list_len >= 0:
         plt.rcParams["figure.figsize"] = (16, 9)
-        ax = dataframe.plot(grid=True)
-        ax.spines["top"].set_visible(True)
-        ax.spines["top"].set_linewidth(12)
-        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs)
+        dataframe.plot(grid=True, zorder=1)
+        handles, labels = plt.gca().get_legend_handles_labels()
+        plt.legend(handles[::-1], labels[::-1],
+                   bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs)
     plt.xlabel('日付')
     plt.ylabel('再生回数(回)')
     plt.title(name[1])
@@ -110,10 +143,11 @@ for name in process_list:
     # plt.plot([dataframe[0], dataframe[0]], [0, 0], "red", linestyle='dashed')
 
     plt.gca().spines['bottom'].set_visible(True)
+
     plt.ticklabel_format(style='plain', axis='y')
     plt.tight_layout()
     # plt.figure(dpi=300)
     plt.savefig(os.path.join(os.getcwd(), 'images', name[1] + '_1.png'), dpi=240)
+    plt.close()
     # plt.show()
     # print(dataframe.columns)
-
