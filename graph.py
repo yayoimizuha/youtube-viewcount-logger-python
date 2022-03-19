@@ -138,8 +138,8 @@ for name in process_list:
     plt.title(name[1])
     plt.grid(linestyle='dashed', color='lightcyan')
     # plt.tick_params(labelbottom=True)
-    plt.axhline(y=0, color='black')
-    plt.axvline(x=0, color='black')
+    plt.axhline(y=0, color='black', zorder=-1)
+    plt.axvline(x=0, color='black', zorder=-1)
     # plt.plot([dataframe[0], dataframe[0]], [0, 0], "red", linestyle='dashed')
 
     plt.gca().spines['bottom'].set_visible(True)
