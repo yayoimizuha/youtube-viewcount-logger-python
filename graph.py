@@ -56,7 +56,7 @@ html_base = """<!DOCTYPE html>
  }}
  </style>
  <div style="text-align: center;">
-    <p style="font-size:70px">
+    <p style="font-size:30px">
         {name}
     </p>
  </div>
