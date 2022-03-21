@@ -14,6 +14,7 @@ styleframe = "*"
 pygithub = "*"
 firebase-admin = "*"
 japanize-matplotlib = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 

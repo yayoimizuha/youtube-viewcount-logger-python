@@ -1,6 +1,6 @@
 import os.path
 import sqlite3
-
+import pprint
 import matplotlib.lines
 import numpy
 import pandas
@@ -9,6 +9,7 @@ import time
 import matplotlib.pyplot as plt
 import japanize_matplotlib
 from matplotlib import spines
+from bs4 import BeautifulSoup
 
 sns.set()
 sns.set_palette('colorblind')
@@ -20,6 +21,36 @@ pandas.options.display.max_columns = None
 pandas.options.display.width = 6000
 pandas.options.display.max_colwidth = 6000
 pandas.options.display.colheader_justify = 'left'
+
+html_base = """<!DOCTYPE html>
+
+<head>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+  <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+ <style>  img {{
+    width: 30px;
+    height: 30px;
+    margin-left: 12px;
+    margin-top: 5px;
+ }}
+ 
+ tr:first-child{{
+     white-space: nowrap;
+ }}
+ 
+ thead th{{
+    text-align: center;
+ }}
+ </style>
+{content}
+ <script>
+     twemoji.parse(document.body);
+ </script>
+</body>
+"""
 
 process_list = [
     ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理'],
@@ -61,7 +92,7 @@ process_list = [
     ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂']
 ]
 # process_list = [
-#    ['PL106616353F82EF27', '中島卓偉']
+#     ['OLAK5uy_l_xKCyQPw4uXQd3mnw0yShaZm3AOANkQI', 'Berryz工房']
 # ]
 
 now = time.time()
@@ -83,7 +114,49 @@ for name in process_list:
     dataframe.replace(0, numpy.NaN, inplace=True)
 
     dataframe.sort_values(dataframe.columns[-1], inplace=True, ascending=True, na_position='first')
+    exportFrame = dataframe.transpose().drop(index='index', axis=0).astype(float).interpolate() \
+        .transpose().fillna(0).astype(int)
+    print(exportFrame.iloc[:, -1] - exportFrame.iloc[:, -2])
+    print(exportFrame.iloc[:, -1])
+    # exportFrame = pandas.DataFrame(exportFrame.iloc[:, -1] - exportFrame.iloc[:, -2], exportFrame.iloc[:, -1])
+    exportFrame = pandas.concat([exportFrame.iloc[:, -1], exportFrame.iloc[:, -1] - exportFrame.iloc[:, -2],
+                                 exportFrame.iloc[:, -1] - exportFrame.iloc[:, -2]
+                                 - exportFrame.iloc[:, -2] + exportFrame.iloc[:, -3]], axis=1)
+    # exportFrame.drop(columns=['タイトル'], inplace=True, axis=1)
+    # exportFrame = exportFrame.sort_values(exportFrame.columns[-1], inplace=True, na_position='first')
+    print(exportFrame.columns)
+    pprint.pprint(exportFrame.index.tolist(), width=200)
+    exportFrame = pandas.DataFrame(exportFrame)
+    exportFrame.sort_values(exportFrame.columns[1], inplace=True, ascending=False, na_position='first')
+    exportFrame.drop(index=[], inplace=True)
 
+    if None in exportFrame.index:
+        exportFrame.drop(index=[None], inplace=True)
+    exportFrame.to_excel('test.xlsx')
+
+    print(exportFrame[exportFrame[1] < 0])
+    exportFrame.loc[exportFrame[1] < 0, 2] = '↘'
+    exportFrame.loc[exportFrame[1] == 0, 2] = '➡'
+    exportFrame.loc[exportFrame[1] > 0, 2] = '↗'
+    exportFrame.drop(columns=1, inplace=True)
+
+    html_file = html_base.format(content=exportFrame.to_html(render_links=True, notebook=True, justify='unset'))
+    soup = BeautifulSoup(html_file, 'html.parser')
+    soup.find('thead').find_all('tr')[1].decompose()
+    soup.find('thead').find_all('th')[0].insert(2, 'タイトル')
+
+    soup.find_all('style')[1].decompose()
+
+    soup.find('thead').find_all('th')[2].clear()
+    soup.find('thead').find_all('th')[2].insert(0, '差分')
+
+    soup.find('thead').find_all('th')[3].clear()
+    soup.find('thead').find_all('th')[3].insert(0, '前日差')
+
+    del soup.find('thead').find('tr').attrs['style']
+    html_file = soup.prettify()
+    with open(os.path.join(os.getcwd(), 'html', name[1] + '.html'), mode='w', encoding='utf-8') as f:
+        f.write(html_file)
     # print(dataframe)
 
     # print(dataframe.transpose())
@@ -91,7 +164,6 @@ for name in process_list:
     print(dataframe.index[1])
     dataframe.drop(index='index', axis=0, inplace=True)
     dataframe = dataframe.astype(float)
-    print(dataframe)
     dataframe.interpolate(inplace=True)
     sns.color_palette(n_colors=len(dataframe.columns))
 
@@ -106,6 +178,7 @@ for name in process_list:
             inplace=True)
         list_len += len([string[i:i + str_len_lim] for i in range(0, len(string), str_len_lim)])
     print(list_len, len(dataframe.columns))
+
     fs = int(2160 / (list_len * 6))
     print(fs)
     if fs >= 12:
@@ -149,5 +222,6 @@ for name in process_list:
     # plt.figure(dpi=300)
     plt.savefig(os.path.join(os.getcwd(), 'images', name[1] + '_1.png'), dpi=240)
     plt.close()
+
     # plt.show()
     # print(dataframe.columns)
