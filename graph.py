@@ -25,7 +25,7 @@ pandas.options.display.colheader_justify = 'left'
 html_base = """<!DOCTYPE html>
 
 <head>
-  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/mvp.css">
   <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
 </head>
 
@@ -33,7 +33,7 @@ html_base = """<!DOCTYPE html>
  <style>  img {{
     width: 30px;
     height: 30px;
-    margin-left: 12px;
+    margin-left: 0px;
     margin-top: 5px;
  }}
  
@@ -41,10 +41,25 @@ html_base = """<!DOCTYPE html>
      white-space: nowrap;
  }}
  
- thead th{{
+ table thead th:first-child{{
     text-align: center;
  }}
+ 
+ div{{
+    margin: auto;
+ }}
+ 
+ table{{
+    margin: auto;
+    margin-top: 7px;
+    display: table;
+ }}
  </style>
+ <div style="text-align: center;">
+    <p style="font-size:70px">
+        {name}
+    </p>
+ </div>
 {content}
  <script>
      twemoji.parse(document.body);
@@ -91,8 +106,9 @@ process_list = [
     ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団'],
     ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂']
 ]
+
 # process_list = [
-#     ['OLAK5uy_l_xKCyQPw4uXQd3mnw0yShaZm3AOANkQI', 'Berryz工房']
+#     ['PLFMni9aeqKTzQ4ciZ-vNscbKge63ohqri', 'アプカミ・ミュージック・デリバリー']
 # ]
 
 now = time.time()
@@ -140,7 +156,8 @@ for name in process_list:
     exportFrame.loc[exportFrame[1] > 0, 2] = '↗'
     exportFrame.drop(columns=1, inplace=True)
 
-    html_file = html_base.format(content=exportFrame.to_html(render_links=True, notebook=True, justify='unset'))
+    html_file = html_base.format(content=exportFrame.to_html(render_links=True, notebook=True, justify='center'),
+                                 name=name[1])
     soup = BeautifulSoup(html_file, 'html.parser')
     soup.find('thead').find_all('tr')[1].decompose()
     soup.find('thead').find_all('th')[0].insert(2, 'タイトル')
@@ -153,7 +170,7 @@ for name in process_list:
     soup.find('thead').find_all('th')[3].clear()
     soup.find('thead').find_all('th')[3].insert(0, '前日差')
 
-    del soup.find('thead').find('tr').attrs['style']
+    # del soup.find('thead').find('tr').attrs['style']
     html_file = soup.prettify()
     with open(os.path.join(os.getcwd(), 'html', name[1] + '.html'), mode='w', encoding='utf-8') as f:
         f.write(html_file)
