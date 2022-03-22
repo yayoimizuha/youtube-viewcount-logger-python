@@ -53,6 +53,22 @@ html_base = """<!DOCTYPE html>
     margin: auto;
     margin-top: 7px;
     display: table;
+    margin-bottom: 30px;
+ }}
+ 
+ body {{
+    --color: #118bee;
+    --color-accent: #118bee15;
+    --color-bg: #fff;
+    --color-bg-secondary: #e9e9e9;
+    --color-link: #118bee;
+    --color-secondary: #920de9;
+    --color-secondary-accent: #920de90b;
+    --color-shadow: #f4f4f4;
+    --color-table: #118bee;
+    --color-text: #000;
+    --color-text-secondary: #999;
+       
  }}
  </style>
  <div style="text-align: center;">
@@ -148,7 +164,6 @@ for name in process_list:
 
     if None in exportFrame.index:
         exportFrame.drop(index=[None], inplace=True)
-    exportFrame.to_excel('test.xlsx')
 
     print(exportFrame[exportFrame[1] < 0])
     exportFrame.loc[exportFrame[1] < 0, 2] = '↘'
