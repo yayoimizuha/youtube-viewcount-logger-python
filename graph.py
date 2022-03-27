@@ -85,7 +85,7 @@ html_base = """<!DOCTYPE html>
 process_list = const.playlists()
 
 # process_list = [
-#     ['PLFMni9aeqKTzQ4ciZ-vNscbKge63ohqri', 'アプカミ・ミュージック・デリバリー']
+#     ['PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', 'つばきファクトリー']
 # ]
 
 now = time.time()
@@ -181,21 +181,21 @@ for name in process_list:
 
     if list_len >= 120:
         plt.rcParams["figure.figsize"] = (26, 9)
-        dataframe.plot(zorder=1)
+        dataframe.plot(zorder=1, grid=True, marker='.', markersize='1', markevery=int(len(dataframe.index) / 100) + 1)
         fs *= 3
         handles, labels = plt.gca().get_legend_handles_labels()
         plt.legend(handles[::-1], labels[::-1],
                    bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs, ncol=3)
     elif list_len >= 60:
         plt.rcParams["figure.figsize"] = (21, 9)
-        dataframe.plot(zorder=1)
+        dataframe.plot(zorder=1, grid=True, marker='.', markersize='1', markevery=int(len(dataframe.index) / 100) + 1)
         fs *= 2
         handles, labels = plt.gca().get_legend_handles_labels()
         plt.legend(handles[::-1], labels[::-1],
                    bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs, ncol=2)
     elif list_len >= 0:
         plt.rcParams["figure.figsize"] = (16, 9)
-        dataframe.plot(grid=True, zorder=1)
+        dataframe.plot(zorder=1, grid=True, marker='.', markersize='1', markevery=int(len(dataframe.index) / 100) + 1)
         handles, labels = plt.gca().get_legend_handles_labels()
         plt.legend(handles[::-1], labels[::-1],
                    bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=fs)
@@ -215,6 +215,7 @@ for name in process_list:
     # plt.figure(dpi=300)
     plt.savefig(os.path.join(os.getcwd(), 'images', name[1] + '_1.png'), dpi=240)
     plt.close()
+    print(len(dataframe.index))
 
     # plt.show()
     # print(dataframe.columns)
