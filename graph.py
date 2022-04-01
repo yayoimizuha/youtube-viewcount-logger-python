@@ -148,6 +148,7 @@ for name in process_list:
 
     # del soup.find('thead').find('tr').attrs['style']
     html_file = soup.prettify()
+    os.makedirs('html' ,exist_ok=True)
     with open(os.path.join(os.getcwd(), 'html', name[1] + '.html'), mode='w', encoding='utf-8') as f:
         f.write(html_file)
     # print(dataframe)
@@ -213,6 +214,7 @@ for name in process_list:
     plt.ticklabel_format(style='plain', axis='y')
     plt.tight_layout()
     # plt.figure(dpi=300)
+    os.makedirs('images',exist_ok=True)
     plt.savefig(os.path.join(os.getcwd(), 'images', name[1] + '_1.png'), dpi=240)
     plt.close()
     print(len(dataframe.index))
