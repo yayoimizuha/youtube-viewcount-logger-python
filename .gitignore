@@ -2,5 +2,3 @@ Pipfile.lock
 .idea/*
 __pycache__
 out.txt
-images
-html
