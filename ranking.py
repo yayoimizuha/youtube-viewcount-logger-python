@@ -17,32 +17,6 @@ pandas.options.display.max_colwidth = 6000
 pandas.options.display.colheader_justify = 'left'
 
 
-# workbook = openpyxl.load_workbook('save.xlsx')
-#
-# now = time.time()
-# connector = sqlite3.connect('save.sqlite')
-# for sheet in workbook.sheetnames:
-#     dataframe = pandas.read_excel('save.xlsx', sheet_name=sheet, index_col=0)
-#     dataframe.to_excel('tmp.xlsx', sheet_name=sheet)
-#     print(sheet)
-#     dataframe.to_sql(sheet, connector, if_exists='replace')
-#     print(dataframe)
-# print(time.time() - now)
-# print('\n\n\n')
-# connector.close()
-#
-# now = time.time()
-# for page in workbook.sheetnames:
-#     connector = sqlite3.connect('save.sqlite')
-#     saver = sqlite3.connect('test.sqlite')
-#     dataframe = pandas.read_sql("SELECT * FROM '{name}'".format(name=page), connector, index_col='タイトル')
-#     dataframe.to_sql(page, saver, if_exists='replace')
-#     saver.close()
-#     connector.close()
-#     print(page)
-#     # print(dataframe)
-#
-# print(time.time() - now)
 def gen_tweet_text(data):
     return """#hpytvc 昨日からの再生回数: #{artist}
 1位: {one_name}\t再生回数:{one_count}回
@@ -95,7 +69,7 @@ process_list = [
 now = time.time()
 db = sqlite3.connect('save.sqlite')
 for name in process_list:
-    dataframe = pandas.read_sql("SELECT * FROM '{name}'".format(name=name[1]), db, index_col='index')
+    dataframe = pandas.read_sql(f"SELECT * FROM '{name}'".format(name=name[1]), db, index_col='index')
     print('\n\n\n')
     dataframe.replace(0, None, inplace=True)
     sortFrame = pandas.DataFrame(columns=['index', 'artist name', 'title', 'view count', 'last update'])
