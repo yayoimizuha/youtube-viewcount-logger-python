@@ -23,6 +23,7 @@ api = tweepy.API(auth)
 def tweet(text=None, name=None):
     if name is not None:
         images = glob.glob(os.path.join('images', name + '*.png'))
+        print(name)
         print(images)
         print("aaa")
         media_ids = [api.media_upload(i).media_id_string for i in images]
