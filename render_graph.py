@@ -15,7 +15,6 @@ options.add_argument('--hide-scrollbars')
 driver = webdriver.Chrome(options=options)
 
 for _, name in const.playlists():
-    break
     print(name)
     html_path = os.path.join(os.getcwd(), 'html', name + '.html')
     print(html_path, end='\n\n')
