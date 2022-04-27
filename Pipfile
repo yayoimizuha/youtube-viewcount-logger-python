@@ -25,7 +25,7 @@ autopep8 = "*"
 python_version = "3"
 
 [scripts]
-auto-run = "bash -c 'python main.py && python graph.py && python ranking.py'"
+auto-run = "bash -c 'python main.py && python graph.py && python render_graph.py && python ranking.py'"
 post-processing = "bash -c 'python post-processing.py'"
 upload-log = "python -c 'import firebase_storage_upload;firebase_storage_upload.upload_log()'"
 visualize = "bash -c 'python graph.py'"
