@@ -17,6 +17,9 @@ japanize-matplotlib = "*"
 beautifulsoup4 = "*"
 selenium = "*"
 chromedriver-binary-auto = "*"
+opencv-python-headless = "*"
+pillow = "*"
+numpy = "*"
 
 [dev-packages]
 autopep8 = "*"
