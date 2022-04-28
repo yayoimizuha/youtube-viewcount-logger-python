@@ -103,7 +103,7 @@ for name in process_list:
             print(rows)
         else:
             break
-    print(dataframe)
+    # print(dataframe)
     dataframe.replace(0, numpy.NaN, inplace=True)
 
     dataframe.sort_values(dataframe.columns[-1], inplace=True, ascending=True, na_position='first')

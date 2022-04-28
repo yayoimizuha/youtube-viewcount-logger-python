@@ -18,7 +18,7 @@ for _, name in const.playlists():
     print(name)
     html_path = os.path.join(os.getcwd(), 'html', name + '.html')
     print(html_path, end='\n\n')
-    driver.get(html_path)
+    driver.get("file://" + html_path)
     ui.WebDriverWait(driver=driver, timeout=15).until(expected_conditions.presence_of_all_elements_located)
 
     driver.set_window_size(800, 600)
