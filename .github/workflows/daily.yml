@@ -11,22 +11,26 @@ env:
   YTV3_API_KEY: ${{secrets.YTV3_API_KEY}}
   DEBUG: NO
   FIREBASE_CREDENTIAL: ${{ secrets.FIREBASE_CREDENTIAL }}
+  TZ: 'Asia/Tokyo'
+
 
 
 on:
   schedule:
-    - cron: '8 00 * * *'
+    - cron: '0 23 * * *'
 
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 jobs:
   job:
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+      - name: Install Chromium & driver
+        run: sudo apt install chromium-chromedriver
       - name: Set up Python 3.10
         uses: actions/setup-python@v2
         with:
@@ -48,7 +52,8 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           if (git diff --shortstat | grep '[0-9]'); then \
-            git add save.sqlite save.xlsx; \
+            git status; \
+            git add save.sqlite save.xlsx images/* html/*; \
             git commit -m "Daily updates"; \
             git push origin HEAD:${GITHUB_REF} -f ; \
           fi
@@ -59,5 +64,10 @@ jobs:
         run: |
           pipenv run post-processing
           exit 1
+
+      - name: Upload Log
+        if: steps.auto-run.outcome != 'failure'
+        run: |
+          pipenv run upload-log
       
         
