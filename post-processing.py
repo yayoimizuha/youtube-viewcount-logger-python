@@ -31,4 +31,3 @@ else:
                               body=body_text, labels=[error_label, bug_label])
 
 print(issue)
-bool('True')
