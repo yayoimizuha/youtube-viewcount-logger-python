@@ -8,6 +8,8 @@ import cv2
 from PIL import Image
 import numpy as np
 
+print(webdriver.__version__)
+
 options = webdriver.ChromeOptions()
 options.headless = True
 options.add_argument('--hide-scrollbars')
@@ -42,7 +44,6 @@ for filename in glob.glob(os.path.join('images', '*_2.png')):
     for i in range(splits):
         split_pic = image[cy:cy + int(h / splits), cx:cx + w, :]
         Image.fromarray(cv2.cvtColor(split_pic, cv2.COLOR_BGR2RGB)).save(filename.replace('_2', '_2_' + str(i)))
-        print('split_pic\\split_y' + str(i) + '.jpg')
         cy = cy + int(h / splits)
     cy = 0
     os.remove(filename)

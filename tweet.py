@@ -25,13 +25,12 @@ def tweet(text=None, name=None):
         images = glob.glob(os.path.join('images', name + '*.png'))
         print(name)
         print(images)
-        print("aaa")
         media_ids = [api.media_upload(i).media_id_string for i in images]
         response = api.update_status(text, media_ids=media_ids)
         pprint.pprint(response)
         return
 
     if text is None:
-        text = "@null\n test tweet.\n" + str(datetime.datetime.now())
+        text = "test tweet.\n" + str(datetime.datetime.now()) + str(name)
     response = api.update_status(text)
     pprint.pprint(response)
