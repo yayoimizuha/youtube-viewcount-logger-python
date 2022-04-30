@@ -28,7 +28,7 @@ html_base = """<!DOCTYPE html>
   <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -71,6 +71,7 @@ html_base = """<!DOCTYPE html>
     --color-text: #000;
     --color-text-secondary: #999;
     font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     font-size: 20px;
        
  }}
