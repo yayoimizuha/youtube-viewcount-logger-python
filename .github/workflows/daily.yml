@@ -43,6 +43,8 @@ jobs:
           pip freeze
           which chromedriver
           chromedriver -v
+          rm -rf images/*
+          rm -rf html/*
       - id: auto-run
         name: get today data
         run: |
