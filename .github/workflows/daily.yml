@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Chromium & driver
-        run: sudo apt install chromium-chromedriver
+        run: sudo apt install chromium-chromedriver fonts-ipafont fonts-ipaexfont
       - name: Set up Python 3.10
         uses: actions/setup-python@v2
         with:
