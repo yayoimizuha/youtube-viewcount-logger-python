@@ -20,6 +20,7 @@ chromedriver-binary-auto = "*"
 opencv-python-headless = "*"
 pillow = "*"
 numpy = "*"
+requests = "*"
 
 [dev-packages]
 autopep8 = "*"
