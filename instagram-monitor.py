@@ -1,6 +1,8 @@
 import json
 import os
 import pprint
+import unicodedata
+
 import numpy
 import requests
 
@@ -25,7 +27,9 @@ def get_data(username=None):
 
 
 def process_data(data):
+    username = data['business_discovery']['username']
     display_name = data['business_discovery']['name']
+    display_name = unicodedata.normalize('NFKC', display_name)
     follower_count = data['business_discovery']['followers_count']
     comments_count_mean = numpy.mean([obj['comments_count'] for obj in data['business_discovery']['media']['data']])
     like_counts = [obj['like_count'] for obj in data['business_discovery']['media']['data'] if 'like_count' in obj]
@@ -33,7 +37,7 @@ def process_data(data):
         like_count_mean = 0.0
     else:
         like_count_mean = numpy.mean(like_counts)
-    return [display_name, follower_count, comments_count_mean, like_count_mean]
+    return [username, display_name, follower_count, comments_count_mean, like_count_mean]
 
 
 with open('instagram_user.list', 'r') as f:
@@ -41,9 +45,14 @@ with open('instagram_user.list', 'r') as f:
 
 pprint.pprint(user_list)
 
+all_data = []
+
 for user in user_list:
     if '#' in user:
         continue
+
     json_data = get_data(user)
     proceed_data = process_data(data=json_data)
-    pprint.pprint(proceed_data)
+    all_data.append(proceed_data)
+
+pprint.pprint(all_data)
