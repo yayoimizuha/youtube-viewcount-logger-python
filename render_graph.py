@@ -1,5 +1,6 @@
 import glob
 import os.path
+import time
 import const
 from selenium import webdriver
 import chromedriver_binary
@@ -22,6 +23,7 @@ for _, name in const.playlists():
     print(html_path, end='\n\n')
     driver.get("file://" + html_path)
     ui.WebDriverWait(driver=driver, timeout=15).until(expected_conditions.presence_of_all_elements_located)
+    time.sleep(3)
 
     driver.set_window_size(800, 600)
     driver.set_window_size(driver.execute_script('return document.body.scrollWidth') + 40,
@@ -43,7 +45,7 @@ for filename in glob.glob(os.path.join('images', '*_2.png')):
 
     for i in range(splits):
         split_pic = image[cy:cy + int(h / splits), cx:cx + w, :]
-        Image.fromarray(cv2.cvtColor(split_pic, cv2.COLOR_BGR2RGB)).save(filename.replace('_2', '_2_' + str(i)))
+        Image.fromarray(cv2.cvtColor(split_pic, cv2.COLOR_BGR2RGB)).save(filename.replace('_2', '_2' + str(i)))
         cy = cy + int(h / splits)
     cy = 0
     os.remove(filename)

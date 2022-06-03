@@ -26,6 +26,9 @@ html_base = """<!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="https://unpkg.com/mvp.css">
   <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -67,6 +70,9 @@ html_base = """<!DOCTYPE html>
     --color-table: #118bee;
     --color-text: #000;
     --color-text-secondary: #999;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 20px;
        
  }}
  </style>
@@ -148,7 +154,7 @@ for name in process_list:
 
     # del soup.find('thead').find('tr').attrs['style']
     html_file = soup.prettify()
-    os.makedirs('html' ,exist_ok=True)
+    os.makedirs('html', exist_ok=True)
     with open(os.path.join(os.getcwd(), 'html', name[1] + '.html'), mode='w', encoding='utf-8') as f:
         f.write(html_file)
     # print(dataframe)
@@ -214,7 +220,7 @@ for name in process_list:
     plt.ticklabel_format(style='plain', axis='y')
     plt.tight_layout()
     # plt.figure(dpi=300)
-    os.makedirs('images',exist_ok=True)
+    os.makedirs('images', exist_ok=True)
     plt.savefig(os.path.join(os.getcwd(), 'images', name[1] + '_1.png'), dpi=240)
     plt.close()
     print(len(dataframe.index))
