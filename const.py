@@ -20,7 +20,7 @@ def playlists():
         ['PLPHwLN81i8cqlVTlXWre1Z7daRXXoa_h_', 'Bitter & Sweet'],
         ['PLFMni9aeqKTwRBEifr0wecspeZPZ24AEN', 'ブラザーズ5'],
         ['PLFMni9aeqKTx6FGeICQu6AMh_h7XaiWrB', 'シャ乱Q'],
-        ['PLcDcrjhCHv-3qWE_6ygbLOMQWHgDSGjI5', 'LoVendoЯ'],
+        ['PLFMni9aeqKTxAMChTm-sad305266kliMy', 'LoVendoЯ'],
         ['PLFMni9aeqKTzQ054kNN0VAn_TC8HVIPvA', '田﨑あさひ'],
         ['PLXok3xPFmG2Akv9qLrdDW1ArlCiodq9Bi', '小片リサ'],
         ['PLXok3xPFmG2ASK8fo_GEwdk7JQALn0P_o', '高橋愛・田中れいな・夏焼雅'],
