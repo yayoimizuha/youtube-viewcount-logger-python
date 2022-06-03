@@ -18,6 +18,14 @@ pandas.options.display.colheader_justify = 'left'
 
 
 def gen_tweet_text(data):
+    if data[1][2] is None:
+        data[1][2] = "null"
+    if data[1][3] is None:
+        data[1][3] = "null"
+    if data[2][2] is None:
+        data[2][2] = "null"
+    if data[2][3] is None:
+        data[2][3] = "null"
     return """#hpytvc 昨日からの再生回数: #{artist}
 1位: {one_name}\t再生回数:{one_count}回
 2位: {two_name}\t再生回数:{two_count}回

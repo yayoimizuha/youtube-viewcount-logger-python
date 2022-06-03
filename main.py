@@ -64,7 +64,7 @@ def trim_title(text, artist_name):
     if artist_name == 'HANGRY&ANGRY':
         return unicodedata.normalize('NFKC', text).replace('VIDEO CLIP', '')
     if artist_name == 'Juice=Juice' or artist_name == 'アンジュルム' or artist_name == '高橋愛・田中れいな・夏焼雅' \
-            or artist_name == 'BEYOOOOONDS' or artist_name == 'モーニング娘。':
+            or artist_name == 'BEYOOOOONDS' or artist_name == 'モーニング娘。' or artist_name == 'OCHA NORMA':
         return re.sub(r'\(.*?\)|\[.*?]|MV|Promotion|Edit', '', unicodedata.normalize('NFKC', text))
     if artist_name == 'LoVendoЯ':
         return re.sub(r'\(.*|\[.*', '', unicodedata.normalize('NFKC', text))

@@ -1,12 +1,11 @@
 def playlists():
     return [
-
         ['PLAAEA82D2950BC77D', 'モーニング娘。'],
         ['PL0DCF7F78614F3AE6', 'アンジュルム'],
         ['PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur', 'Juice=Juice'],
         ['PL8m86iV3p-nRdW2cckAwqruBKuzrxoVvW', 'BEYOOOOONDS'],
         ['PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', 'つばきファクトリー'],
-        ['PLHdMoq6t0XIA5JLPo-SyTTqEByvdu1cGA', 'OCHA NORMA'],
+        # ['PLHdMoq6t0XIA5JLPo-SyTTqEByvdu1cGA', 'OCHA NORMA'],
         ['PLcu1vvKzbBMk1i4k-DF3q5ii0007W-zh7', 'こぶしファクトリー'],
         ['PLhDVFhoEVU3l3X0obfPzdD5OHTbnv7Oio', 'カントリー・ガールズ'],
         ['PLF0E7D2433E255B81', 'Buono!'],
