@@ -192,8 +192,12 @@ def process_channel(artistName, playlistKey):
     connector = sqlite3.connect(os.path.join('save.sqlite'))
     dataframe.to_sql(artistName, connector, if_exists='replace')
     connector.close()
+
     with pandas.ExcelWriter(workbookName, mode='a', if_sheet_exists='replace') as writer:
         dataframe.to_excel(writer, sheet_name=artistName)
+
+    os.makedirs('csvs', exist_ok=True)
+    dataframe.to_csv(os.path.join(os.getcwd(), 'csvs', artistName + '.csv'), sep='\t')
 
     workbook = openpyxl.load_workbook(workbookName)
     if 'Sheet' in workbook.sheetnames and len(workbook.sheetnames) != 1:
