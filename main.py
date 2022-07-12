@@ -196,8 +196,8 @@ def process_channel(artistName, playlistKey):
     with pandas.ExcelWriter(workbookName, mode='a', if_sheet_exists='replace') as writer:
         dataframe.to_excel(writer, sheet_name=artistName)
 
-    os.makedirs('csvs', exist_ok=True)
-    dataframe.to_csv(os.path.join(os.getcwd(), 'csvs', artistName + '.csv'), sep='\t')
+    os.makedirs('tsvs', exist_ok=True)
+    dataframe.to_csv(os.path.join(os.getcwd(), 'tsvs', artistName + '.tsv'), sep='\t')
 
     workbook = openpyxl.load_workbook(workbookName)
     if 'Sheet' in workbook.sheetnames and len(workbook.sheetnames) != 1:
