@@ -218,3 +218,7 @@ def process_channel(artistName, playlistKey):
 for processes in process_list:
     count = 0
     process_channel(artistName=processes[1], playlistKey=processes[0])
+
+os.makedirs(os.path.join(os.getcwd(), 'tsvs'), exist_ok=True)
+with open(os.path.join(os.getcwd(), 'tsvs', 'group_list.tsv'), mode='w',encoding='utf8') as f:
+    f.writelines('\n'.join([i for _, i in process_list]))
