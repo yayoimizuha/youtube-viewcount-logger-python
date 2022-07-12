@@ -156,7 +156,7 @@ def process_channel(artistName, playlistKey):
     if artistName not in workbook.sheetnames:
         dataframe = pandas.DataFrame([0])
     else:
-        dataframe = pandas.read_excel('save.xlsx', sheet_name=artistName, index_col=0)
+        dataframe = pandas.read_excel(workbookName, sheet_name=artistName, index_col=0)
 
     if 'タイトル' not in dataframe.columns:
         dataframe['タイトル'] = ''
