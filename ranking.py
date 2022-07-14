@@ -39,6 +39,9 @@ process_list = const.playlists()
 
 now = time.time()
 db = sqlite3.connect('save.sqlite')
+tweet(text="以下のサイトでグループごとの再生回数のグラフを見ることができます！"
+           "拡大縮小したり、表示したい曲を選択して表示できたりして、毎日の画像ツイートより見やすくなっています！"
+           "https://viewcount-logger-20043.web.app/", raw=True)
 for name in process_list:
     dataframe = pandas.read_sql("SELECT * FROM '{name}'".format(name=name[1]), db, index_col='index')
     print('\n\n\n')
