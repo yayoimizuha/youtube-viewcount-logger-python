@@ -1,6 +1,5 @@
 def playlists():
     return [
-
         ['PLAAEA82D2950BC77D', 'モーニング娘。'],
         ['PL0DCF7F78614F3AE6', 'アンジュルム'],
         ['PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur', 'Juice=Juice'],

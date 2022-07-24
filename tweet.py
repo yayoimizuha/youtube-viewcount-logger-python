@@ -20,7 +20,10 @@ auth = tweepy.OAuth1UserHandler(
 api = tweepy.API(auth)
 
 
-def tweet(text=None, name=None):
+def tweet(text=None, name=None, raw=False):
+    if raw is True:
+        api.update_status(text)
+        return
     if name is not None:
         images = glob.glob(os.path.join('images', name + '*.png'))
         print(name)

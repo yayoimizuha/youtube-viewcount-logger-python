@@ -18,6 +18,14 @@ pandas.options.display.colheader_justify = 'left'
 
 
 def gen_tweet_text(data):
+    if data[1][2] is None:
+        data[1][2] = "null"
+    if data[1][3] is None:
+        data[1][3] = "null"
+    if data[2][2] is None:
+        data[2][2] = "null"
+    if data[2][3] is None:
+        data[2][3] = "null"
     return """#hpytvc 昨日からの再生回数: #{artist}
 1位: {one_name}\t再生回数:{one_count}回
 2位: {two_name}\t再生回数:{two_count}回
@@ -31,6 +39,9 @@ process_list = const.playlists()
 
 now = time.time()
 db = sqlite3.connect('save.sqlite')
+tweet(text="以下のサイトでグループごとの再生回数のグラフを見ることができます！"
+           "拡大縮小したり、表示したい曲を選択して表示できたりして、毎日の画像ツイートより見やすくなっています！"
+           "https://viewcount-logger-20043.web.app/", raw=True)
 for name in process_list:
     dataframe = pandas.read_sql("SELECT * FROM '{name}'".format(name=name[1]), db, index_col='index')
     print('\n\n\n')

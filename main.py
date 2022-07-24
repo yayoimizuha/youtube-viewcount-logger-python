@@ -64,7 +64,7 @@ def trim_title(text, artist_name):
     if artist_name == 'HANGRY&ANGRY':
         return unicodedata.normalize('NFKC', text).replace('VIDEO CLIP', '')
     if artist_name == 'Juice=Juice' or artist_name == 'アンジュルム' or artist_name == '高橋愛・田中れいな・夏焼雅' \
-            or artist_name == 'BEYOOOOONDS' or artist_name == 'モーニング娘。':
+            or artist_name == 'BEYOOOOONDS' or artist_name == 'モーニング娘。' or artist_name == 'OCHA NORMA':
         return re.sub(r'\(.*?\)|\[.*?]|MV|Promotion|Edit', '', unicodedata.normalize('NFKC', text))
     if artist_name == 'LoVendoЯ':
         return re.sub(r'\(.*|\[.*', '', unicodedata.normalize('NFKC', text))
@@ -156,7 +156,7 @@ def process_channel(artistName, playlistKey):
     if artistName not in workbook.sheetnames:
         dataframe = pandas.DataFrame([0])
     else:
-        dataframe = pandas.read_excel('save.xlsx', sheet_name=artistName, index_col=0)
+        dataframe = pandas.read_excel(workbookName, sheet_name=artistName, index_col=0)
 
     if 'タイトル' not in dataframe.columns:
         dataframe['タイトル'] = ''
@@ -192,8 +192,12 @@ def process_channel(artistName, playlistKey):
     connector = sqlite3.connect(os.path.join('save.sqlite'))
     dataframe.to_sql(artistName, connector, if_exists='replace')
     connector.close()
+
     with pandas.ExcelWriter(workbookName, mode='a', if_sheet_exists='replace') as writer:
         dataframe.to_excel(writer, sheet_name=artistName)
+
+    os.makedirs('tsvs', exist_ok=True)
+    dataframe.to_csv(os.path.join(os.getcwd(), 'tsvs', artistName + '.tsv'), sep='\t')
 
     workbook = openpyxl.load_workbook(workbookName)
     if 'Sheet' in workbook.sheetnames and len(workbook.sheetnames) != 1:
@@ -214,3 +218,7 @@ def process_channel(artistName, playlistKey):
 for processes in process_list:
     count = 0
     process_channel(artistName=processes[1], playlistKey=processes[0])
+
+os.makedirs(os.path.join(os.getcwd(), 'tsvs'), exist_ok=True)
+with open(os.path.join(os.getcwd(), 'tsvs', 'group_list.tsv'), mode='w',encoding='utf8') as f:
+    f.writelines('\n'.join([i for _, i in process_list]))
