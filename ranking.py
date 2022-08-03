@@ -2,11 +2,9 @@ import datetime
 import os.path
 import time
 from pprint import pprint
-import openpyxl
 import pandas
 import sqlite3
 import tweepy
-
 import const
 from tweet import tweet
 
@@ -43,6 +41,8 @@ tweet(text="以下のサイトでグループごとの再生回数のグラフ�
            "拡大縮小したり、表示したい曲を選択して表示できたりして、毎日の画像ツイートより見やすくなっています！"
            "https://viewcount-logger-20043.web.app/", raw=True)
 for name in process_list:
+    if not name[2]:
+        continue
     dataframe = pandas.read_sql("SELECT * FROM '{name}'".format(name=name[1]), db, index_col='index')
     print('\n\n\n')
     dataframe.replace(0, None, inplace=True)

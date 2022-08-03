@@ -97,6 +97,8 @@ process_list = const.playlists()
 now = time.time()
 db = sqlite3.connect('save.sqlite')
 for name in process_list:
+    if not name[2]:
+        continue
     dataframe = pandas.read_sql("SELECT * FROM '{name}'".format(name=name[1]), db, index_col='タイトル')
     print('\n\n\n')
     dataframe.replace('hide', 0, inplace=True)

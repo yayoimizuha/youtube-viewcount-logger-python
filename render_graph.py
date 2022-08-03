@@ -17,9 +17,11 @@ options.add_argument('--hide-scrollbars')
 
 driver = webdriver.Chrome(options=options)
 
-for _, name in const.playlists():
-    print(name)
-    html_path = os.path.join(os.getcwd(), 'html', name + '.html')
+for name in const.playlists():
+    if not name[2]:
+        continue
+    print(name[1])
+    html_path = os.path.join(os.getcwd(), 'html', name[1] + '.html')
     print(html_path, end='\n\n')
     driver.get("file://" + html_path)
     ui.WebDriverWait(driver=driver, timeout=15).until(expected_conditions.presence_of_all_elements_located)
@@ -29,7 +31,7 @@ for _, name in const.playlists():
     driver.set_window_size(driver.execute_script('return document.body.scrollWidth') + 40,
                            driver.execute_script('return document.body.scrollHeight') + 40)
 
-    with open(os.path.join(os.getcwd(), 'images', name + '_2.png'), mode='wb') as f:
+    with open(os.path.join(os.getcwd(), 'images', name[1] + '_2.png'), mode='wb') as f:
         f.write(driver.get_screenshot_as_png())
 
 for filename in glob.glob(os.path.join('images', '*_2.png')):
