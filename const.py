@@ -9,6 +9,7 @@ def playlists():
         ['PLcu1vvKzbBMk1i4k-DF3q5ii0007W-zh7', 'こぶしファクトリー', True],
         ['PLhDVFhoEVU3l3X0obfPzdD5OHTbnv7Oio', 'カントリー・ガールズ', True],
         ['PLCpSIn0xlyXkPMYUoVgHmj3clVnEWxSHz', 'Buono!', False],
+        # 初恋サイダー / Buono! (Live at 日本武道館 2016/8/25)　『Buono! Festa 2016』2016年11月23日にDVDとBlu-rayを同日発売!! を追加
         ['PLF0E7D2433E255B81', 'Buono!', True],
         ['OLAK5uy_l_xKCyQPw4uXQd3mnw0yShaZm3AOANkQI', 'Berryz工房', True],
         ['PL04DB1D3D596D47E7', '℃-ute', True],
@@ -17,6 +18,7 @@ def playlists():
         ['PL6A59UsSlG7ex5t5QBIbi4PPviUrZr43p', '宮本佳林', True],
         ['PL4CUK5GhdtMnB4ByVY_X3smojU2uY6fAB', 'PINK CRES.', True],
         ['PLCpSIn0xlyXl5zat4Nzwhd-JC5D-QR14d', 'COVERS - One on One -', False],
+        # COVERS -One on One- ほたる祭りの日 佐藤優樹 x 宮本佳林 (ジュリン) を追加
         ['PLFMni9aeqKTw_nNHBiGWfPLT-VMdMez97', 'COVERS - One on One -', True],
         ['PLFMni9aeqKTwHuSxF4zsHUBMwrubNI05X', 'COVERS ～The Ballad～', True],
         ['PLFMni9aeqKTzQ4ciZ-vNscbKge63ohqri', 'アプカミ・ミュージック・デリバリー', True],
