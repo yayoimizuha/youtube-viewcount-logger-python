@@ -221,4 +221,4 @@ for processes in process_list:
 
 os.makedirs(os.path.join(os.getcwd(), 'tsvs'), exist_ok=True)
 with open(os.path.join(os.getcwd(), 'tsvs', 'group_list.tsv'), mode='w', encoding='utf8') as f:
-    f.writelines('\n'.join([i[1] for i in process_list]))
+    f.writelines('\n'.join([i[1] for i in process_list if i[2]]))
