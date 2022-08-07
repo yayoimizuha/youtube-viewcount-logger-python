@@ -21,6 +21,7 @@ opencv-python-headless = "*"
 pillow = "*"
 numpy = "*"
 requests = "*"
+lxml = "*"
 
 [dev-packages]
 autopep8 = "*"
