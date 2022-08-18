@@ -6,6 +6,7 @@ def playlists():
         ['PL8m86iV3p-nRdW2cckAwqruBKuzrxoVvW', 'BEYOOOOONDS', True],
         ['PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', 'つばきファクトリー', True],
         ['PLHdMoq6t0XIA5JLPo-SyTTqEByvdu1cGA', 'OCHA NORMA', True],
+        ['PLCpSIn0xlyXl0ceNf4rBZvmF2njxunqQC', 'ハロプロダンス部', True],
         ['PLcu1vvKzbBMk1i4k-DF3q5ii0007W-zh7', 'こぶしファクトリー', True],
         ['PLhDVFhoEVU3l3X0obfPzdD5OHTbnv7Oio', 'カントリー・ガールズ', True],
         ['PLCpSIn0xlyXkPMYUoVgHmj3clVnEWxSHz', 'Buono!', False],
