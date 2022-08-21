@@ -70,6 +70,8 @@ def trim_title(text, artist_name):
         return re.sub(r'\(.*|\[.*', '', unicodedata.normalize('NFKC', text))
     if artist_name == '小片リサ':
         return re.sub(r'\-.*', '', unicodedata.normalize('NFKC', text))
+    if artist_name == 'ハロプロダンス部':
+        return re.sub(r'\(.*?\)', '', unicodedata.normalize('NFKC', text))
 
     text = str(text).replace('(仮)', '@kari@')
     text = str(text).replace('（仮）', '@kari@')
