@@ -2,6 +2,7 @@ import datetime
 import os.path
 import time
 from pprint import pprint
+import numpy
 import pandas
 import sqlite3
 import tweepy
@@ -45,7 +46,7 @@ for name in process_list:
         continue
     dataframe = pandas.read_sql("SELECT * FROM '{name}'".format(name=name[1]), db, index_col='index')
     print('\n\n\n')
-    dataframe.replace(0, None, inplace=True)
+    dataframe.replace(0, numpy.NaN, inplace=True)
     sortFrame = pandas.DataFrame(columns=['index', 'artist name', 'title', 'view count', 'last update'])
     for index in dataframe.index:
         Slice = pandas.Series.copy(dataframe.loc[index])
