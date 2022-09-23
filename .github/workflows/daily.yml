@@ -67,6 +67,10 @@ jobs:
             git push origin HEAD:${GITHUB_REF} -f ; \
           fi
 
+
+      - name: Print status
+        run: "${{steps.auto-run.outcome}}"
+        
       - name: Error Handling
         if: steps.auto-run.outcome == 'failure'
         run: |
