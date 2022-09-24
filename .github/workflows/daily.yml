@@ -69,7 +69,7 @@ jobs:
 
 
       - name: Print status
-        run: "${{steps.auto-run.outcome}}"
+        run:  echo "${{steps.auto-run.outcome}}"
         
       - name: Error Handling
         if: steps.auto-run.outcome == 'failure'
