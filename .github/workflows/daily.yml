@@ -53,6 +53,7 @@ jobs:
         id: auto-run
         run: |
           pipenv run auto-run 2>&1 | tee ./out.txt
+          exit 1
         continue-on-error: true
 
       - name: push updates
