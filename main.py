@@ -199,7 +199,7 @@ def process_channel(artistName, playlistKey):
         dataframe.to_excel(writer, sheet_name=artistName)
 
     os.makedirs('tsvs', exist_ok=True)
-    dataframe.sort_values(dataframe.columns[-1], inplace=True, ascending=True)
+    dataframe.sort_values(dataframe.columns[-1], inplace=True, ascending=False)
     dataframe.to_csv(os.path.join(os.getcwd(), 'tsvs', artistName + '.tsv'), sep='\t')
 
     workbook = openpyxl.load_workbook(workbookName)
