@@ -41,7 +41,7 @@ async def view_count_getter(key: tuple[str, str], build: Aiogoogle.discover, aio
         fields='items(snippet/title,statistics/viewCount)',
         id=key[1]
     ))
-    return [key[0], res["items"]]
+    return [key[0], *res["items"]]
 
 
 async def view_counts(keys: list[tuple[str, str]]):
@@ -67,8 +67,17 @@ for playlist_list in music_video_list:
         else:
             videoId_keys.append((group_name, videoId))
 
-
 view_count_result = asyncio.run(view_counts(videoId_keys))
-pprint.pprint(view_count_result)
+# pprint.pprint(view_count_result)
+for content in view_count_result:
+    try:
+        group_name: str = content[0]
+        song_name: str = content[1]["snippet"]["title"]
+        view_count: int = content[1]["statistics"]["viewCount"]
+        print(group_name, song_name, view_count)
+    except Exception as e:
+        print(e, file=sys.__stderr__)
+        continue
+    print(group_name)
 
 print(time.time() - start_time)
