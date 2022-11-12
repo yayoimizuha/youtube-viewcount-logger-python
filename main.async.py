@@ -5,6 +5,7 @@ import sys
 import time
 from aiogoogle import Aiogoogle, auth, GoogleAPI
 import const
+import trim_title
 
 
 async def main():
@@ -16,8 +17,8 @@ async def main():
         return all_musics
 
 
-async def list_playlist_content(playlist_key: str, group: str, build: Aiogoogle.discover, aio: Aiogoogle) -> list[
-    str, list[str]]:
+async def list_playlist_content(playlist_key: str, group: str, build: Aiogoogle.discover, aio: Aiogoogle) -> \
+        list[str, list[str]]:
     res = await aio.as_api_key(build.playlistItems.list(part='snippet',
                                                         fields='items/snippet/resourceId/videoId,nextPageToken',
                                                         playlistId=playlist_key,
@@ -35,13 +36,13 @@ async def list_playlist_content(playlist_key: str, group: str, build: Aiogoogle.
     return [group, video_list]
 
 
-async def view_count_getter(key: tuple[str, str], build: Aiogoogle.discover, aio: Aiogoogle) -> list[str, dict]:
+async def view_count_getter(key: tuple[str, str], build: Aiogoogle.discover, aio: Aiogoogle) -> list[list[str], dict]:
     res = await aio.as_api_key(build.videos.list(
         part='statistics,snippet',
         fields='items(snippet/title,statistics/viewCount)',
         id=key[1]
     ))
-    return [key[0], *res["items"]]
+    return [key, *res["items"]]
 
 
 async def view_counts(keys: list[tuple[str, str]]):
@@ -71,13 +72,17 @@ view_count_result = asyncio.run(view_counts(videoId_keys))
 # pprint.pprint(view_count_result)
 for content in view_count_result:
     try:
-        group_name: str = content[0]
+        group_name: str = content[0][0]
+        song_key: str = content[0][1]
         song_name: str = content[1]["snippet"]["title"]
         view_count: int = content[1]["statistics"]["viewCount"]
-        print(group_name, song_name, view_count)
+
     except Exception as e:
         print(e, file=sys.__stderr__)
+        print()
         continue
-    print(group_name)
+    print()
+    print(group_name, song_key)
+    print(trim_title.trim_title(song_name, group_name), view_count)
 
 print(time.time() - start_time)
