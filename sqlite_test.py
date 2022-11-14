@@ -25,8 +25,7 @@ for table_name in cursor.execute("SELECT name FROM sqlite_master WHERE type='tab
     date_column = [i[1] for i in cursor.fetchall()[2:]]
     # print(date_column)
     dataframe = pandas.read_sql(f"SELECT * FROM {pack_comma(*table_name)}", connector, index_col='index')
-    with pandas.ExcelWriter("test.xlsx", mode='a', if_sheet_exists='replace') as writer:
-        dataframe.to_excel(writer, sheet_name=str(*table_name))
+    dataframe.to_excel(str(*table_name) + ".xlsx")
     # print(dataframe)
     # print(cursor.fetchall())
     # print(dataframe)
