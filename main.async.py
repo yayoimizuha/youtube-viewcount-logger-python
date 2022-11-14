@@ -8,13 +8,13 @@ import const
 import trim_title
 
 
-async def main():
+async def list_playlist():
     async with Aiogoogle(api_key=auth.creds.ApiKey(os.environ["YTV3_API_KEY"])) as aiogoogle:
         youtube_v3: GoogleAPI = await aiogoogle.discover(api_name="youtube", api_version="v3")
-        all_musics = await asyncio.gather(
+        all_videos = await asyncio.gather(
             *[list_playlist_content(playlist_key=playlist_key, group=group, build=youtube_v3, aio=aiogoogle)
               for playlist_key, group, _ in const.playlists()], return_exceptions=True)
-        return all_musics
+        return all_videos
 
 
 async def list_playlist_content(playlist_key: str, group: str, build: Aiogoogle.discover, aio: Aiogoogle) -> \
@@ -54,7 +54,7 @@ async def view_counts(keys: list[tuple[str, str]]):
 
 
 start_time = time.time()
-music_video_list = asyncio.run(main())
+music_video_list = asyncio.run(list_playlist())
 # pprint.pprint(music_video_list)
 
 videoId_keys: list[tuple[str, str]] = []
