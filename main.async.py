@@ -37,11 +37,13 @@ async def list_playlist_content(playlist_key: str, group: str, build: Aiogoogle.
 
 
 async def view_count_getter(key: tuple[str, str], build: Aiogoogle.discover, aio: Aiogoogle) -> list[list[str], dict]:
+    print("start", key, time.time() - start_time)
     res = await aio.as_api_key(build.videos.list(
         part='statistics,snippet',
         fields='items(snippet/title,statistics/viewCount)',
         id=key[1]
     ))
+    print("end", key, time.time() - start_time)
     return [key, *res["items"]]
 
 

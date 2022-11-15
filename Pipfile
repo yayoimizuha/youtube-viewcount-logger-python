@@ -23,6 +23,7 @@ numpy = "*"
 requests = "*"
 lxml = "*"
 aiogoogle = "*"
+coverage = "*"
 
 [dev-packages]
 autopep8 = "*"
