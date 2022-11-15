@@ -18,10 +18,10 @@ for table_name in cursor.execute("SELECT name FROM sqlite_master WHERE type='tab
     print(*table_name)
     # cursor.execute(f"SELECT * FROM {pack_comma(*table_name)};")
     # cursor.execute(f"SELECT * FROM sqlite_master WHERE name={pack_comma(*table_name)};")
-    cursor.execute(f"PRAGMA table_info({pack_comma(*table_name)});")
+    # cursor.execute(f"PRAGMA table_info({pack_comma(*table_name)});")
     # cursor.execute(f"ALTER TABLE {pack_comma(*table_name)} MODIFY * AUTOINCREMENT;")
-    date_column = [i[1] for i in cursor.fetchall()[2:]]
-    print(date_column)
+    # date_column = [i[1] for i in cursor.fetchall()[2:]]
+    # print(date_column)
     dataframe = pandas.read_sql(f"SELECT * FROM {pack_comma(*table_name)}", connector, index_col='index')
     # dataframe.to_excel(str(*table_name) + ".xlsx")
     # print(dataframe)
