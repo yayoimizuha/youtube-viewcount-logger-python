@@ -4,7 +4,7 @@ import pprint
 import sys
 import time
 from aiogoogle import Aiogoogle, auth, GoogleAPI
-import const
+from const import playlists
 import trim_title
 
 
@@ -13,7 +13,7 @@ async def list_playlist():
         youtube_v3: GoogleAPI = await aiogoogle.discover(api_name="youtube", api_version="v3")
         all_videos = await asyncio.gather(
             *[list_playlist_content(playlist_key=playlist_key, group=group, build=youtube_v3, aio=aiogoogle)
-              for playlist_key, group, _ in const.playlists()], return_exceptions=True)
+              for playlist_key, group, _ in playlists()], return_exceptions=True)
         return all_videos
 
 
@@ -57,6 +57,7 @@ async def view_counts(keys: list[tuple[str, str]]):
 
 start_time = time.time()
 music_video_list = asyncio.run(list_playlist())
+
 # pprint.pprint(music_video_list)
 
 videoId_keys: list[tuple[str, str]] = []
