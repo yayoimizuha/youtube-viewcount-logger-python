@@ -44,6 +44,7 @@ async def view_count_getter(key: tuple[str, str], build: Aiogoogle.discover, aio
         id=key[1]
     ))
     print("end", key, time.time() - start_time)
+    # print(res)
     return [key, *res["items"]]
 
 
