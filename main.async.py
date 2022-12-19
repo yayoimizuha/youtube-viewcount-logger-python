@@ -4,12 +4,18 @@ import pprint
 import sys
 import time
 from aiogoogle import Aiogoogle, auth, GoogleAPI
+from aiogoogle.sessions import aiohttp_session
+from aiohttp import ClientSession
+
 from const import playlists
 import trim_title
 
+session = lambda: ClientSession(trust_env=True)
+
 
 async def list_playlist():
-    async with Aiogoogle(api_key=auth.creds.ApiKey(os.environ["YTV3_API_KEY"])) as aiogoogle:
+    async with Aiogoogle(api_key=auth.creds.ApiKey(os.environ["YTV3_API_KEY"]),
+                         session_factory=lambda: ClientSession(trust_env=True)) as aiogoogle:
         youtube_v3: GoogleAPI = await aiogoogle.discover(api_name="youtube", api_version="v3")
         all_videos = await asyncio.gather(
             *[list_playlist_content(playlist_key=playlist_key, group=group, build=youtube_v3, aio=aiogoogle)
@@ -49,7 +55,7 @@ async def view_count_getter(key: tuple[str, str], build: Aiogoogle.discover, aio
 
 
 async def view_counts(keys: list[tuple[str, str]]):
-    async with Aiogoogle(api_key=auth.creds.ApiKey(os.environ["YTV3_API_KEY"])) as aiogoogle:
+    async with Aiogoogle(api_key=auth.creds.ApiKey(os.environ["YTV3_API_KEY"]), session_factory=session) as aiogoogle:
         youtube_v3: GoogleAPI = await aiogoogle.discover(api_name="youtube", api_version="v3")
         all_musics = await asyncio.gather(
             *[view_count_getter(key=key, build=youtube_v3, aio=aiogoogle) for key in keys], return_exceptions=True)
