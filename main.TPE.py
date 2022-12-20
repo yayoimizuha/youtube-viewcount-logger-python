@@ -1,9 +1,10 @@
-import aiohttp
+from aiohttp import ClientSession
 import asyncio
 from os import getenv
-from urllib import parse
+from urllib.parse import urlencode
+from const import playlists
 
-YTV3_ENDPOINT = "https://www.googleapis.com"
+YTV3_ENDPOINT = "https://www.googleapis.com/youtube/v3"
 
 API_KEY = getenv('YTV3_API_KEY', default='')
 if API_KEY == '':
@@ -13,12 +14,22 @@ if API_KEY == '':
 
 def query_builder(resource_type: str,
                   arg: dict,
-                  content_id: str,
-                  part: str,
-                  service_name: str = "youtube",
-                  version: str = "v3",
                   key: str = API_KEY) -> str:
-    base_url: str = "/".join([YTV3_ENDPOINT, service_name, version, resource_type])
+    arg["key"] = key
+    base_url: str = "/".join([YTV3_ENDPOINT, resource_type])
+    return f"{base_url}?{urlencode(arg)}"
 
 
-print(query_builder(arg={"a": 1}, content_id="b", part="c", resource_type="d"))
+async def playlist_channel():
+    async with ClientSession(trust_env=True) as session:
+        for yt_key, artist_name, _ in playlists():
+            url = query_builder(arg={"part": "snippet",
+                                     "fields": 'items/snippet/channelId',
+                                     "playlistId": yt_key,
+                                     "maxResults": 1
+                                     }, resource_type="playlistItems")
+            async with session.get(url=url) as sess:
+                print(await sess.json())
+
+
+asyncio.run(playlist_channel())
