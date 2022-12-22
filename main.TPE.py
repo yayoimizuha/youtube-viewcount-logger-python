@@ -2,10 +2,11 @@ from time import time
 from typing import Any
 from aiohttp import ClientSession
 from asyncio import gather, run, Semaphore
-from os import getenv
+from os import getenv, getcwd, path
 from urllib.parse import urlencode
 from const import playlists, trim_title
 from pprint import pprint
+from sqlite3 import connect
 
 YTV3_ENDPOINT = "https://www.googleapis.com/youtube/v3"
 
@@ -13,6 +14,8 @@ API_KEY = getenv('YTV3_API_KEY', default='')
 if API_KEY == '':
     print('No API Key.')
     exit(-1)
+
+SQLITE_DATABASE = path.join(getcwd(), "save.sqlite")
 
 
 def query_builder(resource_type: str,
@@ -48,6 +51,12 @@ async def get_video_data(video_key: str, artist_name: str, session: ClientSessio
 
 async def runner() -> None:
     start_time: float = time()
+    connector = connect(SQLITE_DATABASE)
+    cursor = connector.cursor()
+    table_name = cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()
+    table_name = [name[0] for name in table_name]
+    print(table_name)
+    exit()
     sess = ClientSession(trust_env=True)
     sem = Semaphore(value=300)
     video_list = await gather(
