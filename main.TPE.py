@@ -7,6 +7,8 @@ from urllib.parse import urlencode
 from const import playlists, trim_title
 from pprint import pprint
 from sqlite3 import connect
+from pandas import read_sql, DataFrame
+from datetime import datetime
 
 YTV3_ENDPOINT = "https://www.googleapis.com/youtube/v3"
 
@@ -16,6 +18,8 @@ if API_KEY == '':
     exit(-1)
 
 SQLITE_DATABASE = path.join(getcwd(), "save.sqlite")
+
+TODAY_DATE = datetime.today()
 
 
 def query_builder(resource_type: str,
@@ -55,6 +59,9 @@ async def runner() -> None:
     cursor = connector.cursor()
     table_name = cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()
     table_name = [name[0] for name in table_name]
+    all_table_data = dict()
+    for name in table_name:
+        all_table_data[name] = read_sql(f"SELECT * FROM \u0022{name}\u0022", connector, index_col='index')
     print(table_name)
     exit()
     sess = ClientSession(trust_env=True)
