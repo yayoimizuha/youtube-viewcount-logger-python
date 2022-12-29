@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 from const import playlists, trim_title
 from pprint import pprint
 from sqlite3 import connect
-from pandas import read_sql, DataFrame, NA,Int64Dtype
+from pandas import read_sql, DataFrame, NA, Int64Dtype
 from datetime import datetime
 from numpy import NaN
 
@@ -53,7 +53,8 @@ async def list_playlist(playlist_key: str, artist_name: str, session: ClientSess
                          'playlistId': playlist_key,
                          'maxResults': 50,
                          'pageToken': next_page_token
-                         }, 'resource_type': 'playlistItems'}
+                         },
+                 'resource_type': 'playlistItems'}
         resp = await (await session.get(query_builder(**query))).json()
 
         playlist_item.update([item['snippet']['resourceId']['videoId'] for item in resp['items']])
@@ -102,21 +103,26 @@ async def runner() -> None:
     for item in video_list:
         if item.artist_name in table_name:
             table_data = read_sql(f"SELECT * FROM {pack_comma(item.artist_name)}", connector, index_col='index')
+            for col in table_data.columns.tolist()[1:]:
+                table_data[col] = table_data[col].astype(Int64Dtype())
+            table_data.replace(0, NA, inplace=True)
         else:
-            table_data = DataFrame(dtype=Int64Dtype)
+            table_data = DataFrame(dtype=Int64Dtype())
         print(item.artist_name)
         view_counts = await gather(*[get_video_data(key, item.artist_name, sess) for key in item.item_key])
         pprint(view_counts)
         # print("aaa")
         # print(table_data)
         print(table_data)
+        table_data[TODAY_DATE.__str__()] = NA
+        table_data[TODAY_DATE.__str__()] = table_data[TODAY_DATE.__str__()].astype(Int64Dtype())
         for view_count in view_counts:
             if not view_count.isError:
                 print(view_count.title)
-                table_data.at[view_count.url, TODAY_DATE] = int(view_count.viewCount)
+                table_data.at[view_count.url, TODAY_DATE.__str__()] = int(view_count.viewCount)
                 table_data.at[view_count.url, 'タイトル'] = view_count.title
             else:
-                table_data.at[view_count.url, TODAY_DATE] = 0
+                table_data.at[view_count.url, TODAY_DATE] = NA
         print(table_data)
         print("aa")
         await sess.close()
