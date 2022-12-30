@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 from const import playlists, trim_title
 from pprint import pprint
 from sqlite3 import connect
-from pandas import read_sql, DataFrame, NA, Int64Dtype
+from pandas import read_sql, DataFrame, NA, Int64Dtype, to_datetime
 from datetime import datetime
 from numpy import NaN
 
@@ -20,7 +20,7 @@ if API_KEY == '':
 
 SQLITE_DATABASE = path.join(getcwd(), "save.sqlite")
 
-TODAY_DATE = datetime.today().date()
+TODAY_DATE = datetime.today().date().__str__()
 
 
 def query_builder(resource_type: str,
@@ -96,30 +96,33 @@ async def runner() -> None:
     # exit()
     sess = ClientSession(trust_env=True)
     sem = Semaphore(value=300)
-    video_list = await gather(
+    # noinspection PyTypeChecker
+    video_list: list[PlaylistItem] = await gather(
         *[list_playlist(yt_key, artist_name, sess) for yt_key, artist_name, _ in playlists()],
         return_exceptions=True)
     pprint(video_list)
     for item in video_list:
         if item.artist_name in table_name:
             table_data = read_sql(f"SELECT * FROM {pack_comma(item.artist_name)}", connector, index_col='index')
-            for col in table_data.columns.tolist()[1:]:
-                table_data[col] = table_data[col].astype(Int64Dtype())
+            col_list = table_data.columns.tolist()[1:]
+            table_data = table_data.astype({key: value for key, value in zip(col_list, [Int64Dtype()] * len(col_list))})
             table_data.replace(0, NA, inplace=True)
         else:
             table_data = DataFrame(dtype=Int64Dtype())
         print(item.artist_name)
-        view_counts = await gather(*[get_video_data(key, item.artist_name, sess) for key in item.item_key])
+        key_set: set = item.item_key | {i.removeprefix('https://youtu.be/') for i in table_data.index}
+        print(key_set)
+        view_counts = await gather(*[get_video_data(key, item.artist_name, sess) for key in key_set])
         pprint(view_counts)
         # print("aaa")
         # print(table_data)
         print(table_data)
-        table_data[TODAY_DATE.__str__()] = NA
-        table_data[TODAY_DATE.__str__()] = table_data[TODAY_DATE.__str__()].astype(Int64Dtype())
+        table_data[TODAY_DATE] = NA
+        table_data[TODAY_DATE] = table_data[TODAY_DATE].astype(Int64Dtype())
         for view_count in view_counts:
             if not view_count.isError:
                 print(view_count.title)
-                table_data.at[view_count.url, TODAY_DATE.__str__()] = int(view_count.viewCount)
+                table_data.at[view_count.url, TODAY_DATE] = int(view_count.viewCount)
                 table_data.at[view_count.url, 'タイトル'] = view_count.title
             else:
                 table_data.at[view_count.url, TODAY_DATE] = NA

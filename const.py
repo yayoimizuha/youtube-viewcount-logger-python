@@ -50,11 +50,10 @@ def playlists():
     ]
 
 
-# def playlists():
-#     return [
-#         ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True]
-#     ]
-#
+def playlists():
+    return [
+        ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True]
+    ]
 
 
 def trim_title(text, artist_name):
