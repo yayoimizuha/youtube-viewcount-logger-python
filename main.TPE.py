@@ -44,8 +44,9 @@ class VideoInfo(NamedTuple):
     url: str
 
 
-async def list_playlist(playlist_key: str, artist_name: str, session: ClientSession) -> PlaylistItem:
-    playlist_item = set()
+async def list_playlist(playlist_key: str, artist_name: str, session: ClientSession, video_dict: dict[str:set[str]]):
+    if artist_name not in video_dict:
+        video_dict[artist_name] = set()
     next_page_token = str()
     while True:
         query = {'arg': {'part': 'snippet',
@@ -56,13 +57,11 @@ async def list_playlist(playlist_key: str, artist_name: str, session: ClientSess
                          },
                  'resource_type': 'playlistItems'}
         resp = await (await session.get(query_builder(**query))).json()
-
-        playlist_item.update([item['snippet']['resourceId']['videoId'] for item in resp['items']])
+        video_dict[artist_name] |= {item['snippet']['resourceId']['videoId'] for item in resp['items']}
         if 'nextPageToken' not in resp:
             break
         else:
             next_page_token = resp['nextPageToken']
-    return PlaylistItem(artist_name=artist_name, item_key=playlist_item)
 
 
 async def get_video_data(video_key: str, artist_name: str, session: ClientSession) -> VideoInfo:
@@ -83,55 +82,30 @@ async def get_video_data(video_key: str, artist_name: str, session: ClientSessio
 
 
 def pack_comma(txt: str) -> str:
-    return '"' + txt + '"'
+    return f'\"{txt}\"'
 
 
 async def runner() -> None:
-    start_time = time()
+    playlist_index_time = time()
+    video_dict = dict()
+    sess = ClientSession(trust_env=True)
+    await gather(*[list_playlist(yt_key, artist_name, sess, video_dict) for yt_key, artist_name, _ in playlists()],
+                 return_exceptions=True)
+    await sess.close()
+    print(f"YouTube playlists index time: {time() - playlist_index_time:2.3f}s")
+
+    sql_index_time = time()
     connector = connect(SQLITE_DATABASE)
     cursor = connector.cursor()
-    table_name = cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()
-    table_name = [name[0] for name in table_name]
-    print(table_name)
-    # exit()
-    sess = ClientSession(trust_env=True)
-    sem = Semaphore(value=300)
-    # noinspection PyTypeChecker
-    video_list: list[PlaylistItem] = await gather(
-        *[list_playlist(yt_key, artist_name, sess) for yt_key, artist_name, _ in playlists()],
-        return_exceptions=True)
-    pprint(video_list)
-    for item in video_list:
-        if item.artist_name in table_name:
-            table_data = read_sql(f"SELECT * FROM {pack_comma(item.artist_name)}", connector, index_col='index')
-            col_list = table_data.columns.tolist()[1:]
-            table_data = table_data.astype({key: value for key, value in zip(col_list, [Int64Dtype()] * len(col_list))})
-            table_data.replace(0, NA, inplace=True)
-        else:
-            table_data = DataFrame(dtype=Int64Dtype())
-        print(item.artist_name)
-        key_set: set = item.item_key | {i.removeprefix('https://youtu.be/') for i in table_data.index}
-        print(key_set)
-        view_counts = await gather(*[get_video_data(key, item.artist_name, sess) for key in key_set])
-        pprint(view_counts)
-        # print("aaa")
-        # print(table_data)
-        print(table_data)
-        table_data[TODAY_DATE] = NA
-        table_data[TODAY_DATE] = table_data[TODAY_DATE].astype(Int64Dtype())
-        for view_count in view_counts:
-            if not view_count.isError:
-                print(view_count.title)
-                table_data.at[view_count.url, TODAY_DATE] = int(view_count.viewCount)
-                table_data.at[view_count.url, 'タイトル'] = view_count.title
-            else:
-                table_data.at[view_count.url, TODAY_DATE] = NA
-        print(table_data)
-        print("aa")
-        await sess.close()
-        exit()
-    print(time() - start_time)
-    await sess.close()
+    table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+    tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
+    table_dict = dict()
+    for key, table in tables.items():
+        table_dict[key] = {i.removeprefix('https://youtu.be/') for i in table.index}
+    print(f"SQL index time: {time() - sql_index_time:2.3f}s")
+
+    merged_dict = dict(**video_dict, **table_dict)
+    print(merged_dict)
 
 
 run(runner())
