@@ -52,7 +52,8 @@ def playlists():
 
 def playlists():
     return [
-        ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True]
+        ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
+        ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True]
     ]
 
 

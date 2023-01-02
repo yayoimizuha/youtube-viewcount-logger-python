@@ -92,18 +92,29 @@ async def runner() -> None:
     connector = connect(SQLITE_DATABASE)
     cursor = connector.cursor()
     table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
-    tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
+    tables: dict[DataFrame] = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for
+                               name in table_name}
     for key, table in tables.items():
         if key not in video_dict.keys():
             continue
+            # noinspection PyUnreachableCode
             video_dict[key] = set()
         video_dict[key] |= {i.removeprefix('https://youtu.be/') for i in table.index}
     print(f"SQL index time: {time() - sql_index_time:2.3f}s")
     pprint(video_dict)
 
-    video_data = await gather(*[get_video_data(item, key, sess) for key, items in video_dict.items() for item in items])
-    pprint(video_data)
+    await_video_data = gather(*[get_video_data(item, key, sess) for key, items in video_dict.items() for item in items])
 
+    for dataframe in tables.values():
+        dataframe[TODAY_DATE] = NA
+        col_list = dataframe.columns.tolist()[1:]
+        dataframe = dataframe.astype({key: value for key, value in zip(col_list, [Int64Dtype()] * len(col_list))})
+        dataframe.replace(0, NA, inplace=True)
+
+    video_data = await await_video_data
+
+    pprint(tables)
+    pprint(video_data)
     await sess.close()
 
 
