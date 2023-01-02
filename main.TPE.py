@@ -11,14 +11,14 @@ from pandas import read_sql, DataFrame, NA, Int64Dtype, to_datetime
 from datetime import datetime
 from numpy import NaN
 
-YTV3_ENDPOINT = "https://www.googleapis.com/youtube/v3"
+YTV3_ENDPOINT = 'https://www.googleapis.com/youtube/v3'
 
 API_KEY = getenv('YTV3_API_KEY', default='')
 if API_KEY == '':
     print('No API Key.')
     exit(-1)
 
-SQLITE_DATABASE = path.join(getcwd(), "save.sqlite")
+SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
 
 TODAY_DATE = datetime.today().date().__str__()
 
@@ -26,14 +26,9 @@ TODAY_DATE = datetime.today().date().__str__()
 def query_builder(resource_type: str,
                   arg: dict,
                   key: str = API_KEY) -> str:
-    arg["key"] = key
-    base_url: str = "/".join([YTV3_ENDPOINT, resource_type])
-    return f"{base_url}?{urlencode(arg)}"
-
-
-class PlaylistItem(NamedTuple):
-    artist_name: str
-    item_key: set
+    arg['key'] = key
+    base_url: str = '/'.join([YTV3_ENDPOINT, resource_type])
+    return f'{base_url}?{urlencode(arg)}'
 
 
 class VideoInfo(NamedTuple):
@@ -91,7 +86,6 @@ async def runner() -> None:
     sess = ClientSession(trust_env=True)
     await gather(*[list_playlist(yt_key, artist_name, sess, video_dict) for yt_key, artist_name, _ in playlists()],
                  return_exceptions=True)
-    await sess.close()
     print(f"YouTube playlists index time: {time() - playlist_index_time:2.3f}s")
 
     sql_index_time = time()
@@ -99,13 +93,18 @@ async def runner() -> None:
     cursor = connector.cursor()
     table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
     tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
-    table_dict = dict()
     for key, table in tables.items():
-        table_dict[key] = {i.removeprefix('https://youtu.be/') for i in table.index}
+        if key not in video_dict.keys():
+            continue
+            video_dict[key] = set()
+        video_dict[key] |= {i.removeprefix('https://youtu.be/') for i in table.index}
     print(f"SQL index time: {time() - sql_index_time:2.3f}s")
+    pprint(video_dict)
 
-    merged_dict = dict(**video_dict, **table_dict)
-    print(merged_dict)
+    video_data = await gather(*[get_video_data(item, key, sess) for key, items in video_dict.items() for item in items])
+    pprint(video_data)
+
+    await sess.close()
 
 
 run(runner())
