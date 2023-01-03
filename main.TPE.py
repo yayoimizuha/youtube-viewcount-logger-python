@@ -1,5 +1,8 @@
 from time import time
 from typing import Any, NamedTuple
+
+import numpy
+import pandas
 from aiohttp import ClientSession
 from asyncio import gather, run, Semaphore
 from os import getenv, getcwd, path
@@ -7,7 +10,7 @@ from urllib.parse import urlencode
 from const import playlists, trim_title
 from pprint import pprint
 from sqlite3 import connect
-from pandas import read_sql, DataFrame, NA, Int64Dtype, to_datetime
+from pandas import read_sql, DataFrame, NA, Int64Dtype, isna
 from datetime import datetime
 from numpy import NaN
 
@@ -81,6 +84,7 @@ def pack_comma(txt: str) -> str:
 
 
 async def runner() -> None:
+    tables: dict[str, DataFrame]
     playlist_index_time = time()
     video_dict = dict()
     sess = ClientSession(trust_env=True)
@@ -92,8 +96,7 @@ async def runner() -> None:
     connector = connect(SQLITE_DATABASE)
     cursor = connector.cursor()
     table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
-    tables: dict[DataFrame] = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for
-                               name in table_name}
+    tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
     for key, table in tables.items():
         if key not in video_dict.keys():
             continue
@@ -105,17 +108,22 @@ async def runner() -> None:
 
     await_video_data = gather(*[get_video_data(item, key, sess) for key, items in video_dict.items() for item in items])
 
-    for dataframe in tables.values():
-        dataframe[TODAY_DATE] = NA
-        col_list = dataframe.columns.tolist()[1:]
-        dataframe = dataframe.astype({key: value for key, value in zip(col_list, [Int64Dtype()] * len(col_list))})
-        dataframe.replace(0, NA, inplace=True)
+    for dataframe_key in tables.keys():
+        tables[dataframe_key][TODAY_DATE] = 0
+        column_list = tables[dataframe_key].columns.tolist()[1:]
+        for column in column_list:
+            tables[dataframe_key].loc[tables[dataframe_key][column] == 0, column] = NaN
+            tables[dataframe_key][column] = tables[dataframe_key][column].astype(Int64Dtype())
 
-    video_data = await await_video_data
+    # noinspection PyTypeChecker
+    video_data: list[VideoInfo] = await await_video_data
+    for video in video_data:
+        if not video.isError:
+            print(video)
+            tables[video.artist_name].at[video.url, TODAY_DATE] = int(video.viewCount)
 
-    pprint(tables)
-    pprint(video_data)
     await sess.close()
+    print(tables['鈴木愛理'])
 
 
 run(runner())
