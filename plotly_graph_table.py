@@ -44,7 +44,6 @@ def main():
         tables[dataframe_key].loc[:, 'タイトル'] = title_list
         column_list = ['タイトル'] + column_list
         tables[dataframe_key] = tables[dataframe_key].reindex(columns=column_list)
-    pass
 
 
 main()
