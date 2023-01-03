@@ -1,16 +1,12 @@
 from time import time
-from typing import Any, NamedTuple
-
-import numpy
-import pandas
+from typing import NamedTuple
 from aiohttp import ClientSession
-from asyncio import gather, run, Semaphore
+from asyncio import gather, run
 from os import getenv, getcwd, path
 from urllib.parse import urlencode
 from const import playlists, trim_title
-from pprint import pprint
 from sqlite3 import connect
-from pandas import read_sql, DataFrame, NA, Int64Dtype, isna
+from pandas import read_sql, DataFrame, Int64Dtype
 from datetime import datetime
 from numpy import NaN
 
@@ -99,12 +95,9 @@ async def runner() -> None:
     tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
     for key, table in tables.items():
         if key not in video_dict.keys():
-            continue
-            # noinspection PyUnreachableCode
             video_dict[key] = set()
         video_dict[key] |= {i.removeprefix('https://youtu.be/') for i in table.index}
     print(f"SQL index time: {time() - sql_index_time:2.3f}s")
-    pprint(video_dict)
 
     await_video_data = gather(*[get_video_data(item, key, sess) for key, items in video_dict.items() for item in items])
 
