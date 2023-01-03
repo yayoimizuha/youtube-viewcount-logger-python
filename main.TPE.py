@@ -112,16 +112,13 @@ async def runner() -> None:
         tables[dataframe_key][TODAY_DATE] = NA
         tables[dataframe_key][TODAY_DATE] = tables[dataframe_key][TODAY_DATE].astype(Int64Dtype())
 
-    # noinspection PyTypeChecker
-    video_data: list[VideoInfo] = await await_video_data
+    video_data = await await_video_data
     for video in video_data:
         if not video.isError:
             print(video.url, video.viewCount, sep=',')
             tables[video.artist_name].at[video.url, TODAY_DATE] = int(video.viewCount)
 
     await sess.close()
-
-
 
 
 run(runner())
