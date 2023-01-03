@@ -94,8 +94,6 @@ async def runner() -> None:
     tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
     for key, table in tables.items():
         if key not in video_dict.keys():
-            continue
-            # noinspection PyUnreachableCode
             video_dict[key] = set()
         video_dict[key] |= {i.removeprefix('https://youtu.be/') for i in table.index}
     print(f"SQL index time: {time() - sql_index_time:2.3f}s")
@@ -119,6 +117,9 @@ async def runner() -> None:
             tables[video.artist_name].at[video.url, TODAY_DATE] = int(video.viewCount)
 
     await sess.close()
+
+    for key, value in tables.items():
+        value.to_sql(key, connector, if_exists='replace')
 
 
 run(runner())
