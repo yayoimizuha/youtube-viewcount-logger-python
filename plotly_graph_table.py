@@ -1,9 +1,8 @@
-from pprint import pprint
-from pandas import read_sql, NA, Int64Dtype, DataFrame, isna, Series
+from pandas import read_sql, NA, Int64Dtype, DataFrame, Series
 from sqlite3 import connect
 from os import path, getcwd
-from numpy import int64, where, place, NAN
-from numba import njit, i8, prange
+from numpy import int64, where, NAN
+from numba import njit, i8
 
 SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
 
@@ -26,9 +25,7 @@ def main():
     connector = connect(SQLITE_DATABASE)
     cursor = connector.cursor()
     table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
-    tables: dict[str, DataFrame] = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index')
-                                    for
-                                    name in table_name}
+    tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
 
     for dataframe_key in tables.keys():
         column_list = tables[dataframe_key].columns.tolist()[1:]
