@@ -25,6 +25,7 @@ lxml = "*"
 aiogoogle = "*"
 coverage = "*"
 plotly = "*"
+numba = "*"
 
 [dev-packages]
 autopep8 = "*"
