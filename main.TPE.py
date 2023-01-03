@@ -6,9 +6,8 @@ from os import getenv, getcwd, path
 from urllib.parse import urlencode
 from const import playlists, trim_title
 from sqlite3 import connect
-from pandas import read_sql, DataFrame, Int64Dtype
+from pandas import read_sql, DataFrame, Int64Dtype, NA
 from datetime import datetime
-from numpy import NaN
 
 YTV3_ENDPOINT = 'https://www.googleapis.com/youtube/v3'
 
@@ -95,6 +94,8 @@ async def runner() -> None:
     tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
     for key, table in tables.items():
         if key not in video_dict.keys():
+            continue
+            # noinspection PyUnreachableCode
             video_dict[key] = set()
         video_dict[key] |= {i.removeprefix('https://youtu.be/') for i in table.index}
     print(f"SQL index time: {time() - sql_index_time:2.3f}s")
@@ -102,21 +103,25 @@ async def runner() -> None:
     await_video_data = gather(*[get_video_data(item, key, sess) for key, items in video_dict.items() for item in items])
 
     for dataframe_key in tables.keys():
-        tables[dataframe_key][TODAY_DATE] = 0
         column_list = tables[dataframe_key].columns.tolist()[1:]
         for column in column_list:
-            tables[dataframe_key].loc[tables[dataframe_key][column] == 0, column] = NaN
+            tables[dataframe_key].loc[tables[dataframe_key][column] == 0, column] = NA
             tables[dataframe_key][column] = tables[dataframe_key][column].astype(Int64Dtype())
+        tables[dataframe_key].dropna(axis=1, how='all', inplace=True)
+        # Today column setting
+        tables[dataframe_key][TODAY_DATE] = NA
+        tables[dataframe_key][TODAY_DATE] = tables[dataframe_key][TODAY_DATE].astype(Int64Dtype())
 
     # noinspection PyTypeChecker
     video_data: list[VideoInfo] = await await_video_data
     for video in video_data:
         if not video.isError:
-            print(video)
+            print(video.url, video.viewCount, sep=',')
             tables[video.artist_name].at[video.url, TODAY_DATE] = int(video.viewCount)
 
     await sess.close()
-    print(tables['鈴木愛理'])
+
+
 
 
 run(runner())
