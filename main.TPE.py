@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 from const import playlists, trim_title
 from sqlite3 import connect
 from pandas import read_sql, DataFrame, Int64Dtype, NA
-from datetime import datetime
+from datetime import date
 
 YTV3_ENDPOINT = 'https://www.googleapis.com/youtube/v3'
 
@@ -18,8 +18,7 @@ if API_KEY == '':
 
 SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
 
-TODAY_DATE = datetime.today().date().__str__()
-
+TODAY_DATE = date.today().__str__()
 
 def query_builder(resource_type: str,
                   arg: dict,
@@ -91,6 +90,7 @@ async def runner() -> None:
     connector = connect(SQLITE_DATABASE)
     cursor = connector.cursor()
     table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+    cursor.close()
     tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
     for key, table in tables.items():
         if key not in video_dict.keys():
@@ -98,28 +98,36 @@ async def runner() -> None:
         video_dict[key] |= {i.removeprefix('https://youtu.be/') for i in table.index}
     print(f"SQL index time: {time() - sql_index_time:2.3f}s")
 
+    video_info_and_dataframe_settings_time = time()
     await_video_data = gather(*[get_video_data(item, key, sess) for key, items in video_dict.items() for item in items])
 
     for dataframe_key in tables.keys():
         column_list = tables[dataframe_key].columns.tolist()[1:]
-        for column in column_list:
-            tables[dataframe_key].loc[tables[dataframe_key][column] == 0, column] = NA
-            tables[dataframe_key][column] = tables[dataframe_key][column].astype(Int64Dtype())
+        tables[dataframe_key][column_list] = tables[dataframe_key][column_list].replace(0, NA).astype(Int64Dtype())
         tables[dataframe_key].dropna(axis=1, how='all', inplace=True)
         # Today column setting
         tables[dataframe_key][TODAY_DATE] = NA
         tables[dataframe_key][TODAY_DATE] = tables[dataframe_key][TODAY_DATE].astype(Int64Dtype())
 
-    video_data = await await_video_data
+    # noinspection PyTypeChecker
+    video_data: tuple[VideoInfo] = await await_video_data
+
+    print(f"Video info and DataFrame settings time: {time() - video_info_and_dataframe_settings_time:2.3f}s")
     for video in video_data:
         if not video.isError:
+            if video.artist_name not in tables.keys():
+                tables[video.artist_name] = DataFrame(data=[video.title, video.viewCount], columns=['タイトル', TODAY_DATE],
+                                                      index=[video.url], dtype=Int64Dtype())
             print(video.url, video.viewCount, sep=',')
             tables[video.artist_name].at[video.url, TODAY_DATE] = int(video.viewCount)
+            tables[video.artist_name].at[video.url, 'タイトル'] = video.title
 
     await sess.close()
 
     for key, value in tables.items():
+        value['タイトル'].replace('0', None, inplace=True)
         value.to_sql(key, connector, if_exists='replace')
+    connector.close()
 
 
 run(runner())
