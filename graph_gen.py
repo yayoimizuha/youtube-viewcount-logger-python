@@ -1,8 +1,8 @@
 from os import path, getcwd
 from sqlite3 import connect
 from japanize_matplotlib import japanize
-from matplotlib import pyplot, rcParams
-from pandas import read_sql, Int64Dtype, DataFrame, Series, concat, NA
+from matplotlib import pyplot
+from pandas import read_sql, Int64Dtype, DataFrame, Series, concat, NA, to_datetime
 from datetime import date, timedelta
 
 SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
@@ -19,12 +19,12 @@ def gen_date_array(begin: str, end: str) -> list[str]:
         yield (date.fromisoformat(begin) + timedelta(i)).__str__()
 
 
-def frame_collector() -> dict[str:DataFrame]:
+def frame_collector() -> dict[str, DataFrame]:
     connector = connect(SQLITE_DATABASE)
     cursor = connector.cursor()
     table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
-    tables: dict[DataFrame] = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for
-                               name in table_name}
+    tables: dict[str, DataFrame] = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index')
+                                    for name in table_name}
 
     for dataframe_key in tables.keys():
         column_list = tables[dataframe_key].columns.tolist()[1:]
@@ -44,9 +44,8 @@ def frame_collector() -> dict[str:DataFrame]:
     return tables
 
 
-dataframes: dict[str:DataFrame] = frame_collector()
-
-if __name__ == '__main__':
+def graph_gen() -> None:
+    dataframes: dict[str:DataFrame] = frame_collector()
     for key, value in dataframes.items():
         value: DataFrame = value
         value.dropna(subset=['タイトル', value.columns[-1]], axis=0, how='any', inplace=True)
@@ -62,6 +61,7 @@ if __name__ == '__main__':
         value.drop(index=set(value.index) - set(displacing.index), inplace=True)
         value.set_index('タイトル', inplace=True)
         print(value)
+        value.columns = to_datetime(value.columns)
         value = value.T
         pyplot.rcParams["figure.dpi"] = 240
         pyplot.rcParams["figure.figsize"] = (16, 9)

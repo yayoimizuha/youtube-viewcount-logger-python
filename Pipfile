@@ -4,31 +4,28 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-google-api-python-client = "*"
-levenshtein = "*"
 pandas = "*"
 tweepy = "*"
 openpyxl = "*"
-seaborn = "*"
 styleframe = "*"
 pygithub = "*"
 firebase-admin = "*"
 japanize-matplotlib = "*"
 beautifulsoup4 = "*"
-selenium = "*"
-chromedriver-binary-auto = "*"
 opencv-python-headless = "*"
 pillow = "*"
 numpy = "*"
 requests = "*"
 lxml = "*"
-aiogoogle = "*"
-coverage = "*"
+matplotlib = "*"
+aiohttp = "*"
 plotly = "*"
 numba = "*"
+scipy = "*"
 
 [dev-packages]
 autopep8 = "*"
+coverage = "*"
 
 [requires]
 python_version = "3"
