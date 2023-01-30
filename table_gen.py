@@ -5,9 +5,10 @@ matplotlib.use('module://mplcairo.base')
 
 from graph_gen import frame_collector
 from pandas import to_datetime, Int64Dtype, isna
-from matplotlib import pyplot
+from const import html_base
 from matplotlib.font_manager import FontProperties
-from os import path, getcwd
+from os import getcwd
+from os.path import join
 from budoux import load_default_japanese_parser
 from unicodedata import east_asian_width, normalize
 
@@ -43,11 +44,12 @@ def fold_text(text: str, length: int = 20, delimiter='\n', max_length=70) -> str
         while count_width(return_string) > max_length:
             return_string = return_string[:-2]
         return_string += '...'
-    return return_string
+    return return_string.removeprefix(delimiter)
 
 
 dataframes = frame_collector()
 for key, value in dataframes.items():
+    print(key)
     value.set_index('タイトル', inplace=True)
     value.columns = to_datetime(value.columns)
     value = value.astype(float)
@@ -67,43 +69,9 @@ for key, value in dataframes.items():
     table_data[table_data.columns[:2]] = table_data.loc[:, table_data.columns[:2]].round()
     table_data[table_data.columns[:2]] = table_data.loc[:, table_data.columns[:2]].astype(Int64Dtype())
     table_data = table_data.astype(object)
-    table_data.index = table_data.index.map(lambda x: fold_text(normalize('NFKC', str(x)), length=37, max_length=55))
+    table_data.index = table_data.index.map(
+        lambda x: fold_text(normalize('NFKC', str(x)), length=37, max_length=55, delimiter='--nl--'))
     if table_data.index.__len__() > 15:
         table_data = table_data.loc[table_data.index[:15], :]
-    pyplot.figure(figsize=(16, 16))
-    pyplot.axis('off')
-    pyplot.title(key, fontsize=30)
-    cell_color_list = list()
-    row_color_list = list()
-    for i in range(table_data.index.__len__()):
-        if i % 2 == 0:
-            cell_color_list.append(['#EBF5FE'] * 3)
-            row_color_list.append('#EBF5FE')
-        else:
-            cell_color_list.append(['#FFFFFF'] * 3)
-            row_color_list.append('#FFFFFF')
-
-    table_data = table_data.fillna('NA')
-    table_image = pyplot.table(cellText=table_data.values,
-                               colLabels=table_data.columns,
-                               rowLabels=table_data.index,
-                               cellLoc='center',
-                               rowLoc='center',
-                               bbox=[0.36, 0, 0.51, 1],
-                               colWidths=[0.15, 0.1, 0.1],
-                               cellColours=cell_color_list,
-                               rowColours=row_color_list)
-    # noinspection PyProtectedMember
-    for cell in table_image._cells:
-        # noinspection PyProtectedMember
-        if table_image._cells[cell]._text._text in '↘↗➡🆕':
-            # noinspection PyProtectedMember
-            table_image._cells[cell]._text._fontproperties = EMOJI_FP
-        else:
-            # noinspection PyProtectedMember
-            table_image._cells[cell]._text._fontproperties = JP_FP
-    table_image.auto_set_font_size(False)
-    table_image.set_fontsize(14)
-
-    pyplot.savefig(path.join(getcwd(), "table", key + '.png'))
-    pyplot.close()
+    with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
+        f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))

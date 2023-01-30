@@ -14,4 +14,6 @@ def gen_tsv():
         dataframe.to_csv(os.path.join(os.getcwd(), 'tsvs', i[1] + '.tsv'), sep='\t')
 
 
-gen_tsv()
+
+with open("test.html","w") as f:
+    f.write(const.html_base(name="name",content="content"))

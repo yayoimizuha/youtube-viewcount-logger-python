@@ -102,3 +102,84 @@ def trim_title(text, artist_name):
                                   IGNORECASE), IGNORECASE | MULTILINE), IGNORECASE),
                       IGNORECASE)
     return return_code.replace('@kari@', '(仮)').replace('@cute@', '℃-ute')
+
+
+def html_base(name: str, content: str) -> str:
+    return f"""<!DOCTYPE html>
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Emoji:wght@700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+     <style>  img {{
+        width: 30px;
+        height: 30px;
+        margin-left: 0px;
+        margin-top: 5px;
+     }}
+
+     tr:first-child{{
+         white-space: nowrap;
+     }}
+
+     table thead th:first-child{{
+        text-align: center;
+     }}
+
+     div{{
+        margin: auto;
+     }}
+
+     table{{
+        margin: auto;
+        margin-top: 7px;
+        display: table;
+        margin-bottom: 30px;
+     }}
+
+     body {{
+        --color: #118bee;
+        --color-accent: #118bee15;
+        --color-bg: #fff;
+        --color-bg-secondary: #e9e9e9;
+        --color-link: #118bee;
+        --color-secondary: #920de9;
+        --color-secondary-accent: #920de90b;
+        --color-shadow: #f4f4f4;
+        --color-table: #118bee;
+        --color-text: #000;
+        --color-text-secondary: #999;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-size: 20px;
+
+     }}
+     
+     table tbody tr td:nth-of-type(1){{
+        font-family: 'Noto Sans', sans-serif;
+     }}
+     table tbody tr td:nth-of-type(2){{
+        font-family: 'Noto Sans', sans-serif;
+     }}
+     table tbody tr td:nth-of-type(3){{
+       font-family: 'Noto Emoji', sans-serif;
+     }}
+     </style>
+     <div style="text-align: center;">
+        <p style="font-size:30px">
+            {name}
+        </p>
+     </div>
+    {content}
+        <script>
+            let thead = document.getElementsByTagName('thead')
+            thead[0].removeChild(thead[0].getElementsByTagName("tr")[1])
+            document.getElementsByTagName("th")[0].innerHTML="タイトル"
+        </script>
+    </body>
+    """.replace('--nl--','<br>')
