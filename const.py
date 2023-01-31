@@ -157,7 +157,7 @@ def html_base(name: str, content: str) -> str:
         --color-text-secondary: #999;
         font-family: 'Noto Sans JP', sans-serif;
         font-size: 20px;
-
+        transform: scale(1.5, 1.5) translateY(25%);
      }}
      
      table tbody tr td:nth-of-type(1){{
