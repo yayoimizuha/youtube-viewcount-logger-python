@@ -43,5 +43,5 @@ def playlists():
         ['OLAK5uy_kFIc8YxoczUnmcpF3Cgrew3HahESCz2ls', '鞘師里保', True],
         ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団', True],
         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
-        ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', False]
+        ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', False]
     ]
