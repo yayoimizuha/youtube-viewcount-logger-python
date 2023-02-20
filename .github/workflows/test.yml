@@ -72,7 +72,7 @@ jobs:
       - name: tweet
         id: tweet-py
         run: |
-          pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run python tweet.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
@@ -83,7 +83,7 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           if (git diff --shortstat | grep '[0-9]'); then \
             git status; \
-            git add save.sqlite save.xlsx graph/* html/* table/* tsvs/*; \
+            git add save.sqlite save.xlsx graph/* html/* table/* tsvs/* -f; \
             git commit -m "Daily updates"; \
             git push origin HEAD:${GITHUB_REF} -f ; \
           fi
