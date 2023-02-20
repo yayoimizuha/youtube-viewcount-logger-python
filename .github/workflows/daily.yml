@@ -49,30 +49,30 @@ jobs:
         
         
       - name: get today data
-        id: main.async.py
+        id: main-async-py
         run: |
-          python main.async.py 2>&1 | tee -a ./out.txt
+          pipenv run python main.async.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
         
         
       - name: generate graph
-        id: graph_gen.py
+        id: graph_gen-py
         run: |
-          python graph_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run python graph_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
       - name: generate table
-        id: table_gen.py
+        id: table_gen-py
         run: |
-          python table_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
         
     
       - name: tweet
-        id: tweet.py
+        id: tweet-py
         run: |
-          python table_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run python tweet.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
         
       - name: push updates
@@ -82,24 +82,28 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           if (git diff --shortstat | grep '[0-9]'); then \
             git status; \
-            git add save.sqlite save.xlsx graph/* html/* table/* tsvs/*; \
+            git add save.sqlite save.xlsx graph/* html/* table/* tsvs/* -f; \
             git commit -m "Daily updates"; \
             git push origin HEAD:${GITHUB_REF} -f ; \
           fi
 
 
       - name: Print status
-        run:  echo "${{steps.auto-run.outcome}}"
+        run: |
+          echo "${{steps.main-async-py.outcome}}"
+          echo "${{steps.graph_gen-py.outcome}}"
+          echo "${{steps.table_gen-py.outcome}}"
+          echo "${{steps.tweet-py.outcome}}"
         
       - name: Error Handling
-        if: steps.auto-run.outcome == 'failure'
+        if: steps.main-async-py.outcome == 'failure' || steps.graph_gen-py.outcome == 'failure' || steps.table_gen-py.outcome == 'failure' || steps.tweet-py.outcome == 'failure'
         run: |
           pipenv run post-processing
           exit 1
 
       - name: Upload Log
-        if: steps.auto-run.outcome != 'failure'
+        if: steps.main-async-py.outcome == 'success' && steps.graph_gen-py.outcome == 'success' && steps.table_gen-py.outcome == 'success' && steps.tweet-py.outcome == 'success'
         run: |
-          pipenv run upload-log
+          pipenv run python upload-log
       
         

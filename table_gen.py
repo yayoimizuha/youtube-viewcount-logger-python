@@ -3,7 +3,7 @@ from multiprocessing import Process
 from sys import stdout, stderr
 from pandas import to_datetime, Int64Dtype, isna
 from const import html_base, frame_collector
-from os import getcwd
+from os import getcwd, makedirs
 from os.path import join
 from budoux import load_default_japanese_parser
 from unicodedata import east_asian_width, normalize
@@ -61,9 +61,12 @@ def crop(file_key: str) -> None:
     margin.save(join(getcwd(), 'table', f'{file_key}.png'))
 
 
+makedirs(join(getcwd(), 'html'), exist_ok=True)
+makedirs(join(getcwd(), 'table'), exist_ok=True)
+
 if __name__ == '__main__':
 
-    serve = Process(target=http_server)
+    serve = Process(target=http_server, daemon=True)
     serve.start()
 
     dataframes = frame_collector()
@@ -99,8 +102,8 @@ if __name__ == '__main__':
 
         with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
             f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))
-        run(['chrome', '--headless', '--screenshot=' + join(getcwd(), 'table', f'{key}.png'), '--window-size=3000,3000',
-             f'http://localhost:8888/html/{key}.html'], stdout=stdout, stderr=stderr)
+        run(['chromium-browser', '--headless', '--disable-gpu', '--screenshot=' + join(getcwd(), 'table', f'{key}.png'),
+             '--window-size=3000,3000', f'http://localhost:8888/html/{key}.html'], stdout=stdout, stderr=stderr)
         crop(key)
 
     serve.terminate()

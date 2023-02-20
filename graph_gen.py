@@ -1,4 +1,4 @@
-from os import path, getcwd
+from os import path, getcwd, makedirs
 from japanize_matplotlib import japanize
 from matplotlib import pyplot
 from const import frame_collector
@@ -39,8 +39,9 @@ def graph_gen() -> None:
         pyplot.ylabel('再生回数')
         pyplot.title(key)
         # pyplot.show()
-        pyplot.savefig(path.join(getcwd(), "graph", key + '.png'))
+        pyplot.savefig(path.join(getcwd(), 'graph', key + '.png'))
         pyplot.close()
 
 
+makedirs(path.join(getcwd(), 'graph'), exist_ok=True)
 graph_gen()
