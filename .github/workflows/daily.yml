@@ -98,7 +98,7 @@ jobs:
           exit 1
 
       - name: Upload Log
-        if: steps.auto-run.outcome != 'failure'
+        if: steps.auto-run.outcome == 'success'
         run: |
           pipenv run upload-log
       
