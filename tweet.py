@@ -58,7 +58,7 @@ for key, frame in tables.items():
     print_str += f'#hpytvc 昨日からの再生回数: #{key}\n'
     for order, (name, count) in enumerate(list(incr.items())[:min(3, incr.size)]):
         print(str(order + 1) + '位', name, str(count) + '回', sep=' ')
-        print_str += f'{order}位:{name} {count}回\n'
+        print_str += f'{order + 1}位:{name} {count}回\n'
     # print(print_str)
     files = list()
     if exists(join(getcwd(), 'table', key + '.png')):
