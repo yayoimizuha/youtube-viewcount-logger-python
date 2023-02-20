@@ -94,7 +94,7 @@ jobs:
       - name: Error Handling
         if: steps.main-async-py.outcome == 'failure' || steps.graph_gen-py.outcome == 'failure' || steps.table_gen-py.outcome == 'failure' || steps.tweet-py.outcome == 'failure'
         run: |
-          pipenv run python post-processing
+          pipenv run post-processing
           exit 1
 
       - name: Upload Log
