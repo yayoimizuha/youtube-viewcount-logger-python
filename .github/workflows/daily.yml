@@ -51,28 +51,28 @@ jobs:
       - name: get today data
         id: main-async-py
         run: |
-          pipenv run main.async.py 2>&1 | tee -a ./out.txt
+          pipenv run python main.async.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
         
         
       - name: generate graph
         id: graph_gen-py
         run: |
-          pipenv run graph_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run python graph_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
       - name: generate table
         id: table_gen-py
         run: |
-          pipenv run table_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
         
     
       - name: tweet
         id: tweet-py
         run: |
-          pipenv run table_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
         
       - name: push updates
@@ -94,12 +94,12 @@ jobs:
       - name: Error Handling
         if: steps.main-async-py.outcome == 'failure' || steps.graph_gen-py.outcome == 'failure' || steps.table_gen-py.outcome == 'failure' || steps.tweet-py.outcome == 'failure'
         run: |
-          pipenv run post-processing
+          pipenv run python post-processing
           exit 1
 
       - name: Upload Log
         if: steps.main-async-py.outcome == 'success' && steps.graph_gen-py.outcome == 'success' && steps.table_gen-py.outcome == 'success' && steps.tweet-py.outcome == 'success'
         run: |
-          pipenv run upload-log
+          pipenv run python upload-log
       
         
