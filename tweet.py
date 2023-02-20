@@ -30,7 +30,6 @@ def tweet(text: str, media: list[str], raw: bool) -> None:
         text = "test tweet.\n" + str(datetime.now()) + str(name)
         return api.update_status(text)
 
-    print(media)
     media_ids = [api.media_upload(i).media_id_string for i in media]
     return api.update_status(text, media_ids=media_ids)
 
@@ -73,7 +72,6 @@ pprint(tweet_content)
 
 for playlist_id, key, is_tweet in playlists():
     if is_tweet:
-        print(tweet_content[key])
         try:
             pprint(tweet(*tweet_content[key], raw=False))
         except TweepyException as e:

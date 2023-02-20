@@ -2,7 +2,8 @@ from time import time
 from typing import NamedTuple
 from aiohttp import ClientSession
 from asyncio import gather, run
-from os import getenv, getcwd, path
+from os import getenv, getcwd, makedirs
+from os.path import join
 from urllib.parse import urlencode
 from const import playlists, trim_title, pack_comma
 from sqlite3 import connect
@@ -16,9 +17,11 @@ if API_KEY == '':
     print('No API Key.')
     exit(-1)
 
-SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
+SQLITE_DATABASE = join(getcwd(), 'save.sqlite')
 
 TODAY_DATE = date.today().__str__()
+
+makedirs('tsvs', exist_ok=True)
 
 
 def query_builder(resource_type: str,
@@ -127,6 +130,8 @@ async def runner() -> None:
     for key, value in tables.items():
         value['タイトル'].replace('0', None, inplace=True)
         value.to_sql(key, connector, if_exists='replace')
+        value.to_csv(join(getcwd(), 'tsvs', key + '.tsv'), sep='\t')
+
     connector.close()
 
 
