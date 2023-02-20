@@ -4,33 +4,28 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-google-api-python-client = "*"
-levenshtein = "*"
 pandas = "*"
 tweepy = "*"
 openpyxl = "*"
-seaborn = "*"
-styleframe = "*"
 pygithub = "*"
 firebase-admin = "*"
 japanize-matplotlib = "*"
-beautifulsoup4 = "*"
-selenium = "*"
-chromedriver-binary-auto = "*"
-opencv-python-headless = "*"
 pillow = "*"
-numpy = "*"
-requests = "*"
-lxml = "*"
+matplotlib = "*"
+aiohttp = "*"
+numba = "*"
+scipy = "*"
+budoux = "*"
 
 [dev-packages]
 autopep8 = "*"
+coverage = "*"
 
 [requires]
 python_version = "3"
 
 [scripts]
-auto-run = "bash -c 'python main.py && python graph.py && python render_graph.py && python ranking.py'"
+
 post-processing = "bash -c 'python post-processing.py'"
 upload-log = "python -c 'import firebase_storage_upload;firebase_storage_upload.upload_log()'"
 visualize = "bash -c 'python graph.py'"
