@@ -51,9 +51,30 @@ jobs:
       - name: get today data
         id: main.async.py
         run: |
-          python main.async.py 2>&1 | tee ./out.txt
+          python main.async.py 2>&1 | tee -a ./out.txt
+        continue-on-error: true
+        
+        
+      - name: generate graph
+        id: graph_gen.py
+        run: |
+          python graph_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
+
+      - name: generate table
+        id: table_gen.py
+        run: |
+          python table_gen.py 2>&1 | tee -a ./out.txt
+        continue-on-error: true
+        
+    
+      - name: tweet
+        id: tweet.py
+        run: |
+          python table_gen.py 2>&1 | tee -a ./out.txt
+        continue-on-error: true
+        
       - name: push updates
         run: |
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
@@ -61,7 +82,7 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           if (git diff --shortstat | grep '[0-9]'); then \
             git status; \
-            git add save.sqlite save.xlsx images/* html/* tsvs/*; \
+            git add save.sqlite save.xlsx graph/* html/* table/* tsvs/*; \
             git commit -m "Daily updates"; \
             git push origin HEAD:${GITHUB_REF} -f ; \
           fi
