@@ -72,7 +72,7 @@ def trim_title(text: str, artist_name: str):
     title_regex_three = r"[\[\(（]([a-zA-Z\s”\[［\]］\.\/’\'\"&。:〜”“0-9\-=\?!×#~,♂　@（）])*[\]\)）]?"
     title_regex_four = r'※.*'  # r"ショート|Short|short|Version|Ver.|Ver|バージョン|Dance|ダンス|リリック.*|"
     if artist_name == '鞘師里保':
-        return sub(r'\(.*\)', '', text)
+        return sub(r'/.*?$|\(.*?$','',sub(r'.*?-', '', text))
     if artist_name == 'COVERS - One on One -':
         return text.removeprefix('COVERS - One on One -').removeprefix('COVERS -One on One-')
     if artist_name == 'アップアップガールズ(仮)':

@@ -118,7 +118,7 @@ async def runner() -> None:
                                                       index=[video.url])
                 tables[video.artist_name]['タイトル'] = tables[video.artist_name]['タイトル'].astype(str)
                 tables[video.artist_name][TODAY_DATE] = tables[video.artist_name][TODAY_DATE].astype(Int64Dtype())
-            print(video.url, video.viewCount, sep=',')
+            print(video.url, video.viewCount, '回', sep=' ')
             tables[video.artist_name].at[video.url, TODAY_DATE] = int(video.viewCount)
             tables[video.artist_name].at[video.url, 'タイトル'] = video.title
 

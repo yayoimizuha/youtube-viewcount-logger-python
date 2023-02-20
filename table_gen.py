@@ -1,9 +1,8 @@
 from subprocess import run
 from multiprocessing import Process
 from sys import stdout, stderr
-from graph_gen import frame_collector
 from pandas import to_datetime, Int64Dtype, isna
-from const import html_base
+from const import html_base, frame_collector
 from os import getcwd
 from os.path import join
 from budoux import load_default_japanese_parser
@@ -71,6 +70,7 @@ if __name__ == '__main__':
     for key, value in dataframes.items():
         print(key)
         if value.columns.__len__() < 4:
+            print('列が少なすぎます。', file=stderr)
             continue
         value.set_index('タイトル', inplace=True)
         value.columns = to_datetime(value.columns)
@@ -80,9 +80,9 @@ if __name__ == '__main__':
         value['yesterday_displace'] = value[value.columns[-2]] - value[value.columns[-3]]
         value['today_displace'] = value[value.columns[-2]] - value[value.columns[-3]]
         table_data = value[value.columns[-3:]]
-        table_data.loc[table_data['yesterday_displace'] > table_data['today_displace'], 'displace'] = '↘'
-        table_data.loc[table_data['yesterday_displace'] < table_data['today_displace'], 'displace'] = '↗'
-        table_data.loc[table_data['yesterday_displace'] == table_data['today_displace'], 'displace'] = '➡'
+        table_data.loc[table_data['yesterday_displace'] > table_data['today_displace'], ['displace']] = '↘'
+        table_data.loc[table_data['yesterday_displace'] < table_data['today_displace'], ['displace']] = '↗'
+        table_data.loc[table_data['yesterday_displace'] == table_data['today_displace'], ['displace']] = '➡'
         table_data.loc[isna(table_data['yesterday_displace']) & isna(table_data['today_displace']), 'displace'] = '🆕'
         table_data = table_data.drop(['yesterday_displace'], axis=1)
         table_data = table_data.dropna(subset=table_data.columns[0], axis=0)

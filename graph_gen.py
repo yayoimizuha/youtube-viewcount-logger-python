@@ -3,6 +3,7 @@ from japanize_matplotlib import japanize
 from matplotlib import pyplot
 from const import frame_collector
 from pandas import DataFrame, to_datetime
+from sys import stderr
 
 japanize()
 
@@ -10,12 +11,15 @@ japanize()
 def graph_gen() -> None:
     dataframes: dict[str:DataFrame] = frame_collector()
     for key, value in dataframes.items():
+        print(key)
         value: DataFrame = value
         value.dropna(subset=['タイトル', value.columns[-1]], axis=0, how='any', inplace=True)
         value.sort_values(by=value.columns[-1], inplace=True, ascending=False)
         displacing = value.dropna(axis=1, how='all')
-        if displacing.columns.__len__() < 3: continue
-        displacing.loc[:, 'today_displace'] = \
+        if displacing.columns.__len__() < 3:
+            print('列が少なすぎます。', file=stderr)
+            continue
+        displacing.loc[displacing.index, ['today_displace']] = \
             displacing.loc[:, displacing.columns[-1]] - displacing.loc[:, displacing.columns[-2]]
         displacing = displacing[displacing['today_displace'] > displacing.iat[0, -1] / 15]
         if displacing.index.__len__() > 27:
@@ -37,5 +41,6 @@ def graph_gen() -> None:
         # pyplot.show()
         pyplot.savefig(path.join(getcwd(), "graph", key + '.png'))
         pyplot.close()
+
 
 graph_gen()
