@@ -49,28 +49,28 @@ jobs:
 
 
       - name: get today data
-        id: main.async.py
+        id: main-async-py
         run: |
           python main.async.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
       - name: generate graph
-        id: graph_gen.py
+        id: graph_gen-py
         run: |
           python graph_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
       - name: generate table
-        id: table_gen.py
+        id: table_gen-py
         run: |
           python table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
       - name: tweet
-        id: tweet.py
+        id: tweet-py
         run: |
           python table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
@@ -94,7 +94,7 @@ jobs:
           pipenv run post-processing
 
       - name: Error Handling
-        if: steps.auto-run.outcome == 'failure'
+        if: steps.main-async-py.outcome == 'failure' || steps.graph_gen-py.outcome == 'failure' || steps.table_gen-py.outcome == 'failure' || steps.tweet-py.outcome == 'failure'
         run: |
           pipenv run post-processing
           exit 1
