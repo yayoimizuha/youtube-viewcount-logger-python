@@ -51,28 +51,28 @@ jobs:
       - name: get today data
         id: main-async-py
         run: |
-          python main.async.py 2>&1 | tee -a ./out.txt
+          pipenv run main.async.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
       - name: generate graph
         id: graph_gen-py
         run: |
-          python graph_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run graph_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
       - name: generate table
         id: table_gen-py
         run: |
-          python table_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
       - name: tweet
         id: tweet-py
         run: |
-          python table_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
