@@ -4,7 +4,7 @@ from aiohttp import ClientSession
 from asyncio import gather, run
 from os import getenv, getcwd, path
 from urllib.parse import urlencode
-from const import playlists, trim_title
+from const import playlists, trim_title, pack_comma
 from sqlite3 import connect
 from pandas import read_sql, DataFrame, Int64Dtype, NA
 from datetime import date
@@ -19,6 +19,7 @@ if API_KEY == '':
 SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
 
 TODAY_DATE = date.today().__str__()
+
 
 def query_builder(resource_type: str,
                   arg: dict,
@@ -73,10 +74,6 @@ async def get_video_data(video_key: str, artist_name: str, session: ClientSessio
         return VideoInfo(isError=True, artist_name=artist_name, viewCount=0, title='', url=url)
 
 
-def pack_comma(txt: str) -> str:
-    return f'\"{txt}\"'
-
-
 async def runner() -> None:
     tables: dict[str, DataFrame]
     playlist_index_time = time()
@@ -103,7 +100,7 @@ async def runner() -> None:
 
     for dataframe_key in tables.keys():
         column_list = tables[dataframe_key].columns.tolist()[1:]
-        tables[dataframe_key][column_list] = tables[dataframe_key][column_list].replace(0, NA).astype(Int64Dtype())
+        tables[dataframe_key][column_list] = tables[dataframe_key][column_list].astype(Int64Dtype()).replace(0, NA)
         tables[dataframe_key].dropna(axis=1, how='all', inplace=True)
         # Today column setting
         tables[dataframe_key][TODAY_DATE] = NA
@@ -116,8 +113,11 @@ async def runner() -> None:
     for video in video_data:
         if not video.isError:
             if video.artist_name not in tables.keys():
-                tables[video.artist_name] = DataFrame(data=[video.title, video.viewCount], columns=['タイトル', TODAY_DATE],
-                                                      index=[video.url], dtype=Int64Dtype())
+                tables[video.artist_name] = DataFrame(data={'タイトル': video.title, TODAY_DATE: video.viewCount},
+                                                      columns=['タイトル', TODAY_DATE],
+                                                      index=[video.url])
+                tables[video.artist_name]['タイトル'] = tables[video.artist_name]['タイトル'].astype(str)
+                tables[video.artist_name][TODAY_DATE] = tables[video.artist_name][TODAY_DATE].astype(Int64Dtype())
             print(video.url, video.viewCount, sep=',')
             tables[video.artist_name].at[video.url, TODAY_DATE] = int(video.viewCount)
             tables[video.artist_name].at[video.url, 'タイトル'] = video.title

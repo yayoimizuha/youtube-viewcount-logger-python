@@ -1,47 +1,10 @@
 from os import path, getcwd
-from sqlite3 import connect
 from japanize_matplotlib import japanize
 from matplotlib import pyplot
-from pandas import read_sql, Int64Dtype, DataFrame, Series, concat, NA, to_datetime
-from datetime import date, timedelta
-
-SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
+from const import frame_collector
+from pandas import DataFrame, to_datetime
 
 japanize()
-
-
-def pack_comma(txt: str) -> str:
-    return f'\"{txt}\"'
-
-
-def gen_date_array(begin: str, end: str) -> list[str]:
-    for i in range((date.fromisoformat(end) - date.fromisoformat(begin)).days):
-        yield (date.fromisoformat(begin) + timedelta(i)).__str__()
-
-
-def frame_collector() -> dict[str, DataFrame]:
-    connector = connect(SQLITE_DATABASE)
-    cursor = connector.cursor()
-    table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
-    tables: dict[str, DataFrame] = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index')
-                                    for name in table_name}
-
-    for dataframe_key in tables.keys():
-        column_list = tables[dataframe_key].columns.tolist()[1:]
-        index_list = tables[dataframe_key].index.tolist()
-        title_list: Series = tables[dataframe_key].loc[:, 'タイトル']
-        title_list = title_list.replace('0', None)
-        num_arr: DataFrame = tables[dataframe_key][column_list]
-        tables[dataframe_key] = DataFrame(num_arr.to_numpy(), columns=column_list, index=index_list, dtype=Int64Dtype())
-        tables[dataframe_key].loc[:, 'タイトル'] = title_list
-        column_list = ['タイトル'] + [col for col in gen_date_array(column_list[1], column_list[-1])]
-        sparse_dataframe = DataFrame(columns=column_list, dtype=Int64Dtype())
-        tables[dataframe_key] = concat(objs=[sparse_dataframe, tables[dataframe_key]], join='outer')
-        tables[dataframe_key]: DataFrame = tables[dataframe_key].reindex(columns=column_list)
-        tables[dataframe_key] = tables[dataframe_key].replace(0, NA)
-
-    connector.close()
-    return tables
 
 
 def graph_gen() -> None:

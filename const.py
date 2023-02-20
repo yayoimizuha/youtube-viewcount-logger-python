@@ -1,4 +1,10 @@
+from datetime import date, timedelta
+from os import getcwd, path, stat
+from os.path import isfile, join
+from pickle import load, dump
 from re import IGNORECASE, sub, MULTILINE
+from sqlite3 import connect
+from pandas import DataFrame, read_sql, Series, Int64Dtype, NA, concat
 from unicodedata import normalize
 
 
@@ -46,18 +52,20 @@ def playlists():
         ['PL59O0JbKsFLp-RYKpMhN_pooj_bJckLL7', 'アップアップガールズ(仮)', True],
         ['OLAK5uy_kFIc8YxoczUnmcpF3Cgrew3HahESCz2ls', '鞘師里保', True],
         ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団', True],
-        ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True]
+        ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
+        ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', False]
     ]
 
 
-def playlists():
-    return [
-        ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
-        ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True]
-    ]
+# def playlists():
+#     return [
+#         ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
+#         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
+#         ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', False]
+#     ]
 
 
-def trim_title(text, artist_name):
+def trim_title(text: str, artist_name: str):
     title_regex_one = r"[\(（]([a-zA-Z\s\[\]\'\"”””“\.…,\/　!！=。@’[°C]・:〜\-])*[\)）]"
     title_regex_two = r"[\s|-][Promotion|Music|Video].*[\s|\-]*|Edit|カバー|[\s|-]*YouTube[\s|\-]*|ver|【セルフカヴァー】" \
                       r"|Promotion|Music|Video"
@@ -68,7 +76,7 @@ def trim_title(text, artist_name):
     if artist_name == 'COVERS - One on One -':
         return text
     if artist_name == 'アップアップガールズ(仮)':
-        tmp = sub(r'【MUSIC VIDEO】|\([A-z\s\[\]\-！!].*\)|ミュージック|イメージ|ビデオ|\[.*?\]', '', text,
+        tmp = sub(r'【MUSIC VIDEO】|\([A-z\s\[\]\-！!].*\)|ミュージック|イメージ|ビデオ|[.*?]', '', text,
                   IGNORECASE)
         return sub(r'UP|GIRLS|kakko|KARI|MV|MUSIC|VIDEO|（MV）', '', tmp, IGNORECASE | MULTILINE)
     if artist_name == 'シャ乱Q':
@@ -87,9 +95,12 @@ def trim_title(text, artist_name):
     if artist_name == 'LoVendoЯ':
         return sub(r'\(.*|\[.*', '', normalize('NFKC', text))
     if artist_name == '小片リサ':
-        return sub(r'\-.*', '', normalize('NFKC', text))
+        return sub(r'-.*', '', normalize('NFKC', text))
     if artist_name == 'ハロプロダンス部':
         return sub(r'\(.*?\)', '', normalize('NFKC', text))
+    if artist_name == '佐藤優樹':
+        if '-One on One-' in text:
+            return text.removeprefix('COVERS -One on One-')
 
     text = str(text).replace('(仮)', '@kari@')
     text = str(text).replace('（仮）', '@kari@')
@@ -182,4 +193,50 @@ def html_base(name: str, content: str) -> str:
             document.getElementsByTagName("th")[0].innerHTML="タイトル"
         </script>
     </body>
-    """.replace('--nl--','<br>')
+    """.replace('--nl--', '<br>')
+
+
+def pack_comma(txt: str) -> str:
+    return f'\"{txt}\"'
+
+
+def gen_date_array(begin: str, end: str) -> list[str]:
+    for i in range((date.fromisoformat(end) - date.fromisoformat(begin)).days):
+        yield (date.fromisoformat(begin) + timedelta(i)).__str__()
+
+
+SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
+
+
+def frame_collector() -> dict[str, DataFrame]:
+    if isfile(join(getcwd(), 'frame.pickle')):
+        if stat(path=join(getcwd(), 'frame.pickle')).st_mtime > stat(path=join(getcwd(), 'save.sqlite')).st_mtime:
+            with open(join(getcwd(), 'frame.pickle'), mode='rb') as f:
+                return load(f)
+
+    connector = connect(SQLITE_DATABASE)
+    cursor = connector.cursor()
+    table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+    tables: dict[str, DataFrame] = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index')
+                                    for name in table_name}
+
+    for dataframe_key in tables.keys():
+        column_list = tables[dataframe_key].columns.tolist()[1:]
+        index_list = tables[dataframe_key].index.tolist()
+        title_list: Series = tables[dataframe_key].loc[:, 'タイトル']
+        title_list = title_list.replace('0', None)
+        num_arr: DataFrame = tables[dataframe_key][column_list]
+        tables[dataframe_key] = DataFrame(num_arr.to_numpy(), columns=column_list, index=index_list, dtype=Int64Dtype())
+        tables[dataframe_key].loc[:, 'タイトル'] = title_list
+        column_list = ['タイトル'] + [col for col in gen_date_array(column_list[1], column_list[-1])]
+        sparse_dataframe = DataFrame(columns=column_list, dtype=Int64Dtype())
+        tables[dataframe_key] = concat(objs=[sparse_dataframe, tables[dataframe_key]], join='outer')
+        tables[dataframe_key]: DataFrame = tables[dataframe_key].reindex(columns=column_list)
+        tables[dataframe_key] = tables[dataframe_key].replace(0, NA)
+
+    connector.close()
+
+    with open(join(getcwd(), 'frame.pickle'), mode='wb') as f:
+        dump(tables, f)
+
+    return tables
