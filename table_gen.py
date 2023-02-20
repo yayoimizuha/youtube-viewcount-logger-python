@@ -102,9 +102,8 @@ if __name__ == '__main__':
 
         with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
             f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))
-        run(['chromium-browser', '--headless', '--screenshot=' + join(getcwd(), 'table', f'{key}.png'),
-             '--window-size=3000,3000',
-             f'http://localhost:8888/html/{key}.html'], stdout=stdout, stderr=stderr)
+        run(['chromium-browser', '--headless', '--disable-gpu', '--screenshot=' + join(getcwd(), 'table', f'{key}.png'),
+             '--window-size=3000,3000', f'http://localhost:8888/html/{key}.html'], stdout=stdout, stderr=stderr)
         crop(key)
 
     serve.terminate()

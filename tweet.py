@@ -52,6 +52,7 @@ for key, frame in tables.items():
     frame.interpolate(method='linear', inplace=True, axis=1)
     frame = frame.loc[frame.index, frame.columns[-2:]]
     incr: Series = frame.iloc[:, 1] - frame.iloc[:, 0]
+    incr.dropna(inplace=True)
     incr = incr.astype(int)
     incr.sort_values(ascending=False, inplace=True)
     print_str = str()

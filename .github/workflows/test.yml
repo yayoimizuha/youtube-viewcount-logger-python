@@ -14,9 +14,6 @@ env:
   FIREBASE_CREDENTIAL: ${{ secrets.FIREBASE_CREDENTIAL }}
   TZ: 'Asia/Tokyo'
 
-permissions:
-  contents: read
-  issues: write
 
 on:
   push:
