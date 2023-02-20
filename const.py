@@ -74,7 +74,7 @@ def trim_title(text: str, artist_name: str):
     if artist_name == '鞘師里保':
         return sub(r'\(.*\)', '', text)
     if artist_name == 'COVERS - One on One -':
-        return text
+        return text.removeprefix('COVERS - One on One -').removeprefix('COVERS -One on One-')
     if artist_name == 'アップアップガールズ(仮)':
         tmp = sub(r'【MUSIC VIDEO】|\([A-z\s\[\]\-！!].*\)|ミュージック|イメージ|ビデオ|[.*?]', '', text,
                   IGNORECASE)
@@ -201,7 +201,7 @@ def pack_comma(txt: str) -> str:
 
 
 def gen_date_array(begin: str, end: str) -> list[str]:
-    for i in range((date.fromisoformat(end) - date.fromisoformat(begin)).days):
+    for i in range((date.fromisoformat(end) - date.fromisoformat(begin)).days + 1):
         yield (date.fromisoformat(begin) + timedelta(i)).__str__()
 
 
@@ -228,7 +228,7 @@ def frame_collector() -> dict[str, DataFrame]:
         num_arr: DataFrame = tables[dataframe_key][column_list]
         tables[dataframe_key] = DataFrame(num_arr.to_numpy(), columns=column_list, index=index_list, dtype=Int64Dtype())
         tables[dataframe_key].loc[:, 'タイトル'] = title_list
-        column_list = ['タイトル'] + [col for col in gen_date_array(column_list[1], column_list[-1])]
+        column_list = ['タイトル'] + [col for col in gen_date_array(column_list[0], column_list[-1])]
         sparse_dataframe = DataFrame(columns=column_list, dtype=Int64Dtype())
         tables[dataframe_key] = concat(objs=[sparse_dataframe, tables[dataframe_key]], join='outer')
         tables[dataframe_key]: DataFrame = tables[dataframe_key].reindex(columns=column_list)

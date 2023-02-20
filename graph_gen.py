@@ -23,7 +23,7 @@ def graph_gen() -> None:
             displacing = displacing[displacing['today_displace'] > threshold]
         value.drop(index=set(value.index) - set(displacing.index), inplace=True)
         value.set_index('タイトル', inplace=True)
-        print(value)
+        # print(value)
         value.columns = to_datetime(value.columns)
         value = value.T
         pyplot.rcParams["figure.dpi"] = 240
@@ -37,3 +37,5 @@ def graph_gen() -> None:
         # pyplot.show()
         pyplot.savefig(path.join(getcwd(), "graph", key + '.png'))
         pyplot.close()
+
+graph_gen()

@@ -70,6 +70,8 @@ if __name__ == '__main__':
     dataframes = frame_collector()
     for key, value in dataframes.items():
         print(key)
+        if value.columns.__len__() < 4:
+            continue
         value.set_index('タイトル', inplace=True)
         value.columns = to_datetime(value.columns)
         value = value.astype(float)
