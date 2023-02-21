@@ -104,6 +104,6 @@ jobs:
       - name: Upload Log
         if: steps.main-async-py.outcome == 'success' && steps.graph_gen-py.outcome == 'success' && steps.table_gen-py.outcome == 'success' && steps.tweet-py.outcome == 'success'
         run: |
-          pipenv run python upload-log
+          pipenv run upload-log
       
         
