@@ -1,10 +1,9 @@
 import datetime
-import glob
 from os.path import exists, join
 from os import getcwd, environ
 from pprint import pprint
 from tweepy import API, OAuth1UserHandler, TweepyException
-from const import frame_collector, trim_title, playlists
+from const import frame_collector, playlists
 from pandas import Series
 from datetime import datetime
 
@@ -12,6 +11,8 @@ consumer_key = environ['API_KEY']
 consumer_secret = environ['API_SECRET']
 access_token = environ['ACCESS_TOKEN']
 access_token_secret = environ['ACCESS_TOKEN_SECRET']
+
+MEDAL = ['🥇', '🥈', '🥉']
 
 auth = OAuth1UserHandler(
     consumer_key=consumer_key,
@@ -59,8 +60,8 @@ for key, frame in tables.items():
     print_str = str()
     print_str += f'#hpytvc 昨日からの再生回数: #{key}\n'
     for order, (name, count) in enumerate(list(incr.items())[:min(3, incr.size)]):
-        print(str(order + 1) + '位', name, str(count) + '回', sep=' ')
-        print_str += f'{order + 1}位:{name} {count}回\n'
+        print(MEDAL[order], name, str(count) + '回', sep=' ')
+        print_str += f'{MEDAL[order]}{name} {count}回\n'
     # print(print_str)
     files = list()
     if exists(join(getcwd(), 'table', key + '.png')):
