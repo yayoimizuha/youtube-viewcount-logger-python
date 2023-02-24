@@ -139,7 +139,7 @@ def html_base(name: str, content: str) -> str:
          white-space: nowrap;
      }}
 
-     table thead th:first-child{{
+     table thead th:nth-child(n){{
         text-align: center;
      }}
 
