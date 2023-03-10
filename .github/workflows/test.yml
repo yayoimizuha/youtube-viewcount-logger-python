@@ -74,7 +74,7 @@ jobs:
           if (git diff --shortstat | grep '[0-9]'); then \
             git status; \
             git add save.sqlite save.xlsx graph/* html/* table/* tsvs/* -f; \
-            git commit -m "Daily updates"; \
+            git commit -m "test summary"; \
             git push origin HEAD:${GITHUB_REF} -f ; \
           fi
 
