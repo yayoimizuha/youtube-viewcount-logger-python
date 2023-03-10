@@ -1,7 +1,8 @@
+from pprint import pprint
 from subprocess import run
 from multiprocessing import Process
 from sys import stdout, stderr
-from pandas import to_datetime, Int64Dtype, isna
+from pandas import to_datetime, Int64Dtype, isna, concat
 from const import html_base, frame_collector
 from os import getcwd, makedirs
 from os.path import join
@@ -77,11 +78,12 @@ if __name__ == '__main__':
             continue
         value.set_index('タイトル', inplace=True)
         value.columns = to_datetime(value.columns)
-        value = value.astype(float)
+        value[value.columns] = value[value.columns].astype(float)
         # print(value)
-        value.interpolate(inplace=True, method='linear', axis=1)
-        value['yesterday_displace'] = value[value.columns[-2]] - value[value.columns[-3]]
-        value['today_displace'] = value[value.columns[-2]] - value[value.columns[-3]]
+        value[value.columns].interpolate(inplace=True, method='linear', axis=1)
+        value = concat([value, (value[value.columns[-2]] - value[value.columns[-3]]).rename('yesterday_displace')],
+                       axis=1)
+        value = concat([value, (value[value.columns[-2]] - value[value.columns[-3]]).rename('today_displace')], axis=1)
         table_data = value[value.columns[-3:]]
         table_data.loc[table_data['yesterday_displace'] > table_data['today_displace'], ['displace']] = '↘'
         table_data.loc[table_data['yesterday_displace'] < table_data['today_displace'], ['displace']] = '↗'
@@ -90,15 +92,19 @@ if __name__ == '__main__':
         table_data = table_data.drop(['yesterday_displace'], axis=1)
         table_data = table_data.dropna(subset=table_data.columns[0], axis=0)
         table_data = table_data.sort_values('today_displace', ascending=False, na_position='first')
-        table_data.columns = ['{}年{}月{}日'.format(*table_data.columns[0].date().__str__().split('-')), '差分',
-                              '前日差']
+        table_data.columns = [
+            '{}年{}月{}日時点--nl--での総再生回数'.format(*table_data.columns[0].date().__str__().split('-')),
+            '昨日からの--nl--再生回数', '前日比']
         table_data[table_data.columns[:2]] = table_data.loc[:, table_data.columns[:2]].round()
         table_data[table_data.columns[:2]] = table_data.loc[:, table_data.columns[:2]].astype(Int64Dtype())
         table_data = table_data.astype(object)
         table_data.index = table_data.index.map(
             lambda x: fold_text(normalize('NFKC', str(x)), length=37, max_length=1000, delimiter='--nl--'))
+
+        table_data.reset_index(inplace=True)
         if table_data.index.__len__() > 15:
             table_data = table_data.loc[table_data.index[:15], :]
+        table_data.set_index(inplace=True, keys=['タイトル'])
 
         with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
             f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))

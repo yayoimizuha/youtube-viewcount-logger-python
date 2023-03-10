@@ -81,18 +81,18 @@ jobs:
           if (git diff --shortstat | grep '[0-9]'); then \
             git status; \
             git add save.sqlite save.xlsx graph/* html/* table/* tsvs/* -f; \
-            git commit -m "Daily updates"; \
+            git commit -m "test summary"; \
             git push origin HEAD:${GITHUB_REF} -f ; \
           fi
 
 
       - name: Add debug info
         run: |
-          pipenv run python post-processing
+          pipenv run post-processing
 
       - name: Error Handling
         if: steps.main-async-py.outcome == 'failure' || steps.graph_gen-py.outcome == 'failure' || steps.table_gen-py.outcome == 'failure' || steps.tweet-py.outcome == 'failure'
         run: |
-          pipenv run python post-processing
+          pipenv run upload-log
           exit 1
       

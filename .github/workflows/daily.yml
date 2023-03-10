@@ -89,17 +89,21 @@ jobs:
 
 
       - name: Print status
-        run:  echo "${{steps.auto-run.outcome}}"
+        run: |
+          echo "${{steps.main-async-py.outcome}}"
+          echo "${{steps.graph_gen-py.outcome}}"
+          echo "${{steps.table_gen-py.outcome}}"
+          echo "${{steps.tweet-py.outcome}}"
         
       - name: Error Handling
         if: steps.main-async-py.outcome == 'failure' || steps.graph_gen-py.outcome == 'failure' || steps.table_gen-py.outcome == 'failure' || steps.tweet-py.outcome == 'failure'
         run: |
-          pipenv run python post-processing
+          pipenv run post-processing
           exit 1
 
       - name: Upload Log
         if: steps.main-async-py.outcome == 'success' && steps.graph_gen-py.outcome == 'success' && steps.table_gen-py.outcome == 'success' && steps.tweet-py.outcome == 'success'
         run: |
-          pipenv run python upload-log
+          pipenv run upload-log
       
         

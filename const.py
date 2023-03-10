@@ -53,7 +53,7 @@ def playlists():
         ['OLAK5uy_kFIc8YxoczUnmcpF3Cgrew3HahESCz2ls', '鞘師里保', True],
         ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団', True],
         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
-        ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', False]
+        ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', True]
     ]
 
 
@@ -72,7 +72,7 @@ def trim_title(text: str, artist_name: str):
     title_regex_three = r"[\[\(（]([a-zA-Z\s”\[［\]］\.\/’\'\"&。:〜”“0-9\-=\?!×#~,♂　@（）])*[\]\)）]?"
     title_regex_four = r'※.*'  # r"ショート|Short|short|Version|Ver.|Ver|バージョン|Dance|ダンス|リリック.*|"
     if artist_name == '鞘師里保':
-        return sub(r'/.*?$|\(.*?$','',sub(r'.*?-', '', text))
+        return sub(r'/.*?$|\(.*?$', '', sub(r'.*?-', '', text))
     if artist_name == 'COVERS - One on One -':
         return text.removeprefix('COVERS - One on One -').removeprefix('COVERS -One on One-')
     if artist_name == 'アップアップガールズ(仮)':
@@ -139,7 +139,7 @@ def html_base(name: str, content: str) -> str:
          white-space: nowrap;
      }}
 
-     table thead th:first-child{{
+     table thead th:nth-child(n){{
         text-align: center;
      }}
 
