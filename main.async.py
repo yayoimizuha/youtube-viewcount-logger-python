@@ -136,3 +136,6 @@ async def runner() -> None:
 
 
 run(runner())
+
+with open(join(getcwd(), 'tsvs', 'group_list.tsv'), mode='w', encoding='utf8') as f:
+    f.writelines('\n'.join({i for _, i, _ in playlists()}))
