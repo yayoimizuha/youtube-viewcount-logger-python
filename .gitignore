@@ -3,7 +3,6 @@ Pipfile.lock
 __pycache__
 out.txt
 user
-
 html
 frame.pickle
 table
