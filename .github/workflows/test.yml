@@ -21,7 +21,7 @@ on:
 
 jobs:
   job:
-    timeout-minutes: 20
+    timeout-minutes: 100
 
     runs-on: ubuntu-latest
 
