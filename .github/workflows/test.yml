@@ -21,14 +21,14 @@ on:
 
 jobs:
   job:
-    timeout-minutes: 100
+    timeout-minutes: 20
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install Chromium
-        run: sudo apt install chromium-browser
+      - name: Install Firefox
+        run: bash < firefox-install.sh
         
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
