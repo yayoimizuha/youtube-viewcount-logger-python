@@ -1,3 +1,4 @@
+import time
 from pprint import pprint
 from subprocess import run
 from multiprocessing import Process
@@ -108,8 +109,10 @@ if __name__ == '__main__':
 
         with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
             f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))
-        run(['chromium-browser', '--headless=new', '--disable-gpu', '--screenshot=' + join(getcwd(), 'table', f'{key}.png'),
-             '--window-size=3000,3000', f'http://localhost:8888/html/{key}.html'], stdout=stdout, stderr=stderr)
+        print(' '.join(['/opt/firefox/firefox', '--screenshot', join(getcwd(), 'table', f'{key}.png'),
+                        f'http://127.0.0.1:8888/html/{key}.html', '--window-size=3000,3000']))
+        run(['/opt/firefox/firefox', '--screenshot', join(getcwd(), 'table', f'{key}.png'),
+             f'http://127.0.0.1:8888/html/{key}.html', '--window-size=3000,3000'], stdout=stdout, stderr=stderr)
         crop(key)
 
     serve.terminate()
