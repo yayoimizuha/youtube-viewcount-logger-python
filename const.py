@@ -54,7 +54,7 @@ def playlists():
         ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団', True],
         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
         ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', True],
-        ['PLFMni9aeqKTwZ-ziMW5IA5PLeuxRH3MSv', 'ハロプロ25周年記念公開MV', True]
+        ['PLFMni9aeqKTwb91a6lLvQiEMNEZXpD88v', 'ハロプロ25周年記念公開MV', True]
     ]
 
 
