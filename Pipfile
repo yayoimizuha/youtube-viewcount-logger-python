@@ -16,6 +16,7 @@ aiohttp = "*"
 numba = "*"
 scipy = "*"
 budoux = "*"
+styleframe = "*"
 
 [dev-packages]
 autopep8 = "*"
@@ -25,7 +26,6 @@ coverage = "*"
 python_version = "3"
 
 [scripts]
-
 post-processing = "bash -c 'python post-processing.py'"
 upload-log = "python -c 'import firebase_storage_upload;firebase_storage_upload.upload_log()'"
 visualize = "bash -c 'python graph.py'"
