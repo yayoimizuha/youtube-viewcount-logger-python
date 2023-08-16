@@ -135,4 +135,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body_path: save.xlsx
+          tag_name: ${{ steps.versioning.outputs }}
+          name: ${{ steps.versioning.outputs }}
+          generate_release_notes: true
 
