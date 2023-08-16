@@ -119,7 +119,7 @@ jobs:
         run: python excel_exporter.py
 
       - name: Release
-        uses: softprops/action-gh-release
+        uses: softprops/action-gh-release@v1
         with:
           body_path: save.xlsx
 
