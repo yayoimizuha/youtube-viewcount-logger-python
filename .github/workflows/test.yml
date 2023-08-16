@@ -111,7 +111,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install -U pip
+          python -m pip install -q -U pip
           pip install -q pandas lxml styleframe openpyxl
 
       - name: Version
@@ -134,7 +134,8 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          body_path: save.xlsx
+          files: save.xlsx
           tag_name: ${{ steps.versioning.outputs.tag_name }}
           name: ${{ steps.versioning.outputs.tag_name }}
+          generate_release_notes: true
 
