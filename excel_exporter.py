@@ -9,7 +9,6 @@ from styleframe import ExcelWriter, StyleFrame, Styler
 from styleframe.utils import horizontal_alignments, colors
 
 
-
 def main():
     as_hyperlink: Callable[[str], str] = lambda url: f'=HYPERLINK("{url}","{url}")'
     # valid_iso_format = lambda date
@@ -27,7 +26,7 @@ def main():
 
     with ExcelWriter(path=excel_file, mode='w') as writer:
         for table_name in table_names:
-            print(*table_name,flush=True)
+            print(*table_name, flush=True)
             dataframe = read_sql(f'SELECT * FROM "{table_name.__getitem__(0)}"', connector, index_col='index')
             dataframe.reset_index(inplace=True)
             dataframe.rename(columns={'index': 'URL'}, inplace=True)
@@ -43,7 +42,6 @@ def main():
             styleframe.apply_headers_style(styler_obj=header_styler)
             styleframe.to_excel(excel_writer=writer, sheet_name=table_name.__getitem__(0),
                                 columns_and_rows_to_freeze='C2')
-            break
 
     with open(file=join(getcwd(), 'save.xlsx'), mode='wb') as f:
         f.write(excel_file.getvalue())
