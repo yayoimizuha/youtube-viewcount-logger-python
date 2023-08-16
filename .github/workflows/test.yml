@@ -137,5 +137,4 @@ jobs:
           body_path: save.xlsx
           tag_name: ${{ steps.versioning.outputs.tag_name }}
           name: ${{ steps.versioning.outputs.tag_name }}
-          generate_release_notes: true
 
