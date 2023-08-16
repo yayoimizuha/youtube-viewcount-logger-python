@@ -116,7 +116,7 @@ jobs:
 
       - name: Version
         id: versioning
-        run: echo v`date '+%Y.%m.%d'`
+        run: echo "tag_name=v`date '+%Y.%m.%d'`" >> "$GITHUB_OUTPUT"
 
       - name: convert SQLite to Excel
         run: python excel_exporter.py
@@ -127,15 +127,15 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add save.xlsx
           git commit -m "convert SQLite to Excel"
-          git tag ${{ steps.versioning.outputs }}
-          git push origin ${{ steps.versioning.outputs }}         
+          git tag ${{ steps.versioning.outputs.tag_name }}
+          git push origin ${{ steps.versioning.outputs.tag_name }}         
           
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           body_path: save.xlsx
-          tag_name: ${{ steps.versioning.outputs }}
-          name: ${{ steps.versioning.outputs }}
+          tag_name: ${{ steps.versioning.outputs.tag_name }}
+          name: ${{ steps.versioning.outputs.tag_name }}
           generate_release_notes: true
 
