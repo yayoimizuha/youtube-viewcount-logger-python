@@ -16,7 +16,6 @@ aiohttp = "*"
 numba = "*"
 scipy = "*"
 budoux = "*"
-styleframe = "*"
 
 [dev-packages]
 autopep8 = "*"
