@@ -113,10 +113,21 @@ jobs:
         run: |
           python -m pip install -U pip
           pip install pandas lxml styleframe openpyxl
-      
+
+      - name: Version
+        id: versioning
+        run: echo v`date '+%Y.%m.%d'`
 
       - name: convert SQLite to Excel
         run: python excel_exporter.py
+
+      - name: Tagging
+        run: |
+          git add save.xlsx
+          git commit -m "convert SQLite to Excel"
+          git tag ${{ steps.versioning.outputs }}
+          git push origin ${{ steps.versioning.outputs }}         
+          
 
       - name: Release
         uses: softprops/action-gh-release@v1
