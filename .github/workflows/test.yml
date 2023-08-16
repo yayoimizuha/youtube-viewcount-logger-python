@@ -21,7 +21,6 @@ on:
 
 jobs:
   crawl:
-    if: false
     timeout-minutes: 20
 
     runs-on: ubuntu-latest
