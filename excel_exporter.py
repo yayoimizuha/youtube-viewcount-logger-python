@@ -43,7 +43,7 @@ def main():
             styleframe.to_excel(excel_writer=writer, sheet_name=table_name.__getitem__(0),
                                 columns_and_rows_to_freeze='C2')
 
-    with open(file=join(getcwd(), 'save.xlsx'), mode='wb') as f:
+    with open(file=join(getcwd(), 'export.xlsx'), mode='wb') as f:
         f.write(excel_file.getvalue())
 
 
