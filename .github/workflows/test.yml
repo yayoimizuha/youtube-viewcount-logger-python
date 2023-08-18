@@ -90,11 +90,15 @@ jobs:
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          if (git diff --shortstat | grep '[0-9]'); then \
-            git status; \
-            git add save.sqlite graph/* html/* table/* tsvs/* change.txt -f; \
-            git commit -m "test summary"; \
-            git push origin HEAD:${GITHUB_REF} -f ; \
+          if (git diff --shortstat | grep '[0-9]'); then
+            git status
+            if (eval ${{ env.RUN_HEAVY }}); then
+              git add change.txt -f
+            else
+              git add save.sqlite graph/* html/* table/* tsvs/* change.txt -f
+            fi
+            git commit -m "test summary"
+            git push origin HEAD:${GITHUB_REF} -f
           fi
 
 
