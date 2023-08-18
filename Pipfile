@@ -16,6 +16,7 @@ aiohttp = "*"
 numba = "*"
 scipy = "*"
 budoux = "*"
+tabulate = "*"
 
 [dev-packages]
 autopep8 = "*"

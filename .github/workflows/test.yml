@@ -161,5 +161,7 @@ jobs:
           files: export.xlsx
           tag_name: ${{ steps.versioning.outputs.tag_name }}
           name: ${{ steps.versioning.outputs.tag_name }}
-          generate_release_notes: true
+          generate_release_notes: false
+
+
 
