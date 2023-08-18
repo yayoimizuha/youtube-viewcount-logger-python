@@ -47,8 +47,10 @@ jobs:
           pip install -q pipenv
           pipenv install -q
           pip freeze
-          rm -rf images/*
-          rm -rf html/*          
+          if (${{ env.RUN_HEAVY == 'true' }}); then \
+            rm -rf images/* \
+            rm -rf html/* \
+          fi
           
         
         
