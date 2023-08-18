@@ -48,8 +48,8 @@ jobs:
           pipenv install -q
           pip freeze
           if (eval ${{ env.RUN_HEAVY }}); then \
-            rm -rf images/* \
-            rm -rf html/* \
+            rm -rf images/*
+            rm -rf html/*
           fi
           
         
