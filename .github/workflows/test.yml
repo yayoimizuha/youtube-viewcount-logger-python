@@ -73,7 +73,7 @@ jobs:
 
 
       - name: generate table
-        if: ${{ env.RUN_HEAVY == 'true' }}
+        # if: ${{ env.RUN_HEAVY == 'true' }}
         id: table_gen-py
         run: |
           pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
