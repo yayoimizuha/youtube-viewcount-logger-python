@@ -151,6 +151,13 @@ jobs:
       - name: convert SQLite to Excel
         run: python excel_exporter.py
 
+
+      - name: Restore markdown data
+        uses: actions/cache@v3
+        with:
+          path: markdown.pickle
+          key: markdown.pickle
+
       - name: generate release note
         run: python release_note.py `git show --format='%H' --no-patch`
 
