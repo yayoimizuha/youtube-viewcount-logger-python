@@ -2,13 +2,12 @@ import datetime
 from os.path import exists, join
 from os import getcwd, environ
 from pprint import pprint
-from tweepy import API, OAuth1UserHandler, TweepyException
 from const import frame_collector, playlists
 from pandas import Series
 from datetime import datetime
 
 
-def tweet(api:API, text: str, media: list[str], raw: bool, name: str = "") -> None:
+def tweet(api: API, text: str, media: list[str], raw: bool, name: str = "") -> None:
     if raw is True:
         return api.update_status(text)
     if text == '':
@@ -58,11 +57,12 @@ def generate_txt() -> dict[str, (str, list[str])]:
 
 if __name__ == '__main__':
 
+    from tweepy import API, OAuth1UserHandler, TweepyException
+
     consumer_key = environ['API_KEY']
     consumer_secret = environ['API_SECRET']
     access_token = environ['ACCESS_TOKEN']
     access_token_secret = environ['ACCESS_TOKEN_SECRET']
-
 
     auth = OAuth1UserHandler(
         consumer_key=consumer_key,
