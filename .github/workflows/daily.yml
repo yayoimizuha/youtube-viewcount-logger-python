@@ -82,7 +82,7 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           if (git diff --shortstat | grep '[0-9]'); then \
             git status; \
-            git add save.sqlite save.xlsx graph/* html/* table/* tsvs/* -f; \
+            git add save.sqlite graph/* html/* table/* tsvs/* -f; \
             git commit -m "Daily updates"; \
             git push origin HEAD:${GITHUB_REF} -f ; \
           fi
