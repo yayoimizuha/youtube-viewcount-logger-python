@@ -48,6 +48,7 @@ jobs:
           pipenv install -q
           pip freeze
           if (eval ${{ env.RUN_HEAVY }}); then \
+            echo 'remove old files'
             rm -rf images/*
             rm -rf html/*
           fi
