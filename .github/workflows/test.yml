@@ -162,8 +162,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-          export.xlsx
-          release_note.md
+            export.xlsx
+            release_note.md
           tag_name: ${{ steps.versioning.outputs.tag_name }}
           name: ${{ steps.versioning.outputs.tag_name }}
           generate_release_notes: false
