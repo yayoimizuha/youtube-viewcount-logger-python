@@ -145,6 +145,9 @@ jobs:
       - name: convert SQLite to Excel
         run: python excel_exporter.py
 
+      - name: generate release note
+        run: python release_note.py `git show --format='%H' --no-patch`
+
       - name: Tagging
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
@@ -158,7 +161,9 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: export.xlsx
+          files: |
+          export.xlsx
+          release_note.md
           tag_name: ${{ steps.versioning.outputs.tag_name }}
           name: ${{ steps.versioning.outputs.tag_name }}
           generate_release_notes: false

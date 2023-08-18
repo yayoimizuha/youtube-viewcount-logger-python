@@ -1,7 +1,7 @@
 from os.path import join
 from pprint import pprint
 from tweet import generate_txt
-from sys import stdout, __stdout__
+from sys import stdout, __stdout__,argv
 from os import devnull, getcwd
 from urllib.parse import quote
 from pickle import load
@@ -18,7 +18,7 @@ for key, value in update_data.items():
     release_note_md += value[0].split('\n', maxsplit=1)[1].replace('\n', '  \n') + '\n'
     release_note_md += f'  {markdown_table_dict[key]}  \n'
     release_note_md += (f'![{key}の再生回数の推移](https://raw.githubusercontent.com/yayoimizuha/youtube-viewcount-logger'
-                        f'-python/master/graph/{quote(key)}.png)\n  \n')
+                        f'-python/{argv[1]}/graph/{quote(key)}.png)\n  \n')
 
 with open(file=join(getcwd(), 'release_note.md'), mode='w') as f:
     f.write(release_note_md)
