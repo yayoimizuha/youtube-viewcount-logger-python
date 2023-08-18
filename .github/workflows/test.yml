@@ -79,6 +79,12 @@ jobs:
           pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
+      - name: Cache markdown data
+        uses: actions/cache@v3
+        with:
+          path: markdown.pickle
+          key: markdown.pickle
+
       - name: make change
         if: ${{ env.RUN_HEAVY != 'true' }}
         run: echo `date` > change.txt
