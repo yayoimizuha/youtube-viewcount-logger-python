@@ -79,6 +79,12 @@ jobs:
           pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
+      - name: Cache markdown data
+        uses: actions/cache@v3
+        with:
+          path: markdown.pickle
+          key: markdown.pickle
+
       - name: make change
         if: ${{ env.RUN_HEAVY != 'true' }}
         run: echo `date` > change.txt
@@ -144,6 +150,13 @@ jobs:
 
       - name: convert SQLite to Excel
         run: python excel_exporter.py
+
+
+      - name: Restore markdown data
+        uses: actions/cache@v3
+        with:
+          path: markdown.pickle
+          key: markdown.pickle
 
       - name: generate release note
         run: python release_note.py `git show --format='%H' --no-patch`
