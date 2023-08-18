@@ -7,7 +7,7 @@ from pandas import Series
 from datetime import datetime
 
 
-def tweet(api: API, text: str, media: list[str], raw: bool, name: str = "") -> None:
+def tweet(api, text: str, media: list[str], raw: bool, name: str = "") -> None:
     if raw is True:
         return api.update_status(text)
     if text == '':
