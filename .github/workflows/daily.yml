@@ -169,7 +169,10 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: export.xlsx
+          files: |
+            export.xlsx
+            daily_report.md
+          body_path: release_note.md
           tag_name: ${{ steps.versioning.outputs.tag_name }}
           name: ${{ steps.versioning.outputs.tag_name }}
           generate_release_notes: false
