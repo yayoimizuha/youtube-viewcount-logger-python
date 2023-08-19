@@ -83,6 +83,8 @@ jobs:
         run: |
           gh extension install actions/gh-actions-cache
           gh actions-cache delete markdown.pickle --confirm
+
+
       - name: Cache markdown data
         uses: actions/cache@v3
         with:
@@ -164,7 +166,7 @@ jobs:
       - name: generate daily report & release note
         run: |
           python daily_report.py `git show --format='%H' --no-patch`
-          grep -e "^[#🥇🥈🥉]" daily_report.md > release_note.md
+          grep -e "^[#🥇🥈🥉]" daily_report.md | sed -e '/^#/! s/\([~|#]\)/\\\1/g'
 
       - name: Tagging
         run: |
