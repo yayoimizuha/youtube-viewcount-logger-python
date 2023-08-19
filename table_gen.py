@@ -1,6 +1,7 @@
-from pickle import load, dump
+from pickle import dump
 from multiprocessing import Process
 from sys import stdout, stderr
+from subprocess import run
 from pandas import to_datetime, Int64Dtype, isna, concat, NA
 from const import html_base, frame_collector
 from os import getcwd, makedirs
@@ -108,10 +109,10 @@ if __name__ == '__main__':
         markdown_dict[key] = table_data.replace(NA, 'no data').to_markdown().replace('--nl--', '')
         if table_data.index.__len__() > 15:
             table_data = table_data.loc[table_data.index[:15], :]
-        # with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
-        #     f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))
-        # run(['/opt/firefox/firefox', '--screenshot', join(getcwd(), 'table', f'{key}.png'),
-        #      f'http://127.0.0.1:8888/html/{key}.html', '--window-size=3000,3000'], stdout=stdout, stderr=stderr)
+        with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
+            f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))
+        #run(['/opt/firefox/firefox', '--screenshot', join(getcwd(), 'table', f'{key}.png'),
+        #     f'http://127.0.0.1:8888/html/{key}.html', '--window-size=3000,3000'], stdout=stdout, stderr=stderr)
         crop(key)
 
     serve.terminate()
