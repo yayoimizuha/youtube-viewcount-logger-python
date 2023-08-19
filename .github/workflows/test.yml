@@ -86,7 +86,6 @@ jobs:
           key: markdown.pickle
 
       - name: make change
-        if: ${{ env.RUN_HEAVY != 'true' }}
         run: echo `date` > change.txt
 
         
