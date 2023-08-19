@@ -86,7 +86,6 @@ jobs:
           key: markdown.pickle
 
       - name: make change
-        if: ${{ env.RUN_HEAVY != 'true' }}
         run: echo `date` > change.txt
 
         
@@ -158,8 +157,10 @@ jobs:
           path: markdown.pickle
           key: markdown.pickle
 
-      - name: generate release note
-        run: python release_note.py `git show --format='%H' --no-patch`
+      - name: generate daily report & release note
+        run: |
+          python daily_report.py `git show --format='%H' --no-patch`
+          grep -e "^[#\360]" daily_report.md > release_note.md
 
       - name: Tagging
         run: |
@@ -176,7 +177,8 @@ jobs:
         with:
           files: |
             export.xlsx
-            release_note.md
+            daily_report.md
+          body_path: release_note.md
           tag_name: ${{ steps.versioning.outputs.tag_name }}
           name: ${{ steps.versioning.outputs.tag_name }}
           generate_release_notes: false
