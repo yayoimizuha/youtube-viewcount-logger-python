@@ -13,7 +13,7 @@ env:
   DEBUG: YES
   FIREBASE_CREDENTIAL: ${{ secrets.FIREBASE_CREDENTIAL }}
   TZ: 'Asia/Tokyo'
-  RUN_HEAVY: 'false'
+  RUN_HEAVY: 'true'
 
 
 on:
@@ -73,7 +73,6 @@ jobs:
 
 
       - name: generate table
-        # if: ${{ env.RUN_HEAVY == 'true' }}
         id: table_gen-py
         run: |
           pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
@@ -166,7 +165,7 @@ jobs:
       - name: generate daily report & release note
         run: |
           python daily_report.py `git show --format='%H' --no-patch`
-          grep -e "^[#🥇🥈🥉]" daily_report.md | sed -e '/^#/! s/\([~|#]\)/\\\1/g'
+          grep -e "^[#🥇🥈🥉]" daily_report.md | sed -e '/^#/! s/\([~|#]\)/\\\1/g' > release_note.md
 
       - name: Tagging
         run: |
