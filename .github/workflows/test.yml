@@ -160,7 +160,7 @@ jobs:
       - name: generate daily report & release note
         run: |
           python daily_report.py `git show --format='%H' --no-patch`
-          grep -e "^[#\360]" daily_report.md > release_note.md
+          grep -e "^[#🥇🥈🥉]" daily_report.md > release_note.md
 
       - name: Tagging
         run: |
