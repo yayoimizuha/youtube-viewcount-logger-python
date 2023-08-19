@@ -79,6 +79,10 @@ jobs:
           pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
+      - name: Delete markdown data
+        run: |
+          gh extension install actions/gh-actions-cache
+          gh actions-cache delete markdown.pickle --confirm
       - name: Cache markdown data
         uses: actions/cache@v3
         with:
