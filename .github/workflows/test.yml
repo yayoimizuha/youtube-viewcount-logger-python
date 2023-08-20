@@ -73,9 +73,10 @@ jobs:
 
 
       - name: Delete markdown data
+        continue-on-error: true
         run: |
           gh extension install actions/gh-actions-cache
-          gh actions-cache delete markdown.pickle --confirm || true
+          gh actions-cache delete markdown.pickle --confirm
 
 
       - name: generate table
