@@ -60,7 +60,8 @@ def playlists():
         ['PLFMni9aeqKTzwxJrS92a6zbxKQiYydGkG', '後藤真希', True],
         ['PLFMni9aeqKTxJqAbOc60917KKfOsAmjqD', '中澤裕子', True],
         ['PLFMni9aeqKTxNAXGrN4VW_qpYD1fLoI5H', 'メロン記念日', True],
-        ['PLFMni9aeqKTzGddgeMhbXMhXgz8dMgaJs', '太陽とシスコムーン', True]
+        ['PLFMni9aeqKTzGddgeMhbXMhXgz8dMgaJs', '太陽とシスコムーン', True],
+        ['PLXok3xPFmG2DWOqD9q7yGm608F6gNjUIx', '稲場愛香', True]
     ]
 
 
