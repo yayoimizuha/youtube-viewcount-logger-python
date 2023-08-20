@@ -33,6 +33,7 @@ def graph_gen() -> None:
         pyplot.rcParams["figure.dpi"] = 240
         pyplot.rcParams["figure.figsize"] = (16, 9)
         pyplot.rcParams["axes.formatter.use_mathtext"] = True
+        value.index = value.index.strftime("%Y/%-m/%-d")
         value.plot()
         pyplot.legend(loc='upper left', borderaxespad=1)
         pyplot.xlabel('日付')
