@@ -61,7 +61,8 @@ def playlists():
         ['PLFMni9aeqKTxJqAbOc60917KKfOsAmjqD', '中澤裕子', True],
         ['PLFMni9aeqKTxNAXGrN4VW_qpYD1fLoI5H', 'メロン記念日', True],
         ['PLFMni9aeqKTzGddgeMhbXMhXgz8dMgaJs', '太陽とシスコムーン', True],
-        ['PLXok3xPFmG2DWOqD9q7yGm608F6gNjUIx', '稲場愛香', True]
+        ['PLXok3xPFmG2DWOqD9q7yGm608F6gNjUIx', '稲場愛香', True],
+        ['PLXok3xPFmG2DsiyGQD2A5Elihz05RVIR-', 'M-line Music', False]
     ]
 
 
