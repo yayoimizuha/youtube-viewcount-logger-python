@@ -33,6 +33,7 @@ jobs:
       - name: check env
         run: echo ${{ env.RUN_HEAVY == 'true' }}
 
+
       - name: Install Firefox
         run: bash < firefox-install.sh
         
@@ -159,7 +160,7 @@ jobs:
 
       - name: generate daily report & release note
         run: |
-          python daily_report.py $GITHUB_SHA
+          python daily_report.py ${GITHUB_SHA}
           grep -e "^[#🥇🥈🥉]" daily_report.md | sed -e '/^#/! s/\([~|#]\)/\\\1/g' > release_note.md
 
       - name: Tagging
