@@ -83,7 +83,7 @@ jobs:
         continue-on-error: true
         with:
           path: markdown.pickle
-          key: ${GITHUB_SHA}-markdown.pickle
+          key: $GITHUB_SHA-markdown.pickle
 
       - name: make change
         run: echo `date` > change.txt
@@ -156,11 +156,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: markdown.pickle
-          key: ${GITHUB_SHA}-markdown.pickle
+          key: $GITHUB_SHA-markdown.pickle
 
       - name: generate daily report & release note
         run: |
-          python daily_report.py ${GITHUB_SHA}
+          python daily_report.py $GITHUB_SHA
           grep -e "^[#🥇🥈🥉]" daily_report.md | sed -e '/^#/! s/\([~|#]\)/\\\1/g' > release_note.md
 
       - name: Tagging
