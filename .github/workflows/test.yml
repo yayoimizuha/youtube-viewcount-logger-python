@@ -83,7 +83,7 @@ jobs:
         continue-on-error: true
         with:
           path: markdown.pickle
-          key: $GITHUB_SHA-markdown.pickle
+          key: ${{ github.sha }}-markdown.pickle
 
       - name: make change
         run: echo `date` > change.txt
@@ -156,7 +156,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: markdown.pickle
-          key: $GITHUB_SHA-markdown.pickle
+          key: ${{ github.sha }}-markdown.pickle
 
       - name: generate daily report & release note
         run: |
