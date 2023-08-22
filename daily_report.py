@@ -6,11 +6,13 @@ from urllib.parse import quote
 from pickle import load
 
 with open(file=join(getcwd(), 'markdown.pickle'), mode='rb') as f:
-    markdown_table_dict = load(file=f)
+    markdown_table_dict: dict[str, str] = load(file=f)
 
 update_data = generate_txt()
 release_note_md = str()
 for key, value in update_data.items():
+    if key not in markdown_table_dict.keys():
+        continue
     print(key, flush=True)
     release_note_md += f'## {key}\n'
     release_note_md += value[0].split('\n', maxsplit=1)[1].replace('\n', '  \n') + '\n'
