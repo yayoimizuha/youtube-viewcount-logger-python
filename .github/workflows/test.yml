@@ -33,16 +33,6 @@ jobs:
       - name: check env
         run: echo ${{ env.RUN_HEAVY == 'true' }}
 
-      - name: Get previous commit hash
-        id: hash
-        run: git show --format='%H' --no-patch
-
-      - name: env check
-        run: |
-          echo $GITHUB_REF
-          echo $GITHUB_RUN_ID
-          echo $GITHUB_SHA
-
       - name: Install Firefox
         run: bash < firefox-install.sh
         
@@ -80,13 +70,6 @@ jobs:
         continue-on-error: true
 
 
-      - name: Delete markdown data
-        continue-on-error: true
-        run: |
-          gh extension install actions/gh-actions-cache
-          gh actions-cache delete markdown.pickle --confirm
-
-
       - name: generate table
         id: table_gen-py
         run: |
@@ -99,7 +82,7 @@ jobs:
         continue-on-error: true
         with:
           path: markdown.pickle
-          key: markdown.pickle
+          key: ${GITHUB_SHA}-markdown.pickle
 
       - name: make change
         run: echo `date` > change.txt
@@ -160,13 +143,6 @@ jobs:
           pip install -q pandas lxml styleframe openpyxl
           
 
-      - name: env check
-        run: |
-          echo $GITHUB_REF
-          echo $GITHUB_RUN_ID
-          echo $GITHUB_SHA
-
-
       - name: Version
         id: versioning
         run: echo "tag_name=test-`date '+%Y.%m.%d-%H.%M.%S.%4N'`" >> "$GITHUB_OUTPUT"
@@ -179,11 +155,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: markdown.pickle
-          key: markdown.pickle
+          key: ${GITHUB_SHA}-markdown.pickle
 
       - name: generate daily report & release note
         run: |
-          python daily_report.py `git show --format='%H' --no-patch`
+          python daily_report.py $GITHUB_SHA
           grep -e "^[#🥇🥈🥉]" daily_report.md | sed -e '/^#/! s/\([~|#]\)/\\\1/g' > release_note.md
 
       - name: Tagging
