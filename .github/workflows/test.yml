@@ -163,10 +163,10 @@ jobs:
 
       - name: env check
         run: |
-          echo ${{ GITHUB_HEAD_REF }}
-          echo ${{ GITHUB_REF }}
-          echo ${{ GITHUB_RUN_ID }}
-          echo ${{ GITHUB_SHA }}
+          echo ${ GITHUB_HEAD_REF }
+          echo ${ GITHUB_REF }
+          echo ${ GITHUB_RUN_ID }
+          echo ${ GITHUB_SHA }
 
 
       - name: Version
