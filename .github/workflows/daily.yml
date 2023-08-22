@@ -62,13 +62,6 @@ jobs:
         continue-on-error: true
 
 
-      - name: Delete markdown data
-        continue-on-error: true
-        run: |
-          gh extension install actions/gh-actions-cache
-          gh actions-cache delete markdown.pickle --confirm
-
-
       - name: generate table & markdown data
         id: table_gen-py
         run: |
@@ -80,7 +73,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: markdown.pickle
-          key: markdown.pickle
+          key: ${{ github.sha }}-markdown.pickle
 
 
       - name: tweet
@@ -151,11 +144,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: markdown.pickle
-          key: markdown.pickle
+          key: ${{ github.sha }}-markdown.pickle
 
       - name: generate daily report & release note
         run: |
-          python daily_report.py `git show --format='%H' --no-patch`
+          python daily_report.py $GITHUB_SHA
           grep -e "^[#🥇🥈🥉]" daily_report.md | sed -e '/^#/! s/\([~|#]\)/\\\1/g' > release_note.md
 
 
