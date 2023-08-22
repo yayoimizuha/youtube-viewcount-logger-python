@@ -33,10 +33,6 @@ jobs:
       - name: check env
         run: echo ${{ env.RUN_HEAVY == 'true' }}
 
-      - name: Get previous commit hash
-        id: hash
-        run: git show --format='%H' --no-patch
-
 
       - name: Install Firefox
         run: bash < firefox-install.sh
