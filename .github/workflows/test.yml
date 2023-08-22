@@ -33,6 +33,17 @@ jobs:
       - name: check env
         run: echo ${{ env.RUN_HEAVY == 'true' }}
 
+      - name: Get previous commit hash
+        id: hash
+        run: git show --format='%H' --no-patch
+
+      - name: env check
+        run: |
+          echo ${{ GITHUB_HEAD_REF }}
+          echo ${{ GITHUB_REF }}
+          echo ${{ GITHUB_RUN_ID }}
+          echo ${{ GITHUB_SHA }}
+
       - name: Install Firefox
         run: bash < firefox-install.sh
         
@@ -51,11 +62,9 @@ jobs:
             echo 'remove old files'
             rm -rf images/*
             rm -rf html/*
-          fi
-          
-        
-        
-        
+          fi        
+
+
       - name: get today data
         if: ${{ env.RUN_HEAVY == 'true' }}
         id: main-async-py
@@ -88,6 +97,7 @@ jobs:
 
       - name: Cache markdown data
         uses: actions/cache@v3
+        continue-on-error: true
         with:
           path: markdown.pickle
           key: markdown.pickle
