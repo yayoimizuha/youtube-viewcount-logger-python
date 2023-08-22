@@ -39,9 +39,9 @@ jobs:
 
       - name: env check
         run: |
-          echo ${ GITHUB_REF }
-          echo ${ GITHUB_RUN_ID }
-          echo ${ GITHUB_SHA }
+          echo $GITHUB_REF
+          echo $GITHUB_RUN_ID
+          echo $GITHUB_SHA
 
       - name: Install Firefox
         run: bash < firefox-install.sh
@@ -162,9 +162,9 @@ jobs:
 
       - name: env check
         run: |
-          echo ${ GITHUB_REF }
-          echo ${ GITHUB_RUN_ID }
-          echo ${ GITHUB_SHA }
+          echo $GITHUB_REF
+          echo $GITHUB_RUN_ID
+          echo $GITHUB_SHA
 
 
       - name: Version
