@@ -150,8 +150,6 @@ jobs:
         id: versioning
         run: echo "tag_name=test-`date '+%Y.%m.%d-%H.%M.%S.%4N'`" >> "$GITHUB_OUTPUT"
 
-      - name: convert SQLite to Excel
-        run: python excel_exporter.py
 
       - run: rm save.sqlite
 
@@ -164,6 +162,11 @@ jobs:
             save.sqlite
           key: ${{ github.sha }}-cache
 
+
+      - name: convert SQLite to Excel
+        run: python excel_exporter.py
+
+
       - name: generate daily report & release note
         run: |
           python daily_report.py $GITHUB_SHA
@@ -173,7 +176,7 @@ jobs:
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add export.xlsx
+          git add export.xlsx save.sqlite          
           git commit -m "convert SQLite to Excel"
           git tag ${{ steps.versioning.outputs.tag_name }}
           git push origin ${{ steps.versioning.outputs.tag_name }}         
