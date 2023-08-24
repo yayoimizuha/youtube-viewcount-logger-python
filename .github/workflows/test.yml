@@ -71,7 +71,7 @@ jobs:
         continue-on-error: true
 
 
-      - name: generate table
+      - name: generate table & markdown data
         id: table_gen-py
         run: |
           pipenv run python table_gen.py 2>&1 | tee -a ./out.txt

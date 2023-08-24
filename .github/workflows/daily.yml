@@ -72,8 +72,10 @@ jobs:
       - name: Cache markdown data
         uses: actions/cache@v3
         with:
-          path: markdown.pickle
-          key: ${{ github.sha }}-markdown.pickle
+          path: |
+            markdown.pickle
+            save.sqlite
+          key: ${{ github.sha }}-cache
 
 
       - name: tweet
@@ -140,11 +142,21 @@ jobs:
         run: python excel_exporter.py
 
 
+      - run: rm save.sqlite
+
+
       - name: Restore markdown data
         uses: actions/cache@v3
         with:
-          path: markdown.pickle
-          key: ${{ github.sha }}-markdown.pickle
+          path: |
+            markdown.pickle
+            save.sqlite
+          key: ${{ github.sha }}-cache
+
+
+      - name: convert SQLite to Excel
+        run: python excel_exporter.py
+
 
       - name: generate daily report & release note
         run: |
