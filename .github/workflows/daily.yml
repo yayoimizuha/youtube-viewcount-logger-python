@@ -138,8 +138,8 @@ jobs:
         id: versioning
         run: echo "tag_name=`date '+%Y.%m.%d'`" >> "$GITHUB_OUTPUT"
 
-      - name: convert SQLite to Excel
-        run: python excel_exporter.py
+      # - name: convert SQLite to Excel
+        # run: python excel_exporter.py
 
 
       - run: rm save.sqlite
