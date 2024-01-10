@@ -11,9 +11,15 @@ from unicodedata import east_asian_width, normalize
 from PIL import Image
 from PIL.ImageChops import difference
 
+firefox_path = r"C:\Program Files\Firefox Developer Edition\firefox.exe"
+
+
+# firefox_path = "/opt/firefox/firefox"
+
 
 def http_server() -> None:
     from http.server import HTTPServer, SimpleHTTPRequestHandler
+
     class SimpleServer(SimpleHTTPRequestHandler, object):
         def do_GET(self) -> None:
             super(SimpleServer, self).do_GET()
@@ -87,6 +93,8 @@ if __name__ == '__main__':
                        axis=1)
         value = concat([value, (value[value.columns[-2]] - value[value.columns[-3]]).rename('today_displace')], axis=1)
         table_data = value[value.columns[-3:]]
+        # table_data = table_data.astype(object)
+        table_data = table_data.assign(displace="")
         table_data.loc[table_data['yesterday_displace'] > table_data['today_displace'], ['displace']] = '↘'
         table_data.loc[table_data['yesterday_displace'] < table_data['today_displace'], ['displace']] = '↗'
         table_data.loc[table_data['yesterday_displace'] == table_data['today_displace'], ['displace']] = '➡'
@@ -111,7 +119,7 @@ if __name__ == '__main__':
             table_data = table_data.loc[table_data.index[:15], :]
         with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
             f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))
-        run(['/opt/firefox/firefox', '--screenshot', join(getcwd(), 'table', f'{key}.png'),
+        run([firefox_path, '--screenshot', join(getcwd(), 'table', f'{key}.png'),
              f'http://127.0.0.1:8888/html/{key}.html', '--window-size=3000,3000'], stdout=stdout, stderr=stderr)
         crop(key)
 
