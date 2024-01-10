@@ -10,6 +10,7 @@ from unicodedata import normalize
 
 def playlists():
     return [
+        # ' <--- youtube playlist key --->  <- group name -> <- is tweet? ->'
         ['PLAAEA82D2950BC77D', 'モーニング娘。', True],
         ['PL0DCF7F78614F3AE6', 'アンジュルム', True],
         ['PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur', 'Juice=Juice', True],
