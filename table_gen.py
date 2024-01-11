@@ -11,10 +11,10 @@ from unicodedata import east_asian_width, normalize
 from PIL import Image
 from PIL.ImageChops import difference
 
-firefox_path = r"C:\Program Files\Firefox Developer Edition\firefox.exe"
+# firefox_path = r"C:\Program Files\Firefox Developer Edition\firefox.exe"
 
 
-# firefox_path = "/opt/firefox/firefox"
+firefox_path = "/opt/firefox/firefox"
 
 
 def http_server() -> None:
