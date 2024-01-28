@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: check env
         run: echo ${{ env.RUN_HEAVY == 'true' }}
@@ -38,7 +38,7 @@ jobs:
         run: bash < firefox-install.sh
         
       - name: Set up Python 3.10
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.10"
           
@@ -79,7 +79,7 @@ jobs:
 
 
       - name: Cache markdown data
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         continue-on-error: true
         with:
           path: |
