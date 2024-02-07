@@ -69,7 +69,9 @@ jobs:
         continue-on-error: true
 
       - name: debug-ls
-        run: find . -maxdepth 2 -type f
+        run: |
+          find . -maxdepth 2 -type f
+          pwd
 
 
       - name: Cache markdown data
@@ -148,7 +150,9 @@ jobs:
       - run: rm save.sqlite
 
       - name: debug-ls
-        run: find . -maxdepth 2 -type f
+        run: |
+          find . -maxdepth 2 -type f
+          pwd
 
 
       - name: Restore markdown data
