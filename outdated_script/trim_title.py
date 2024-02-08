@@ -23,18 +23,22 @@ def trim_title(text, artist_name):
             or artist_name == '真野恵里菜' or artist_name == '鈴木愛理':
         return re.sub(r'\(.*', '', normalize('NFKC', text))
     if artist_name == 'Bitter & Sweet':
-        return re.sub(r'\(.*?\)', '', normalize('NFKC', text))
+        return re.sub(r'(』).*|(」).*', r'\1', normalize('NFKC', text))
     if artist_name == 'HANGRY&ANGRY':
         return normalize('NFKC', text).replace('VIDEO CLIP', '')
-    if artist_name == 'Juice=Juice' or artist_name == 'アンジュルム' or artist_name == '高橋愛・田中れいな・夏焼雅' \
-            or artist_name == 'BEYOOOOONDS' or artist_name == 'モーニング娘。' or artist_name == 'OCHA NORMA':
+    if (artist_name == 'アンジュルム' or artist_name == '高橋愛・田中れいな・夏焼雅' or artist_name == 'BEYOOOOONDS'
+            or artist_name == 'モーニング娘。' or artist_name == 'OCHA NORMA'):
         return re.sub(r'\(.*?\)|\[.*?]|MV|Promotion|Edit', '', normalize('NFKC', text))
+    if artist_name == 'Juice=Juice':
+        re.sub(r'(?P<main>.*)(』).*|(」).*', r'\g<main>\2', normalize('NFKC', text))
     if artist_name == 'LoVendoЯ':
         return re.sub(r'\(.*|\[.*', '', normalize('NFKC', text))
     if artist_name == '小片リサ':
         return re.sub(r'\-.*', '', normalize('NFKC', text))
     if artist_name == 'ハロプロダンス部':
         return re.sub(r'\(.*?\)', '', normalize('NFKC', text))
+    if artist_name == 'M-line Music':
+        return re.sub(r'Promotion Edit|-YouTube Edit-', '', normalize('NFKC', text))
 
     text = str(text).replace('(仮)', '@kari@')
     text = str(text).replace('（仮）', '@kari@')
