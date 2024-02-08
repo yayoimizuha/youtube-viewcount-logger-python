@@ -82,6 +82,10 @@ jobs:
             save.sqlite
           key: ${{ github.sha }}-cache
 
+      - name: debug-ls
+        run: |
+          find . -maxdepth 2 -type f
+          pwd
 
       - name: tweet
         id: tweet-py
