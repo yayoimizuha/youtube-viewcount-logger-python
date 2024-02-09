@@ -41,7 +41,7 @@ def fold_text(text: str, length: int = 20, delimiter='\n', max_length=70) -> str
         return width
 
     if text.__len__() == 0:
-        raise ""
+        return ""
     parser = load_default_japanese_parser()
     word_list = parser.parse(text)
     return_string = str()
