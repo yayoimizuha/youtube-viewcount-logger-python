@@ -1,3 +1,4 @@
+import re
 from datetime import date, timedelta
 from os import getcwd, path, stat
 from os.path import isfile, join
@@ -114,6 +115,8 @@ def trim_title(text: str, artist_name: str):
     if artist_name == '佐藤優樹':
         if '-One on One-' in text:
             return text.removeprefix('COVERS -One on One-')
+    if artist_name == 'M-line Music':
+        return re.sub(r'(」).*|(』).*|COVERS.*- ', r'\1\2', normalize('NFKC', text))
 
     text = str(text).replace('(仮)', '@kari@')
     text = str(text).replace('（仮）', '@kari@')
