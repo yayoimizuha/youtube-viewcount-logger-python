@@ -17,6 +17,7 @@ numba = "*"
 scipy = "*"
 budoux = "*"
 tabulate = "*"
+google-generativeai = "*"
 
 [dev-packages]
 autopep8 = "*"

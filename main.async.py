@@ -1,3 +1,4 @@
+import json
 from time import time
 from typing import NamedTuple
 from aiohttp import ClientSession
@@ -10,11 +11,13 @@ from sqlite3 import connect
 from pandas import read_sql, DataFrame, Int64Dtype, NA
 from datetime import date
 
+from gemini_title_cleaner import trim_title_with_ai
+
 YTV3_ENDPOINT = 'https://www.googleapis.com/youtube/v3'
 
-API_KEY = getenv('YTV3_API_KEY', default='')
-if API_KEY == '':
-    print('No API Key.')
+YTV3_API_KEY = getenv('YTV3_API_KEY', default='')
+if YTV3_API_KEY == '':
+    print('No YouTube Data v3 API Key.')
     exit(-1)
 
 SQLITE_DATABASE = join(getcwd(), 'save.sqlite')
@@ -26,7 +29,7 @@ makedirs('tsvs', exist_ok=True)
 
 def query_builder(resource_type: str,
                   arg: dict,
-                  key: str = API_KEY) -> str:
+                  key: str = YTV3_API_KEY) -> str:
     arg['key'] = key
     base_url: str = '/'.join([YTV3_ENDPOINT, resource_type])
     return f'{base_url}?{urlencode(arg)}'
@@ -60,7 +63,7 @@ async def list_playlist(playlist_key: str, artist_name: str, session: ClientSess
             next_page_token = resp['nextPageToken']
 
 
-async def get_video_data(video_key: str, artist_name: str, session: ClientSession) -> VideoInfo:
+async def get_video_data(video_key: str, artist_name: str, session: ClientSession, gemini_cache: dict) -> VideoInfo:
     query = {'arg': {'part': 'statistics,snippet',
                      'fields': 'items(snippet/title,statistics/viewCount)',
                      'id': video_key
@@ -69,7 +72,7 @@ async def get_video_data(video_key: str, artist_name: str, session: ClientSessio
     # print(resp)
     url = f'https://youtu.be/{video_key}'
     try:
-        title = trim_title(resp['items'][0]['snippet']['title'], artist_name=artist_name)
+        title = await trim_title_with_ai(resp['items'][0]['snippet']['title'], gemini_cache)
         view_count = int(resp['items'][0]['statistics']['viewCount'])
         return VideoInfo(isError=False, artist_name=artist_name, viewCount=view_count, title=title, url=url)
     except BaseException as exception:
@@ -99,7 +102,13 @@ async def runner() -> None:
     print(f"SQL index time: {time() - sql_index_time:2.3f}s")
 
     video_info_and_dataframe_settings_time = time()
-    await_video_data = gather(*[get_video_data(item, key, sess) for key, items in video_dict.items() for item in items])
+
+    with open(join(getcwd(), "gemini-cache.json"), mode="r", encoding="utf-8") as gemini_cache_file:
+        gemini_cache = json.loads(gemini_cache_file.read())
+    await_video_data = gather(
+        *[get_video_data(item, key, sess, gemini_cache) for key, items in video_dict.items() for item in items])
+    with open(join(getcwd(), "gemini-cache.json"), mode="r", encoding="utf-8") as gemini_cache_file:
+        gemini_cache_file.write(json.dumps(gemini_cache, indent=2, ensure_ascii=False))
 
     for dataframe_key in tables.keys():
         column_list = tables[dataframe_key].columns.tolist()[1:]
