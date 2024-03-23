@@ -107,7 +107,7 @@ async def runner() -> None:
         gemini_cache = json.loads(gemini_cache_file.read())
     await_video_data = gather(
         *[get_video_data(item, key, sess, gemini_cache) for key, items in video_dict.items() for item in items])
-    with open(join(getcwd(), "gemini-cache.json"), mode="r", encoding="utf-8") as gemini_cache_file:
+    with open(join(getcwd(), "gemini-cache.json"), mode="w", encoding="utf-8") as gemini_cache_file:
         gemini_cache_file.write(json.dumps(gemini_cache, indent=2, ensure_ascii=False))
 
     for dataframe_key in tables.keys():
