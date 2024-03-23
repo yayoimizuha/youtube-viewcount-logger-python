@@ -32,13 +32,13 @@
     "version": ""
   },
   "『「ひとりで生きられそう」って それってねえ、褒めているの？』(リリック・ビデオ)": {
-    "song_name": "ひとりで生きられそうって それってねえ、褒めているの？",
+    "song_name": "「ひとりで生きられそう」って それってねえ、褒めているの？",
     "singer": [],
-    "edition": "",
+    "edition": "リリック・ビデオ",
     "version": ""
   },
   "Juice=Juice『「ひとりで生きられそう」って それってねえ、褒めているの？』(Promotion Edit)": {
-    "song_name": "ひとりで生きられそうって それってねえ、褒めているの？",
+    "song_name": "「ひとりで生きられそう」って それってねえ、褒めているの？",
     "singer": [
       "Juice=Juice"
     ],
@@ -277,7 +277,7 @@
       "モーニング娘。'14"
     ],
     "edition": "",
-    "version": "Promotion Ver."
+    "version": ""
   },
   "W（ダブルユー）「淋しい熱帯魚」Music Video": {
     "song_name": "淋しい熱帯魚",
@@ -316,7 +316,7 @@
     "singer": [
       "モーニング娘。'14"
     ],
-    "edition": "Promotion Ver.",
+    "edition": "",
     "version": ""
   },
   "安倍なつみ「恋の花」Music Video": {
@@ -1601,7 +1601,7 @@
     "version": ""
   },
   "BEYOOOOONDS『こんなハズジャナカッター！』(BEYOOOOONDS[This is not how I pictured myself.])(Promotion Edit)": {
-    "song_name": "こんなハズジャナカッター",
+    "song_name": "こんなハズジャナカッター！",
     "singer": [
       "BEYOOOOONDS"
     ],
@@ -1884,7 +1884,7 @@
     "singer": [
       "道重さゆみ"
     ],
-    "edition": "Promotion Ver.",
+    "edition": "",
     "version": ""
   },
   "アップアップガールズ（仮）『君という仮説』(UP UP GIRLS kakko KARI) (MV)": {
@@ -2961,7 +2961,7 @@
     "version": ""
   },
   "つばきファクトリー『勇気 It's my Life！』Promotion Edit": {
-    "song_name": "勇気 It's my Life",
+    "song_name": "勇気 It's my Life！",
     "singer": [
       "つばきファクトリー"
     ],
@@ -6699,7 +6699,7 @@
     "version": ""
   },
   "Berryz工房『なんちゅう恋をやってるぅ YOU KNOW？』": {
-    "song_name": "なんちゅう恋をやってるぅ YOU KNOW",
+    "song_name": "なんちゅう恋をやってるぅ YOU KNOW？",
     "singer": [
       "Berryz工房"
     ],
@@ -7351,7 +7351,7 @@
     "singer": [
       "モーニング娘。'14"
     ],
-    "edition": "Promotion Ver.",
+    "edition": "",
     "version": ""
   },
   "森高千里 『鬼たいじ』 【セルフカヴァー】": {
@@ -7919,7 +7919,7 @@
       "モーニング娘。'14"
     ],
     "edition": "",
-    "version": "Promotion Ver."
+    "version": ""
   },
   "【MV】松原健之/ふるさとの空遠く（full.ver）": {
     "song_name": "ふるさとの空遠く",
@@ -8179,12 +8179,12 @@
     "version": ""
   },
   "ピーベリー 『キャベツ白書～春編～』 （MV）": {
-    "song_name": "キャベツ白書～春編～",
+    "song_name": "キャベツ白書",
     "singer": [
       "ピーベリー"
     ],
     "edition": "",
-    "version": ""
+    "version": "春編"
   },
   "松浦亜弥 『横浜ロンド』": {
     "song_name": "横浜ロンド",
@@ -8576,7 +8576,7 @@
     "version": ""
   },
   "つばきファクトリー『キャベツ白書～春編～』(Camellia Factory [The Cabbage Statement ~ Spring Version ]) (MV)": {
-    "song_name": "キャベツ白書～春編～",
+    "song_name": "キャベツ白書",
     "singer": [
       "つばきファクトリー"
     ],
@@ -11320,7 +11320,7 @@
       "モーニング娘。"
     ],
     "edition": "",
-    "version": ""
+    "version": "ロング Ver."
   },
   "段原瑠々「見上げてごらん夜の星を」カバー": {
     "song_name": "見上げてごらん夜の星を",
@@ -11328,7 +11328,7 @@
       "段原瑠々"
     ],
     "edition": "",
-    "version": ""
+    "version": "カバー"
   },
   "Berryz工房 『一丁目ロック！』": {
     "song_name": "一丁目ロック！",
@@ -12166,7 +12166,7 @@
     "version": ""
   },
   "”もうサイコー！”ミュージックビデオ by つばきファクトリー |「トロールズ： シング・ダンス・ハグ！」エンディングソング": {
-    "song_name": "もうサイコー！",
+    "song_name": "トロールズ： シング・ダンス・ハグ！",
     "singer": [
       "つばきファクトリー"
     ],
