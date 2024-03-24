@@ -492,7 +492,7 @@
     "singer": [
       "上國料萌衣"
     ],
-    "edition": "",
+    "edition": "カバー",
     "version": ""
   },
   "Juice=Juice『ポツリと』(Juice=Juice[Solitary])(Promotion Edit)": {
@@ -501,7 +501,7 @@
       "Juice=Juice"
     ],
     "edition": "",
-    "version": "Solitary"
+    "version": ""
   },
   "ROCK ALIVE (Live Rock Alive Complete at Nakano Sunplaza, 1992.9.30) (Including MC)": {
     "song_name": "ROCK ALIVE",
@@ -539,8 +539,8 @@
       "松原健之",
       "小林萌花(BEYOOOOONDS)"
     ],
-    "edition": "Piano Play Editバージョン",
-    "version": ""
+    "edition": "",
+    "version": "Piano Play Editバージョン"
   },
   "森高千里 『長男と田舎もん』 【セルフカヴァー】": {
     "song_name": "長男と田舎もん",
@@ -571,8 +571,8 @@
     "singer": [
       "Berryz工房"
     ],
-    "edition": "Dance Shot Ver.",
-    "version": ""
+    "edition": "",
+    "version": "Dance Shot Ver."
   },
   "上々軍団『悪友』(MV)": {
     "song_name": "悪友",
@@ -9195,17 +9195,17 @@
     "version": ""
   },
   "『Romantic -ロマンティック-』〜『戻れない夏』@Blue Note TOKYO": {
-    "song_name": "Romantic -ロマンティック-",
+    "song_name": "『Romantic -ロマンティック-』〜『戻れない夏』",
     "singer": [
-      "Blue Note TOKYO"
+      "森高千里"
     ],
-    "edition": "",
+    "edition": "Blue Note TOKYO",
     "version": ""
   },
   "バレバレ I LOVE YOU　Azusa Sekine Story": {
     "song_name": "バレバレ I LOVE YOU",
     "singer": [
-      "Azusa Sekine"
+      "関根 梓"
     ],
     "edition": "",
     "version": ""
@@ -11816,7 +11816,7 @@
     "version": ""
   },
   "TAKUI NAKAJIMA LIVE TOUR2017 THE SINGLES COLLECTION vol.2 ツアーCM②！": {
-    "song_name": "",
+    "song_name": "ツアーCM",
     "singer": [
       "TAKUI NAKAJIMA"
     ],
@@ -11880,7 +11880,7 @@
     "version": ""
   },
   "Berryz工房デビュー10周年": {
-    "song_name": "",
+    "song_name": "デビュー10周年",
     "singer": [
       "Berryz工房"
     ],
@@ -11938,7 +11938,7 @@
   "Kibun Sokai (The Singles Live 2018 Day2)": {
     "song_name": "Kibun Sokai",
     "singer": [
-      "The Singles"
+      "森高千里"
     ],
     "edition": "Live 2018 Day2",
     "version": ""
@@ -11956,7 +11956,7 @@
     "singer": [
       "小野瑞歩"
     ],
-    "edition": "",
+    "edition": "カバー",
     "version": ""
   },
   "OCHA NORMA『シェケナーレ』Promotion Edit": {
@@ -11980,7 +11980,7 @@
     "singer": [
       "鞘師里保"
     ],
-    "edition": "",
+    "edition": "Live Clip",
     "version": ""
   },
   "森高千里 『片思い (2015 Ver.)』 【セルフカヴァー】": {
@@ -11997,7 +11997,7 @@
       "夏焼雅"
     ],
     "edition": "",
-    "version": "Solo Dance Ver."
+    "version": "夏焼雅 Solo Dance Ver."
   },
   "安倍なつみ「恋のテレフォンGOAL」Music Video": {
     "song_name": "恋のテレフォンGOAL",
@@ -12021,8 +12021,8 @@
     "singer": [
       "アップアップガールズ（仮）"
     ],
-    "edition": "Dance Shot Ver.",
-    "version": ""
+    "edition": "",
+    "version": "Dance Shot Ver."
   },
   "吉川友『チャーミング勝負世代』（You Kikkawa [Charming generation]）MV": {
     "song_name": "チャーミング勝負世代",
@@ -12296,12 +12296,12 @@
     "version": ""
   },
   "MI-HA- (Moritaka Land Version)": {
-    "song_name": "MI-HA",
+    "song_name": "MI-HA-",
     "singer": [
       "Moritaka"
     ],
-    "edition": "Land Version",
-    "version": ""
+    "edition": "",
+    "version": "Moritaka Land Version"
   },
   "SALT5「GET UP！ラッパー」Music Video": {
     "song_name": "GET UP！ラッパー",

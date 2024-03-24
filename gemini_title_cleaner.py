@@ -69,7 +69,7 @@ async def trim_title_with_ai(string: str, cache: dict) -> str:
     
 """ + string]
         response = await model.generate_content_async(prompt_parts)
-        json_data = json.loads(response.text)
+        json_data: dict = json.loads(response.text)
         print("Generating title by Gemini ..." + response.text)
         cache[string] = json_data
         # with open(join(getcwd(), "gemini-cache.json"), mode="w", encoding="utf-8") as f:

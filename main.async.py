@@ -107,8 +107,6 @@ async def runner() -> None:
         gemini_cache = json.loads(gemini_cache_file.read())
     await_video_data = gather(
         *[get_video_data(item, key, sess, gemini_cache) for key, items in video_dict.items() for item in items])
-    with open(join(getcwd(), "gemini-cache.json"), mode="w", encoding="utf-8") as gemini_cache_file:
-        gemini_cache_file.write(json.dumps(gemini_cache, indent=2, ensure_ascii=False))
 
     for dataframe_key in tables.keys():
         column_list = tables[dataframe_key].columns.tolist()[1:]
@@ -120,6 +118,8 @@ async def runner() -> None:
 
     # noinspection PyTypeChecker
     video_data: tuple[VideoInfo] = await await_video_data
+    with open(join(getcwd(), "gemini-cache.json"), mode="w", encoding="utf-8") as gemini_cache_file:
+        gemini_cache_file.write(json.dumps(gemini_cache, indent=2, ensure_ascii=False))
 
     print(f"Video info and DataFrame settings time: {time() - video_info_and_dataframe_settings_time:2.3f}s")
     for video in video_data:

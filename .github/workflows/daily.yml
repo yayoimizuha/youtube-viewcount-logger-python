@@ -97,6 +97,7 @@ jobs:
       - name: push updates
         run: |
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+          git config --global core.quotepath off
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           if (git diff --shortstat | grep '[0-9]'); then \
