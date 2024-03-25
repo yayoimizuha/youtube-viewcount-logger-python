@@ -376,7 +376,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #5": {
-    "song_name": "",
+    "song_name": "密着 #5",
     "singer": [
       "田﨑あさひ"
     ],
@@ -749,7 +749,7 @@
     "version": "2015 Ver."
   },
   "田﨑あさひ 密着 #8": {
-    "song_name": "",
+    "song_name": "密着 #8",
     "singer": [
       "田﨑あさひ"
     ],
@@ -879,7 +879,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #4": {
-    "song_name": "",
+    "song_name": "密着 #4",
     "singer": [
       "田﨑あさひ"
     ],
@@ -1641,7 +1641,7 @@
     "version": ""
   },
   "Berryz工房ニューシングルタイトル発表動画": {
-    "song_name": "",
+    "song_name": "Berryz工房ニューシングルタイトル発表動画",
     "singer": [
       "Berryz工房"
     ],
@@ -1967,11 +1967,11 @@
     "version": ""
   },
   "清水佐紀1stDVD『ＳＡＫＩ』ダイジェスト": {
-    "song_name": "",
+    "song_name": "清水佐紀1stDVD『ＳＡＫＩ』",
     "singer": [
       "清水佐紀"
     ],
-    "edition": "",
+    "edition": "ダイジェスト",
     "version": ""
   },
   "森高千里 『ジン ジン ジングルベル 2015』 【セルフカヴァー】": {
@@ -2267,7 +2267,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 2013夏　第二回：長崎～大好きな場所編": {
-    "song_name": "",
+    "song_name": "密着 2013夏　第二回：長崎～大好きな場所編",
     "singer": [
       "田﨑あさひ"
     ],
@@ -2285,7 +2285,7 @@
     "singer": [
       "鞘師里保"
     ],
-    "edition": "",
+    "edition": "Official Music Video",
     "version": ""
   },
   "あなたは人気者": {
@@ -2454,7 +2454,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #6": {
-    "song_name": "",
+    "song_name": "密着 #6",
     "singer": [
       "田﨑あさひ"
     ],
@@ -2498,7 +2498,7 @@
     "singer": [
       "鞘師里保"
     ],
-    "edition": "",
+    "edition": "Live Clip",
     "version": ""
   },
   "モーニング娘。'17『ジェラシー ジェラシー』(Morning Musume。'17[Jealousy Jealousy])(Promotion Edit)": {
@@ -2557,7 +2557,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 2013夏　第一回：長崎～思い出の場所編": {
-    "song_name": "",
+    "song_name": "密着 2013夏　第一回：長崎～思い出の場所編",
     "singer": [
       "田﨑あさひ"
     ],
@@ -2792,7 +2792,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #12": {
-    "song_name": "",
+    "song_name": "密着 #12",
     "singer": [
       "田﨑あさひ"
     ],
@@ -2995,8 +2995,9 @@
   "カントリー娘｡に紺野と藤本(モーニング娘｡)「浮気なハニーパイ」Music Video": {
     "song_name": "浮気なハニーパイ",
     "singer": [
-      "カントリー娘｡に紺野と藤本",
-      "モーニング娘｡"
+      "カントリー娘｡",
+      "紺野あさ美",
+      "藤本美貴"
     ],
     "edition": "",
     "version": ""
@@ -3087,7 +3088,7 @@
     "singer": [
       "田﨑あさひ"
     ],
-    "edition": "",
+    "edition": "弾き語り #1",
     "version": ""
   },
   "安倍なつみ「甘すぎた果実」Music Video": {
@@ -3268,8 +3269,8 @@
     "singer": [
       "田﨑あさひ"
     ],
-    "edition": "",
-    "version": "カバー"
+    "edition": "カバー",
+    "version": ""
   },
   "Berryz工房 『21時までのシンデレラ』": {
     "song_name": "21時までのシンデレラ",
@@ -3410,15 +3411,15 @@
       "上々軍団",
       "中島卓偉"
     ],
-    "edition": "コットンver",
-    "version": ""
+    "edition": "",
+    "version": "コットンver"
   },
   "松浦亜弥 「渡良瀬橋」 ビデオクリップ": {
     "song_name": "渡良瀬橋",
     "singer": [
       "松浦亜弥"
     ],
-    "edition": "",
+    "edition": "ビデオクリップ",
     "version": ""
   },
   "森高千里 『HEY! VODKA』 【セルフカヴァー】": {
@@ -4004,7 +4005,7 @@
     "version": ""
   },
   "真野恵里菜 「元気者で行こう！」(MV)": {
-    "song_name": "元気者で行こう",
+    "song_name": "元気者で行こう！",
     "singer": [
       "真野恵里菜"
     ],
@@ -4211,7 +4212,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #3": {
-    "song_name": "",
+    "song_name": "密着 #3",
     "singer": [
       "田﨑あさひ"
     ],
@@ -4459,8 +4460,10 @@
     "version": ""
   },
   "MERGE": {
-    "song_name": "",
-    "singer": [],
+    "song_name": "MERGE",
+    "singer": [
+      "鞘師里保"
+    ],
     "edition": "",
     "version": ""
   },
@@ -4831,8 +4834,8 @@
     "singer": [
       "田﨑あさひ"
     ],
-    "edition": "",
-    "version": "カバー"
+    "edition": "カバー",
+    "version": ""
   },
   "Berryz工房「Loving you Too much」(Party Ver.)": {
     "song_name": "Loving you Too much",
@@ -5256,8 +5259,10 @@
     "version": ""
   },
   "alchemy": {
-    "song_name": "",
-    "singer": [],
+    "song_name": "alchemy",
+    "singer": [
+      "鞘師里保"
+    ],
     "edition": "",
     "version": ""
   },
@@ -5642,7 +5647,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #11": {
-    "song_name": "",
+    "song_name": "密着 #11",
     "singer": [
       "田﨑あさひ"
     ],
@@ -5715,7 +5720,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 2013夏　第三回：長崎 初ライブ編": {
-    "song_name": "",
+    "song_name": "密着 2013夏　第三回：長崎 初ライブ編",
     "singer": [
       "田﨑あさひ"
     ],
@@ -6675,7 +6680,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #9": {
-    "song_name": "",
+    "song_name": "密着 #9",
     "singer": [
       "田﨑あさひ"
     ],
@@ -6683,7 +6688,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #2": {
-    "song_name": "",
+    "song_name": "密着 #2",
     "singer": [
       "田﨑あさひ"
     ],
@@ -7025,7 +7030,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 2013夏　第四回：友達との再会編": {
-    "song_name": "",
+    "song_name": "密着 2013夏　第四回：友達との再会編",
     "singer": [
       "田﨑あさひ"
     ],
@@ -7395,7 +7400,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 2013夏　最終章：憧れのステージ編": {
-    "song_name": "",
+    "song_name": "密着 2013夏　最終章：憧れのステージ編",
     "singer": [
       "田﨑あさひ"
     ],
@@ -7556,7 +7561,7 @@
       "真野恵里菜"
     ],
     "edition": "",
-    "version": ""
+    "version": "東京タワー"
   },
   "後藤真希「溢れちゃう．．．BE IN LOVE」Music Video": {
     "song_name": "溢れちゃう．．．BE IN LOVE",
@@ -8256,7 +8261,7 @@
       "鈴木愛理",
       "Blue Vintage"
     ],
-    "edition": "",
+    "edition": "MV making teaser movie",
     "version": ""
   },
   "モーニング娘。 『I WISH』 (MV)": {
@@ -8953,7 +8958,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #7": {
-    "song_name": "",
+    "song_name": "密着 #7",
     "singer": [
       "田﨑あさひ"
     ],
@@ -9371,7 +9376,7 @@
     "singer": [
       "田﨑あさひ"
     ],
-    "edition": "",
+    "edition": "カバー",
     "version": ""
   },
   "松浦亜弥 『only one』": {
@@ -9484,7 +9489,7 @@
     "singer": [
       "真野恵里菜"
     ],
-    "edition": "",
+    "edition": "発売記念ミニライブ＆握手会",
     "version": ""
   },
   "森高千里 『Two of me』 【セルフカヴァー】": {
@@ -9674,7 +9679,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #1": {
-    "song_name": "",
+    "song_name": "密着 #1",
     "singer": [
       "田﨑あさひ"
     ],
@@ -9800,7 +9805,7 @@
     "version": ""
   },
   "田﨑あさひ 密着 #10": {
-    "song_name": "",
+    "song_name": "密着 #10",
     "singer": [
       "田﨑あさひ"
     ],
@@ -10134,8 +10139,10 @@
     "version": "full.ver"
   },
   "田﨑あさひ 密着 2013夏　第五回：母校を訪問編": {
-    "song_name": "",
-    "singer": [],
+    "song_name": "密着 2013夏　第五回：母校を訪問編",
+    "singer": [
+      "田﨑あさひ"
+    ],
     "edition": "",
     "version": ""
   },
@@ -11021,11 +11028,11 @@
     "version": "ver.0"
   },
   "鞘師里保 - RIHO SAYASHI 1st Live＆Documentary DAYBREAK  (Official Teaser Movie2)": {
-    "song_name": "",
+    "song_name": "RIHO SAYASHI 1st Live＆Documentary DAYBREAK",
     "singer": [
       "鞘師里保"
     ],
-    "edition": "",
+    "edition": "Official Teaser Movie2",
     "version": ""
   },
   "浅倉樹々「夢見る少女じゃいられない」歌唱動画": {
@@ -11538,7 +11545,9 @@
   },
   "あぁ！「FIRST KISS」Music Video": {
     "song_name": "FIRST KISS",
-    "singer": [],
+    "singer": [
+      "あぁ！"
+    ],
     "edition": "",
     "version": ""
   },
