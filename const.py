@@ -67,7 +67,8 @@ def playlists():
         ['PLXok3xPFmG2DsiyGQD2A5Elihz05RVIR-', 'M-line Music', True],
         ['PLFMni9aeqKTwIf7DShjl6y2Lf2-MGUvd3', 'タンポポ', False],
         ['PLFMni9aeqKTw00DcNa2h05AdhzJCr-eiV', 'プッチモニ', False],
-        ['PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', 'ミニモニ。', False]
+        ['PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', 'ミニモニ。', False],
+        ['PLCpSIn0xlyXmU10v0Lh6dO7PcPUYESTq2', 'ME:I', True]
     ]
 
 
