@@ -96,7 +96,7 @@ async def runner() -> None:
     cursor.close()
     tables = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index') for name in table_name}
     for key, table in tables.items():
-        table.reindex(columns=['タイトル'] + sorted(table.columns.tolist()[1:]))
+        tables[key] = table.reindex(columns=['タイトル'] + sorted(table.columns.tolist()[1:]))
         if key not in video_dict.keys():
             video_dict[key] = set()
         video_dict[key] |= {i.removeprefix('https://youtu.be/') for i in table.index}
