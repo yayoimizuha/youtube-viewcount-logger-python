@@ -138,7 +138,8 @@ async def runner() -> None:
     await sess.close()
 
     for key, value in tables.items():
-        value['タイトル'].replace('0', None, inplace=True)
+        value.loc[value['タイトル'] == '0', 'タイトル'] = None
+        # value['タイトル'].replace('0', None, inplace=True)
         value.to_sql(key, connector, if_exists='replace')
         value.to_csv(join(getcwd(), 'tsvs', key + '.tsv'), sep='\t')
 

@@ -1,5 +1,5 @@
 from os import path, getcwd, makedirs
-from japanize_matplotlib import japanize
+from matplotlib_fontja import japanize
 from matplotlib import pyplot, style
 from const import frame_collector
 from pandas import DataFrame, to_datetime, DatetimeIndex
