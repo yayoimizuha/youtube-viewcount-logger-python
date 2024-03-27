@@ -1,16 +1,21 @@
 import os
-from pickle import dump
+import time
 from multiprocessing import Process
-from sys import stdout, stderr
-from subprocess import run
-from pandas import to_datetime, Int64Dtype, isna, concat, NA
-from const import html_base, frame_collector
 from os import getcwd, makedirs
 from os.path import join
-from budoux import load_default_japanese_parser
-from unicodedata import east_asian_width, normalize
+from pickle import dump
+from sys import stderr
+
 from PIL import Image
 from PIL.ImageChops import difference
+from budoux import load_default_japanese_parser
+from pandas import to_datetime, Int64Dtype, isna, concat, NA
+from selenium import webdriver
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+from unicodedata import east_asian_width, normalize
+
+from const import html_base, frame_collector
 
 if os.name == 'nt':
     firefox_path = r"C:\Program Files\Firefox Developer Edition\firefox.exe"
@@ -80,10 +85,16 @@ if __name__ == '__main__':
     serve.start()
 
     dataframes = frame_collector()
+    firefox_options = webdriver.FirefoxOptions()
+    firefox_options.binary_location = firefox_path
+    firefox_options.add_argument('-headless')
+    browser = webdriver.Firefox(options=firefox_options)
+    browser.set_window_size(3000, 3000)
+    open_tabs = []
     for key, value in dataframes.items():
         print(key)
         if value.columns.__len__() < 4:
-            print('列が少なすぎます。', file=stderr)
+            print(f'列が少なすぎます。 -> {key}', file=stderr)
             continue
         value.set_index('タイトル', inplace=True)
         value.columns = to_datetime(value.columns)
@@ -120,10 +131,25 @@ if __name__ == '__main__':
             table_data = table_data.loc[table_data.index[:15], :]
         with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
             f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))
-        run([firefox_path, '--screenshot', join(getcwd(), 'table', f'{key}.png'),
-             f'http://127.0.0.1:8888/html/{key}.html', '--window-size=3000,3000'], stdout=stdout, stderr=stderr)
+
+        browser.get(f'http://127.0.0.1:8888/html/{key}.html')
+        browser.switch_to.new_window('tab')
+        WebDriverWait(driver=browser, timeout=5).until(
+            expected_conditions.number_of_windows_to_be(open_tabs.__len__() + 2))
+        open_tabs.append(key)
+    browser.close()  # close last tab.
+    open_tabs.pop()
+    for tab_order, key in enumerate(open_tabs):
+        print(tab_order, key)
+        browser.switch_to.window(browser.window_handles[tab_order])
+        while browser.execute_script('return document.readyState') != 'complete':
+            time.sleep(.1)
+        browser.get_screenshot_as_file(join(getcwd(), 'table', f'{key}.png'))
         crop(key)
 
+    # print(browser.window_handles.__len__())
+    # time.sleep(100)
+    browser.quit()
     serve.terminate()
 with open(file=join(getcwd(), 'markdown.pickle'), mode='wb') as f:
     dump(obj=markdown_dict, file=f)

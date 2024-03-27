@@ -64,9 +64,9 @@ jobs:
 
 
       - name: generate table & markdown data
-        id: table_gen-py
+        id: table_gen_selenium-py
         run: |
-          pipenv run python table_gen.py 2>&1 | tee -a ./out.txt
+          pipenv run python table_gen_selenium.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
       - name: debug-ls

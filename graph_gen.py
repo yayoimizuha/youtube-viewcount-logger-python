@@ -1,10 +1,11 @@
 from os import path, getcwd, makedirs
 from japanize_matplotlib import japanize
-from matplotlib import pyplot
+from matplotlib import pyplot, style
 from const import frame_collector
-from pandas import DataFrame, to_datetime
+from pandas import DataFrame, to_datetime, DatetimeIndex
 from sys import stderr
 
+style.use('fast')
 japanize()
 
 
@@ -17,7 +18,7 @@ def graph_gen() -> None:
         value.sort_values(by=value.columns[-1], inplace=True, ascending=False)
         displacing = value.dropna(axis=1, how='all')
         if displacing.columns.__len__() < 3:
-            print('列が少なすぎます。', file=stderr)
+            print(f'列が少なすぎます。-> {key}', file=stderr)
             continue
         displacing.loc[displacing.index, ['today_displace']] = \
             displacing.loc[:, displacing.columns[-1]] - displacing.loc[:, displacing.columns[-2]]
@@ -25,7 +26,7 @@ def graph_gen() -> None:
         if displacing.index.__len__() > 27:
             threshold = displacing.sort_values(by='today_displace', ascending=False).iloc[26, -1]
             displacing = displacing[displacing['today_displace'] > threshold]
-        value.drop(index=set(value.index) - set(displacing.index), inplace=True)
+        value.drop(index=list(set(value.index) - set(displacing.index)), inplace=True)
         value.set_index('タイトル', inplace=True)
         # print(value)
         value.columns = to_datetime(value.columns)
@@ -33,7 +34,7 @@ def graph_gen() -> None:
         pyplot.rcParams["figure.dpi"] = 240
         pyplot.rcParams["figure.figsize"] = (16, 9)
         pyplot.rcParams["axes.formatter.use_mathtext"] = True
-        value.index = value.index.strftime("%Y/%-m/%-d")
+        value.index = value.index.map(lambda x: f"{x.year}/{x.month}/{x.day}")
         value.plot()
         pyplot.legend(loc='upper left', borderaxespad=1)
         pyplot.xlabel('日付')

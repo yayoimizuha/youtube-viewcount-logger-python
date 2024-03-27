@@ -18,6 +18,7 @@ scipy = "*"
 budoux = "*"
 tabulate = "*"
 google-generativeai = "*"
+selenium = "*"
 
 [dev-packages]
 autopep8 = "*"
