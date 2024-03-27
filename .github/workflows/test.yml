@@ -47,8 +47,8 @@ jobs:
         run: |
           python -m pip install -q -U pip
           pip install -q uv
-          uv pip compile requirements.in -o requirements.txt
-          pip install -r requirements.txt
+          uv -q pip compile requirements.in -o requirements.txt
+          pip install -qr requirements.txt
           pip freeze
           if (eval ${{ env.RUN_HEAVY }}); then \
             echo 'remove old files'

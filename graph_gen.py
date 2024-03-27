@@ -5,7 +5,7 @@ from const import frame_collector
 from pandas import DataFrame, to_datetime, DatetimeIndex
 from sys import stderr
 
-style.use('fast')
+# style.use('fast')
 japanize()
 
 
