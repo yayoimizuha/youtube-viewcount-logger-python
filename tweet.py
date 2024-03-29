@@ -2,7 +2,7 @@ import datetime
 from os.path import exists, join
 from os import getcwd, environ
 from pprint import pprint
-from const import frame_collector, playlists
+from const import playlists, frame_collector
 from pandas import Series
 from datetime import datetime
 

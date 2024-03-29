@@ -83,23 +83,45 @@ def playlists():
         ['PLPHwLN81i8cqlVTlXWre1Z7daRXXoa_h_', 'Bitter & Sweet', True],
         # Playlist(playlist_key='PLFMni9aeqKTwRBEifr0wecspeZPZ24AEN', db_key='ブラザーズ5', is_tweet=False)
         ['PLFMni9aeqKTwRBEifr0wecspeZPZ24AEN', 'ブラザーズ5', False],
+        # Playlist(playlist_key='PLFMni9aeqKTx6FGeICQu6AMh_h7XaiWrB', db_key='シャ乱Q'),
         ['PLFMni9aeqKTx6FGeICQu6AMh_h7XaiWrB', 'シャ乱Q', True],
-        ['PLFMni9aeqKTxAMChTm-sad305266kliMy', 'hLoVendoЯ', False],
+        # Playlist(playlist_key='PLFMni9aeqKTxAMChTm-sad305266kliMy', db_key='LoVendoЯ', is_tweet=False),
+        ['PLFMni9aeqKTxAMChTm-sad305266kliMy', 'LoVendoЯ', False],
+        # Playlist(playlist_key='PLFMni9aeqKTzQ054kNN0VAn_TC8HVIPvA', db_key='田﨑あさひ', is_tweet=False),
         ['PLFMni9aeqKTzQ054kNN0VAn_TC8HVIPvA', '田﨑あさひ', False],
+        # Playlist(playlist_key='PLXok3xPFmG2Akv9qLrdDW1ArlCiodq9Bi', db_key='小片リサ'),
         ['PLXok3xPFmG2Akv9qLrdDW1ArlCiodq9Bi', '小片リサ', True],
+        # Playlist(playlist_key='PLXok3xPFmG2ASK8fo_GEwdk7JQALn0P_o', db_key='高橋愛・田中れいな・夏焼雅',
+        #          is_tweet=False),
         ['PLXok3xPFmG2ASK8fo_GEwdk7JQALn0P_o', '高橋愛・田中れいな・夏焼雅', False],
+        # Playlist(playlist_key='PLFMni9aeqKTx6nJoI4lDcXIW0RnkIj-WC', db_key='吉川友', is_tweet=False),
         ['PLFMni9aeqKTx6nJoI4lDcXIW0RnkIj-WC', '吉川友', False],
+        # Playlist(playlist_key='PL106616353F82EF27', db_key='中島卓偉'),
         ['PL106616353F82EF27', '中島卓偉', True],
+        # Playlist(playlist_key='PLFMni9aeqKTxaQnGrEBaf20ZtWGc2FGGt', db_key='KAN', is_tweet=False),
         ['PLFMni9aeqKTxaQnGrEBaf20ZtWGc2FGGt', 'KAN', False],
+        # Playlist(playlist_key='PLFMni9aeqKTwLp-YS0TdSAJNFp2QdF5et', db_key='hangryangryf', display_name='HANGRY&ANGRY',
+        #          is_tweet=False),
         ['PLFMni9aeqKTwLp-YS0TdSAJNFp2QdF5et', 'HANGRY&ANGRY', False],
+        # Playlist(playlist_key='PL6xCFVfh13DFK5Gsv_qy7Rlwcg_gzcf_a', db_key='里山里海',
+        #          display_name='SATOYAMA SATOUMI movement'),
         ['PL6xCFVfh13DFK5Gsv_qy7Rlwcg_gzcf_a', 'SATOYAMA SATOUMI movement', True],
+        # Playlist(playlist_key='PLFMni9aeqKTyw-UpUPRSEJtD0QfjasWhH', db_key='松原健之'),
         ['PLFMni9aeqKTyw-UpUPRSEJtD0QfjasWhH', '松原健之', True],
+        # Playlist(playlist_key='PLFMni9aeqKTz7uYHYKB-b_7SRo7dxKmeL', db_key='上々軍団', is_tweet=False),
         ['PLFMni9aeqKTz7uYHYKB-b_7SRo7dxKmeL', '上々軍団', False],
+        # Playlist(playlist_key='OLAK5uy_m-IDdDas3oTbaeCG8B-EMeQTe7uwW0wcw', db_key='真野恵里菜'),
         ['OLAK5uy_m-IDdDas3oTbaeCG8B-EMeQTe7uwW0wcw', '真野恵里菜', True],
+        # Playlist(playlist_key='OLAK5uy_mZKo1FwBv_WzjTnkYLglBj4dlWAuax3Js', db_key='森高千里'),
         ['OLAK5uy_mZKo1FwBv_WzjTnkYLglBj4dlWAuax3Js', '森高千里', True],
+        # Playlist(playlist_key='PL59O0JbKsFLp-RYKpMhN_pooj_bJckLL7', db_key='アップアップガールズ(仮)', hashtag='アプガ',
+        #          is_tweet=False),
         ['PL59O0JbKsFLp-RYKpMhN_pooj_bJckLL7', 'アップアップガールズ(仮)', False],
+        # Playlist(playlist_key='OLAK5uy_kFIc8YxoczUnmcpF3Cgrew3HahESCz2ls', db_key='鞘師里保'),
         ['OLAK5uy_kFIc8YxoczUnmcpF3Cgrew3HahESCz2ls', '鞘師里保', True],
+        # Playlist('PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', db_key='犬神サーカス団', is_tweet=False),
         ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団', False],
+        # Playlist(playlist_key='PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr',db_key='つんく')
         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', False],
         ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', True],
         ['PLFMni9aeqKTwb91a6lLvQiEMNEZXpD88v', 'ハロプロ25周年記念公開MV', True],
@@ -124,59 +146,61 @@ def playlists():
     #         ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', False]
     #     ]
 
-    def trim_title(text: str, artist_name: str):
-        title_regex_one = r"[\(（]([a-zA-Z\s\[\]\'\"”””“\.…,\/　!！=。@’[°C]・:〜\-])*[\)）]"
-        title_regex_two = r"[\s|-][Promotion|Music|Video].*[\s|\-]*|Edit|カバー|[\s|-]*YouTube[\s|\-]*|ver|【セルフカヴァー】" \
-                          r"|Promotion|Music|Video"
-        title_regex_three = r"[\[\(（]([a-zA-Z\s”\[［\]］\.\/’\'\"&。:〜”“0-9\-=\?!×#~,♂　@（）])*[\]\)）]?"
-        title_regex_four = r'※.*'  # r"ショート|Short|short|Version|Ver.|Ver|バージョン|Dance|ダンス|リリック.*|"
-        if artist_name == '鞘師里保':
-            return sub(r'/.*?$|\(.*?$', '', sub(r'.*?-', '', text))
-        if artist_name == 'COVERS - One on One -':
-            return text.removeprefix('COVERS - One on One -').removeprefix('COVERS -One on One-')
-        if artist_name == 'アップアップガールズ(仮)':
-            tmp = sub(r'【MUSIC VIDEO】|\([A-z\s\[\]\-！!].*\)|ミュージック|イメージ|ビデオ|[.*?]', '', text,
+
+def trim_title(text: str, artist_name: str):
+    title_regex_one = r"[\(（]([a-zA-Z\s\[\]\'\"”””“\.…,\/　!！=。@’[°C]・:〜\-])*[\)）]"
+    title_regex_two = r"[\s|-][Promotion|Music|Video].*[\s|\-]*|Edit|カバー|[\s|-]*YouTube[\s|\-]*|ver|【セルフカヴァー】" \
+                      r"|Promotion|Music|Video"
+    title_regex_three = r"[\[\(（]([a-zA-Z\s”\[［\]］\.\/’\'\"&。:〜”“0-9\-=\?!×#~,♂　@（）])*[\]\)）]?"
+    title_regex_four = r'※.*'  # r"ショート|Short|short|Version|Ver.|Ver|バージョン|Dance|ダンス|リリック.*|"
+    if artist_name == '鞘師里保':
+        return sub(r'/.*?$|\(.*?$', '', sub(r'.*?-', '', text))
+    if artist_name == 'COVERS - One on One -':
+        return text.removeprefix('COVERS - One on One -').removeprefix('COVERS -One on One-')
+    if artist_name == 'アップアップガールズ(仮)':
+        tmp = sub(r'【MUSIC VIDEO】|\([A-z\s\[\]\-！!].*\)|ミュージック|イメージ|ビデオ|[.*?]', '', text,
+                  IGNORECASE)
+        return sub(r'UP|GIRLS|kakko|KARI|MV|MUSIC|VIDEO|（MV）', '', tmp, IGNORECASE | MULTILINE)
+    if artist_name == 'シャ乱Q':
+        return sub(r'[v|(].*', '', normalize('NFKC', text))
+    if artist_name == 'つんく♂' or artist_name == '℃-ute' or artist_name == 'Berryz工房' or artist_name == 'Buono!' \
+            or artist_name == 'PINK CRES.' or artist_name == 'こぶしファクトリー' or artist_name == 'ブラザーズ5' \
+            or artist_name == '真野恵里菜' or artist_name == '鈴木愛理':
+        return sub(r'\(.*', '', normalize('NFKC', text))
+    if artist_name == 'Bitter & Sweet':
+        return sub(r'\(.*?\)', '', normalize('NFKC', text))
+    if artist_name == 'HANGRY&ANGRY':
+        return normalize('NFKC', text).replace('VIDEO CLIP', '')
+    if artist_name == 'Juice=Juice' or artist_name == 'アンジュルム' or artist_name == '高橋愛・田中れいな・夏焼雅' \
+            or artist_name == 'BEYOOOOONDS' or artist_name == 'モーニング娘。' or artist_name == 'OCHA NORMA':
+        return sub(r'\(.*?\)|\[.*?]|MV|Promotion|Edit', '', normalize('NFKC', text))
+    if artist_name == 'LoVendoЯ':
+        return sub(r'\(.*|\[.*', '', normalize('NFKC', text))
+    if artist_name == '小片リサ':
+        return sub(r'-.*', '', normalize('NFKC', text))
+    if artist_name == 'ハロプロダンス部':
+        return sub(r'\(.*?\)', '', normalize('NFKC', text))
+    if artist_name == '佐藤優樹':
+        if '-One on One-' in text:
+            return text.removeprefix('COVERS -One on One-')
+    if artist_name == 'M-line Music':
+        return re.sub(r'(」).*|(』).*|COVERS.*- ', r'\1\2', normalize('NFKC', text))
+
+    text = str(text).replace('(仮)', '@kari@')
+    text = str(text).replace('（仮）', '@kari@')
+    text = str(text).replace('℃-ute', '@cute@')
+    text = str(text).replace('°C-ute', '@cute@')
+    return_code = sub(title_regex_four, '',
+                      sub(title_regex_three, '',
+                          sub(title_regex_two, '',
+                              sub(title_regex_one, ' ', normalize('NFKC', text),
+                                  IGNORECASE), IGNORECASE | MULTILINE), IGNORECASE),
                       IGNORECASE)
-            return sub(r'UP|GIRLS|kakko|KARI|MV|MUSIC|VIDEO|（MV）', '', tmp, IGNORECASE | MULTILINE)
-        if artist_name == 'シャ乱Q':
-            return sub(r'[v|(].*', '', normalize('NFKC', text))
-        if artist_name == 'つんく♂' or artist_name == '℃-ute' or artist_name == 'Berryz工房' or artist_name == 'Buono!' \
-                or artist_name == 'PINK CRES.' or artist_name == 'こぶしファクトリー' or artist_name == 'ブラザーズ5' \
-                or artist_name == '真野恵里菜' or artist_name == '鈴木愛理':
-            return sub(r'\(.*', '', normalize('NFKC', text))
-        if artist_name == 'Bitter & Sweet':
-            return sub(r'\(.*?\)', '', normalize('NFKC', text))
-        if artist_name == 'HANGRY&ANGRY':
-            return normalize('NFKC', text).replace('VIDEO CLIP', '')
-        if artist_name == 'Juice=Juice' or artist_name == 'アンジュルム' or artist_name == '高橋愛・田中れいな・夏焼雅' \
-                or artist_name == 'BEYOOOOONDS' or artist_name == 'モーニング娘。' or artist_name == 'OCHA NORMA':
-            return sub(r'\(.*?\)|\[.*?]|MV|Promotion|Edit', '', normalize('NFKC', text))
-        if artist_name == 'LoVendoЯ':
-            return sub(r'\(.*|\[.*', '', normalize('NFKC', text))
-        if artist_name == '小片リサ':
-            return sub(r'-.*', '', normalize('NFKC', text))
-        if artist_name == 'ハロプロダンス部':
-            return sub(r'\(.*?\)', '', normalize('NFKC', text))
-        if artist_name == '佐藤優樹':
-            if '-One on One-' in text:
-                return text.removeprefix('COVERS -One on One-')
-        if artist_name == 'M-line Music':
-            return re.sub(r'(」).*|(』).*|COVERS.*- ', r'\1\2', normalize('NFKC', text))
+    return return_code.replace('@kari@', '(仮)').replace('@cute@', '℃-ute')
 
-        text = str(text).replace('(仮)', '@kari@')
-        text = str(text).replace('（仮）', '@kari@')
-        text = str(text).replace('℃-ute', '@cute@')
-        text = str(text).replace('°C-ute', '@cute@')
-        return_code = sub(title_regex_four, '',
-                          sub(title_regex_three, '',
-                              sub(title_regex_two, '',
-                                  sub(title_regex_one, ' ', normalize('NFKC', text),
-                                      IGNORECASE), IGNORECASE | MULTILINE), IGNORECASE),
-                          IGNORECASE)
-        return return_code.replace('@kari@', '(仮)').replace('@cute@', '℃-ute')
 
-    def html_base(name: str, content: str) -> str:
-        return f"""<!DOCTYPE html>
+def html_base(name: str, content: str) -> str:
+    return f"""<!DOCTYPE html>
 
     <head>
         <meta charset="UTF-8">
@@ -255,47 +279,51 @@ def playlists():
     </body>
     """.replace('--nl--', '<br>')
 
-    def pack_comma(txt: str) -> str:
-        return f'\"{txt}\"'
 
-    def gen_date_array(begin: str, end: str) -> list[str]:
-        for i in range((date.fromisoformat(end) - date.fromisoformat(begin)).days + 1):
-            yield (date.fromisoformat(begin) + timedelta(i)).__str__()
+def pack_comma(txt: str) -> str:
+    return f'\"{txt}\"'
 
-    SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
 
-    def frame_collector() -> dict[str, DataFrame]:
-        if isfile(join(getcwd(), 'frame.pickle')):
-            if stat(path=join(getcwd(), 'frame.pickle')).st_mtime > stat(path=join(getcwd(), 'save.sqlite')).st_mtime:
-                with open(join(getcwd(), 'frame.pickle'), mode='rb') as f:
-                    return load(f)
+def gen_date_array(begin: str, end: str) -> list[str]:
+    for i in range((date.fromisoformat(end) - date.fromisoformat(begin)).days + 1):
+        yield (date.fromisoformat(begin) + timedelta(i)).__str__()
 
-        connector = connect(SQLITE_DATABASE)
-        cursor = connector.cursor()
-        table_name = [name[0] for name in
-                      cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
-        tables: dict[str, DataFrame] = {
-            name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index')
-            for name in table_name}
 
-        for dataframe_key in tables.keys():
-            column_list = tables[dataframe_key].columns.tolist()[1:]
-            index_list = tables[dataframe_key].index.tolist()
-            title_list: Series = tables[dataframe_key].loc[:, 'タイトル']
-            title_list = title_list.replace('0', None)
-            num_arr: DataFrame = tables[dataframe_key][column_list]
-            tables[dataframe_key] = DataFrame(num_arr.to_numpy(), columns=column_list, index=index_list,
-                                              dtype=Int64Dtype())
-            tables[dataframe_key].loc[:, 'タイトル'] = title_list
-            column_list = ['タイトル'] + [col for col in gen_date_array(column_list[0], column_list[-1])]
-            sparse_dataframe = DataFrame(columns=column_list, dtype=Int64Dtype())
-            tables[dataframe_key] = concat(objs=[sparse_dataframe, tables[dataframe_key]], join='outer')
-            tables[dataframe_key]: DataFrame = tables[dataframe_key].reindex(columns=column_list)
-            tables[dataframe_key] = tables[dataframe_key].replace(0, NA)
+SQLITE_DATABASE = path.join(getcwd(), 'save.sqlite')
 
-        connector.close()
 
-        with open(join(getcwd(), 'frame.pickle'), mode='wb') as f:
-            dump(tables, f)
+def frame_collector() -> dict[str, DataFrame]:
+    if isfile(join(getcwd(), 'frame.pickle')):
+        if stat(path=join(getcwd(), 'frame.pickle')).st_mtime > stat(path=join(getcwd(), 'save.sqlite')).st_mtime:
+            with open(join(getcwd(), 'frame.pickle'), mode='rb') as f:
+                return load(f)
 
-        return tables
+    connector = connect(SQLITE_DATABASE)
+    cursor = connector.cursor()
+    table_name = [name[0] for name in
+                  cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+    tables: dict[str, DataFrame] = {
+        name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index')
+        for name in table_name}
+
+    for dataframe_key in tables.keys():
+        column_list = tables[dataframe_key].columns.tolist()[1:]
+        index_list = tables[dataframe_key].index.tolist()
+        title_list: Series = tables[dataframe_key].loc[:, 'タイトル']
+        title_list = title_list.replace('0', None)
+        num_arr: DataFrame = tables[dataframe_key][column_list]
+        tables[dataframe_key] = DataFrame(num_arr.to_numpy(), columns=column_list, index=index_list,
+                                          dtype=Int64Dtype())
+        tables[dataframe_key].loc[:, 'タイトル'] = title_list
+        column_list = ['タイトル'] + [col for col in gen_date_array(column_list[0], column_list[-1])]
+        sparse_dataframe = DataFrame(columns=column_list, dtype=Int64Dtype())
+        tables[dataframe_key] = concat(objs=[sparse_dataframe, tables[dataframe_key]], join='outer')
+        tables[dataframe_key]: DataFrame = tables[dataframe_key].reindex(columns=column_list)
+        tables[dataframe_key] = tables[dataframe_key].replace(0, NA)
+
+    connector.close()
+
+    with open(join(getcwd(), 'frame.pickle'), mode='wb') as f:
+        dump(tables, f)
+
+    return tables
