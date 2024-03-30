@@ -14,7 +14,6 @@ from selenium import webdriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from unicodedata import east_asian_width, normalize
-from socketserver import TCPServer
 from const import html_base, frame_collector, playlists
 
 if os.name == 'nt':
@@ -93,10 +92,10 @@ if __name__ == '__main__':
     open_tabs = []
     for key, value in dataframes.items():
         print(key)
-        if key != 'ME_I':
-            continue
-        else:
-            print(value.to_numpy())
+        # if key != 'ME_I':
+        #     continue
+        # else:
+        #     print(value.to_numpy())
         if value.columns.__len__() < 4:
             print(f'列が少なすぎます。 -> {key}', file=stderr)
             continue
