@@ -58,7 +58,7 @@ def playlists() -> list[Playlist]:
         # ['PLF0E7D2433E255B81', 'Buono!', True],
         Playlist(playlist_key='OLAK5uy_l_xKCyQPw4uXQd3mnw0yShaZm3AOANkQI', db_key='Berryz工房'),
         # ['OLAK5uy_l_xKCyQPw4uXQd3mnw0yShaZm3AOANkQI', 'Berryz工房', True],
-        Playlist(playlist_key='PL04DB1D3D596D47E7', db_key='℃-ute', hashtag='c-ute'),
+        Playlist(playlist_key='PL04DB1D3D596D47E7', db_key='℃-ute', hashtag='c_ute'),
         # ['PL04DB1D3D596D47E7', '℃-ute', True],
         Playlist(playlist_key='PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', db_key='鈴木愛理'),
         # ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
