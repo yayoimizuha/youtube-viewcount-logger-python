@@ -6,7 +6,7 @@ from asyncio import gather, run
 from os import getenv, getcwd, makedirs
 from os.path import join
 from urllib.parse import urlencode
-from const import playlists, trim_title, pack_comma
+from const import playlists, pack_comma
 from sqlite3 import connect
 from pandas import read_sql, DataFrame, Int64Dtype, NA
 from datetime import date
@@ -85,7 +85,7 @@ async def runner() -> None:
     playlist_index_time = time()
     video_dict = dict()
     sess = ClientSession(trust_env=True)
-    await gather(*[list_playlist(yt_key, artist_name, sess, video_dict) for yt_key, artist_name, _ in playlists()],
+    await gather(*[list_playlist(playlist.playlist_key, playlist.db_key, sess, video_dict) for playlist in playlists()],
                  return_exceptions=True)
     print(f"YouTube playlists index time: {time() - playlist_index_time:2.3f}s")
 
@@ -149,4 +149,4 @@ async def runner() -> None:
 run(runner())
 
 with open(join(getcwd(), 'tsvs', 'group_list.tsv'), mode='w', encoding='utf8') as f:
-    f.writelines('\n'.join({i for _, i, _ in playlists()}))
+    f.writelines('\n'.join({playlist.db_key for playlist in playlists()}))

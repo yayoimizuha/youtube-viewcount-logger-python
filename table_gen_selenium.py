@@ -14,8 +14,7 @@ from selenium import webdriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from unicodedata import east_asian_width, normalize
-
-from const import html_base, frame_collector
+from const import html_base, frame_collector, playlists
 
 if os.name == 'nt':
     firefox_path = r"C:\Program Files\Firefox Developer Edition\firefox.exe"
@@ -93,6 +92,10 @@ if __name__ == '__main__':
     open_tabs = []
     for key, value in dataframes.items():
         print(key)
+        # if key != 'ME_I':
+        #     continue
+        # else:
+        #     print(value.to_numpy())
         if value.columns.__len__() < 4:
             print(f'列が少なすぎます。 -> {key}', file=stderr)
             continue
@@ -130,7 +133,8 @@ if __name__ == '__main__':
         if table_data.index.__len__() > 15:
             table_data = table_data.loc[table_data.index[:15], :]
         with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
-            f.write(html_base(name=key, content=table_data.to_html(render_links=True, notebook=True, justify='center')))
+            f.write(html_base(name=filter(lambda x: x.db_key == key, playlists()).__next__().display_name,
+                              content=table_data.to_html(render_links=True, notebook=True, justify='center')))
 
         browser.get(f'http://127.0.0.1:8888/html/{key}.html')
         browser.switch_to.new_window('tab')
@@ -138,7 +142,8 @@ if __name__ == '__main__':
             expected_conditions.number_of_windows_to_be(open_tabs.__len__() + 2))
         open_tabs.append(key)
     browser.close()  # close last tab.
-    open_tabs.pop()
+    print(open_tabs)
+    # open_tabs.pop()
     for tab_order, key in enumerate(open_tabs):
         print(tab_order, key)
         browser.switch_to.window(browser.window_handles[tab_order])

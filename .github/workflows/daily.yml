@@ -42,31 +42,32 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install -q -U pip
-          pip install -q pipenv
-          pipenv install -q
+          pip install -q uv
+          uv -q pip compile requirements.in -o requirements.txt
+          pip install -qr requirements.txt
           pip freeze
           rm -rf images/*
           rm -rf html/*          
         
-        
+
       - name: get today data
         id: main-async-py
         run: |
-          pipenv run python main.async.py 2>&1 | tee -a ./out.txt
+          python main.async.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
-        
-        
+
+
       - name: generate graph
         id: graph_gen-py
         run: |
-          pipenv run python graph_gen.py 2>&1 | tee -a ./out.txt
+          python graph_gen.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
 
       - name: generate table & markdown data
         id: table_gen_selenium-py
         run: |
-          pipenv run python table_gen_selenium.py 2>&1 | tee -a ./out.txt
+          python table_gen_selenium.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
       - name: debug-ls
@@ -91,9 +92,9 @@ jobs:
       - name: tweet
         id: tweet-py
         run: |
-          pipenv run python tweet.py 2>&1 | tee -a ./out.txt
+          python tweet.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
-        
+
       - name: push updates
         run: |
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
@@ -114,17 +115,17 @@ jobs:
           echo "${{steps.graph_gen-py.outcome}}"
           echo "${{steps.table_gen-py.outcome}}"
           echo "${{steps.tweet-py.outcome}}"
-        
+
       - name: Error Handling
         if: steps.main-async-py.outcome == 'failure' || steps.graph_gen-py.outcome == 'failure' || steps.table_gen-py.outcome == 'failure' || steps.tweet-py.outcome == 'failure'
         run: |
-          pipenv run post-processing
+          python post_processing.py 2>&1 | tee -a ./out.txt
           exit 1
 
       - name: Upload Log
         if: steps.main-async-py.outcome == 'success' && steps.graph_gen-py.outcome == 'success' && steps.table_gen-py.outcome == 'success' && steps.tweet-py.outcome == 'success'
         run: |
-          pipenv run upload-log
+          python -c 'import firebase_storage_upload;firebase_storage_upload.upload_log()' 2>&1 | tee -a ./out.txt
       
   excel_export:
     timeout-minutes: 10

@@ -7,77 +7,159 @@ from re import IGNORECASE, sub, MULTILINE
 from sqlite3 import connect
 from pandas import DataFrame, read_sql, Series, Int64Dtype, NA, concat
 from unicodedata import normalize
+from typing import Optional
 
 
-def playlists():
+class Playlist:
+    def __init__(self, playlist_key: str, db_key: str, hashtag: Optional[str] = None,
+                 display_name: Optional[str] = None, is_tweet: bool = True):
+        self.playlist_key = playlist_key
+        self.db_key = db_key
+        if hashtag is None:
+            self.hashtag = db_key
+        else:
+            self.hashtag = hashtag
+        if display_name is None:
+            self.display_name = db_key
+        else:
+            self.display_name = display_name
+        self.is_tweet = is_tweet
+
+
+def playlists() -> list[Playlist]:
+    # def playlists():
+    #     return [
+    #         ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
     return [
-        # ' <--- youtube playlist key --->  <- group name -> <- is tweet? ->'
-        ['PLAAEA82D2950BC77D', 'モーニング娘。', True],
-        ['PL0DCF7F78614F3AE6', 'アンジュルム', True],
-        ['PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur', 'Juice=Juice', True],
-        ['PL8m86iV3p-nRdW2cckAwqruBKuzrxoVvW', 'BEYOOOOONDS', True],
-        ['PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', 'つばきファクトリー', True],
-        ['PLHdMoq6t0XIA5JLPo-SyTTqEByvdu1cGA', 'OCHA NORMA', True],
-        ['PLCpSIn0xlyXl0ceNf4rBZvmF2njxunqQC', 'ハロプロダンス部', True],
-        ['PLcu1vvKzbBMk1i4k-DF3q5ii0007W-zh7', 'こぶしファクトリー', True],
-        ['PLhDVFhoEVU3l3X0obfPzdD5OHTbnv7Oio', 'カントリー・ガールズ', True],
-        ['PLCpSIn0xlyXkPMYUoVgHmj3clVnEWxSHz', 'Buono!', False],
+        # ' <--- youtube playlist key --->  <- group name -> <- hashtag -> <- is tweet? ->'
+        Playlist(playlist_key='PLAAEA82D2950BC77D', db_key='モーニング娘。', hashtag='モーニング娘24',
+                 display_name='モーニング娘。\'24'),
+        # ['PLAAEA82D2950BC77D', 'モーニング娘。', True],
+        Playlist(playlist_key='PL0DCF7F78614F3AE6', db_key='アンジュルム'),
+        # ['PL0DCF7F78614F3AE6', 'アンジュルム', True],
+        Playlist(playlist_key='PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur', db_key='juicejuice', display_name='Juice=Juice'),
+        # ['PLs8AlpdTjgwdSDETD55q0i3W98tC9SAur', 'Juice=Juice', True],
+        Playlist(playlist_key='PL8m86iV3p-nRdW2cckAwqruBKuzrxoVvW', db_key='BEYOOOOONDS'),
+        # ['PL8m86iV3p-nRdW2cckAwqruBKuzrxoVvW', 'BEYOOOOONDS', True],
+        Playlist(playlist_key='PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', db_key='つばきファクトリー'),
+        # ['PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', 'つばきファクトリー', True],
+        Playlist(playlist_key='PLHdMoq6t0XIA5JLPo-SyTTqEByvdu1cGA', db_key='ochanorma', display_name='OCHA NORMA'),
+        # ['PLHdMoq6t0XIA5JLPo-SyTTqEByvdu1cGA', 'OCHA NORMA', True],
+        Playlist(playlist_key='PLCpSIn0xlyXl0ceNf4rBZvmF2njxunqQC', db_key='ハロプロダンス部', is_tweet=False),
+        # ['PLCpSIn0xlyXl0ceNf4rBZvmF2njxunqQC', 'ハロプロダンス部', False],
+        Playlist(playlist_key='PLcu1vvKzbBMk1i4k-DF3q5ii0007W-zh7', db_key='こぶしファクトリー'),
+        # ['PLcu1vvKzbBMk1i4k-DF3q5ii0007W-zh7', 'こぶしファクトリー', True],
+        Playlist(playlist_key='PLhDVFhoEVU3l3X0obfPzdD5OHTbnv7Oio', db_key='カントリー・ガールズ'),
+        # ['PLhDVFhoEVU3l3X0obfPzdD5OHTbnv7Oio', 'カントリー・ガールズ', True],
+        Playlist(playlist_key='PLCpSIn0xlyXkPMYUoVgHmj3clVnEWxSHz', db_key='Buono!', hashtag='Buono', is_tweet=False),
+        # ['PLCpSIn0xlyXkPMYUoVgHmj3clVnEWxSHz', 'Buono!', False],
         # 初恋サイダー / Buono! (Live at 日本武道館 2016/8/25)　『Buono! Festa 2016』2016年11月23日にDVDとBlu-rayを同日発売!! を追加
-        ['PLF0E7D2433E255B81', 'Buono!', True],
-        ['OLAK5uy_l_xKCyQPw4uXQd3mnw0yShaZm3AOANkQI', 'Berryz工房', True],
-        ['PL04DB1D3D596D47E7', '℃-ute', True],
-        ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
-        ['PLFMni9aeqKTyLxgYVGR9y7zO28Ip5q6Kb', '道重さゆみ', True],
-        ['PL6A59UsSlG7ex5t5QBIbi4PPviUrZr43p', '宮本佳林', True],
-        ['PL4CUK5GhdtMnB4ByVY_X3smojU2uY6fAB', 'PINK CRES.', True],
-        ['PLCpSIn0xlyXl5zat4Nzwhd-JC5D-QR14d', 'COVERS - One on One -', False],
+        Playlist(playlist_key='PLF0E7D2433E255B81', db_key='Buono!', hashtag='Buono'),
+        # ['PLF0E7D2433E255B81', 'Buono!', True],
+        Playlist(playlist_key='OLAK5uy_l_xKCyQPw4uXQd3mnw0yShaZm3AOANkQI', db_key='Berryz工房'),
+        # ['OLAK5uy_l_xKCyQPw4uXQd3mnw0yShaZm3AOANkQI', 'Berryz工房', True],
+        Playlist(playlist_key='PL04DB1D3D596D47E7', db_key='℃-ute', hashtag='c-ute'),
+        # ['PL04DB1D3D596D47E7', '℃-ute', True],
+        Playlist(playlist_key='PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', db_key='鈴木愛理'),
+        # ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
+        Playlist(playlist_key='PLFMni9aeqKTyLxgYVGR9y7zO28Ip5q6Kb', db_key='道重さゆみ'),
+        # ['PLFMni9aeqKTyLxgYVGR9y7zO28Ip5q6Kb', '道重さゆみ', True],
+        Playlist(playlist_key='PL6A59UsSlG7ex5t5QBIbi4PPviUrZr43p', db_key='宮本佳林'),
+        # ['PL6A59UsSlG7ex5t5QBIbi4PPviUrZr43p', '宮本佳林', True],
+        Playlist(playlist_key='PL4CUK5GhdtMnB4ByVY_X3smojU2uY6fAB', db_key='PINKCRES', hashtag='PINKCRES',
+                 display_name='PINK CRES.', is_tweet=False),
+        # ['PL4CUK5GhdtMnB4ByVY_X3smojU2uY6fAB', 'PINK CRES.', False],
+        Playlist(playlist_key='PLCpSIn0xlyXl5zat4Nzwhd-JC5D-QR14d', db_key='COVERS - One on One -',
+                 hashtag='CoversOneOnOne', is_tweet=False),
+        Playlist(playlist_key='PLFMni9aeqKTw_nNHBiGWfPLT-VMdMez97', db_key='COVERS - One on One -',
+                 hashtag='CoversOneOnOne'),
+        # ['PLCpSIn0xlyXl5zat4Nzwhd-JC5D-QR14d', 'COVERS - One on One -', False],
         # COVERS -One on One- ほたる祭りの日 佐藤優樹 x 宮本佳林 (ジュリン) を追加
-        ['PLFMni9aeqKTw_nNHBiGWfPLT-VMdMez97', 'COVERS - One on One -', True],
-        ['PLFMni9aeqKTwHuSxF4zsHUBMwrubNI05X', 'COVERS ～The Ballad～', True],
-        ['PLFMni9aeqKTzQ4ciZ-vNscbKge63ohqri', 'アプカミ・ミュージック・デリバリー', True],
-        ['PLPHwLN81i8cqlVTlXWre1Z7daRXXoa_h_', 'Bitter & Sweet', True],
-        ['PLFMni9aeqKTwRBEifr0wecspeZPZ24AEN', 'ブラザーズ5', False],
-        ['PLFMni9aeqKTx6FGeICQu6AMh_h7XaiWrB', 'シャ乱Q', True],
-        ['PLFMni9aeqKTxAMChTm-sad305266kliMy', 'LoVendoЯ', False],
-        ['PLFMni9aeqKTzQ054kNN0VAn_TC8HVIPvA', '田﨑あさひ', True],
-        ['PLXok3xPFmG2Akv9qLrdDW1ArlCiodq9Bi', '小片リサ', True],
-        ['PLXok3xPFmG2ASK8fo_GEwdk7JQALn0P_o', '高橋愛・田中れいな・夏焼雅', False],
-        ['PLFMni9aeqKTx6nJoI4lDcXIW0RnkIj-WC', '吉川友', False],
-        ['PL106616353F82EF27', '中島卓偉', True],
-        ['PLFMni9aeqKTxaQnGrEBaf20ZtWGc2FGGt', 'KAN', False],
-        ['PLFMni9aeqKTwLp-YS0TdSAJNFp2QdF5et', 'HANGRY&ANGRY', False],
-        ['PL6xCFVfh13DFK5Gsv_qy7Rlwcg_gzcf_a', 'SATOYAMA SATOUMI movement', True],
-        ['PLFMni9aeqKTyw-UpUPRSEJtD0QfjasWhH', '松原健之', True],
-        ['PLFMni9aeqKTz7uYHYKB-b_7SRo7dxKmeL', '上々軍団', False],
-        ['OLAK5uy_m-IDdDas3oTbaeCG8B-EMeQTe7uwW0wcw', '真野恵里菜', True],
-        ['OLAK5uy_mZKo1FwBv_WzjTnkYLglBj4dlWAuax3Js', '森高千里', True],
-        ['PL59O0JbKsFLp-RYKpMhN_pooj_bJckLL7', 'アップアップガールズ(仮)', True],
-        ['OLAK5uy_kFIc8YxoczUnmcpF3Cgrew3HahESCz2ls', '鞘師里保', True],
-        ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団', False],
-        ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', False],
-        ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', True],
-        ['PLFMni9aeqKTwb91a6lLvQiEMNEZXpD88v', 'ハロプロ25周年記念公開MV', True],
-        ['PLFMni9aeqKTw8G3gCcMDBUKwDCAts-Cj-', '松浦亜弥', True],
-        ['PLFMni9aeqKTxpeBpkYUe4TbQ2RtFiz8hJ', '藤本美貴', False],
-        ['PLFMni9aeqKTzwxJrS92a6zbxKQiYydGkG', '後藤真希', False],
-        ['PLFMni9aeqKTxJqAbOc60917KKfOsAmjqD', '中澤裕子', False],
-        ['PLFMni9aeqKTxNAXGrN4VW_qpYD1fLoI5H', 'メロン記念日', True],
-        ['PLFMni9aeqKTzGddgeMhbXMhXgz8dMgaJs', '太陽とシスコムーン', True],
-        ['PLXok3xPFmG2DWOqD9q7yGm608F6gNjUIx', '稲場愛香', True],
-        ['PLXok3xPFmG2DsiyGQD2A5Elihz05RVIR-', 'M-line Music', True],
-        ['PLFMni9aeqKTwIf7DShjl6y2Lf2-MGUvd3', 'タンポポ', False],
-        ['PLFMni9aeqKTw00DcNa2h05AdhzJCr-eiV', 'プッチモニ', False],
-        ['PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', 'ミニモニ。', False],
-        ['PLCpSIn0xlyXmU10v0Lh6dO7PcPUYESTq2', 'ME_I', True]
+        # ['PLFMni9aeqKTw_nNHBiGWfPLT-VMdMez97', 'COVERS - One on One -', True],
+        Playlist(playlist_key='PLFMni9aeqKTwHuSxF4zsHUBMwrubNI05X', db_key='COVERS ～The Ballad～',
+                 hashtag='CoversTheBallad'),
+        # ['PLFMni9aeqKTwHuSxF4zsHUBMwrubNI05X', 'COVERS ～The Ballad～', True],
+        Playlist(playlist_key='PLFMni9aeqKTzQ4ciZ-vNscbKge63ohqri', db_key='アプカミ・ミュージック・デリバリー',
+                 is_tweet=False),
+        # ['PLFMni9aeqKTzQ4ciZ-vNscbKge63ohqri', 'アプカミ・ミュージック・デリバリー', False],
+        Playlist(playlist_key='PLPHwLN81i8cqlVTlXWre1Z7daRXXoa_h_', db_key='ビタスイ', display_name='Bitter & Sweet'),
+        # ['PLPHwLN81i8cqlVTlXWre1Z7daRXXoa_h_', 'Bitter & Sweet', True],
+        Playlist(playlist_key='PLFMni9aeqKTwRBEifr0wecspeZPZ24AEN', db_key='ブラザーズ5', is_tweet=False),
+        # ['PLFMni9aeqKTwRBEifr0wecspeZPZ24AEN', 'ブラザーズ5', False],
+        Playlist(playlist_key='PLFMni9aeqKTx6FGeICQu6AMh_h7XaiWrB', db_key='シャ乱Q'),
+        # ['PLFMni9aeqKTx6FGeICQu6AMh_h7XaiWrB', 'シャ乱Q', True],
+        Playlist(playlist_key='PLFMni9aeqKTxAMChTm-sad305266kliMy', db_key='LoVendoЯ', is_tweet=False),
+        # ['PLFMni9aeqKTxAMChTm-sad305266kliMy', 'LoVendoЯ', False],
+        Playlist(playlist_key='PLFMni9aeqKTzQ054kNN0VAn_TC8HVIPvA', db_key='田﨑あさひ', is_tweet=False),
+        # ['PLFMni9aeqKTzQ054kNN0VAn_TC8HVIPvA', '田﨑あさひ', False],
+        Playlist(playlist_key='PLXok3xPFmG2Akv9qLrdDW1ArlCiodq9Bi', db_key='小片リサ'),
+        # ['PLXok3xPFmG2Akv9qLrdDW1ArlCiodq9Bi', '小片リサ', True],
+        Playlist(playlist_key='PLXok3xPFmG2ASK8fo_GEwdk7JQALn0P_o', db_key='高橋愛・田中れいな・夏焼雅',
+                 is_tweet=False),
+        # ['PLXok3xPFmG2ASK8fo_GEwdk7JQALn0P_o', '高橋愛・田中れいな・夏焼雅', False],
+        Playlist(playlist_key='PLFMni9aeqKTx6nJoI4lDcXIW0RnkIj-WC', db_key='吉川友', is_tweet=False),
+        # ['PLFMni9aeqKTx6nJoI4lDcXIW0RnkIj-WC', '吉川友', False],
+        Playlist(playlist_key='PL106616353F82EF27', db_key='中島卓偉'),
+        # ['PL106616353F82EF27', '中島卓偉', True],
+        Playlist(playlist_key='PLFMni9aeqKTxaQnGrEBaf20ZtWGc2FGGt', db_key='KAN', is_tweet=False),
+        # ['PLFMni9aeqKTxaQnGrEBaf20ZtWGc2FGGt', 'KAN', False],
+        Playlist(playlist_key='PLFMni9aeqKTwLp-YS0TdSAJNFp2QdF5et', db_key='hangryangryf',
+                 display_name='HANGRY&ANGRY', is_tweet=False),
+        # ['PLFMni9aeqKTwLp-YS0TdSAJNFp2QdF5et', 'HANGRY&ANGRY', False],
+        Playlist(playlist_key='PL6xCFVfh13DFK5Gsv_qy7Rlwcg_gzcf_a', db_key='里山里海',
+                 display_name='SATOYAMA SATOUMI movement'),
+        # ['PL6xCFVfh13DFK5Gsv_qy7Rlwcg_gzcf_a', 'SATOYAMA SATOUMI movement', True],
+        Playlist(playlist_key='PLFMni9aeqKTyw-UpUPRSEJtD0QfjasWhH', db_key='松原健之'),
+        # ['PLFMni9aeqKTyw-UpUPRSEJtD0QfjasWhH', '松原健之', True],
+        Playlist(playlist_key='PLFMni9aeqKTz7uYHYKB-b_7SRo7dxKmeL', db_key='上々軍団', is_tweet=False),
+        # ['PLFMni9aeqKTz7uYHYKB-b_7SRo7dxKmeL', '上々軍団', False],
+        Playlist(playlist_key='OLAK5uy_m-IDdDas3oTbaeCG8B-EMeQTe7uwW0wcw', db_key='真野恵里菜'),
+        # ['OLAK5uy_m-IDdDas3oTbaeCG8B-EMeQTe7uwW0wcw', '真野恵里菜', True],
+        Playlist(playlist_key='OLAK5uy_mZKo1FwBv_WzjTnkYLglBj4dlWAuax3Js', db_key='森高千里'),
+        # ['OLAK5uy_mZKo1FwBv_WzjTnkYLglBj4dlWAuax3Js', '森高千里', True],
+        Playlist(playlist_key='PL59O0JbKsFLp-RYKpMhN_pooj_bJckLL7', db_key='アップアップガールズ(仮)', hashtag='アプガ',
+                 is_tweet=False),
+        # ['PL59O0JbKsFLp-RYKpMhN_pooj_bJckLL7', 'アップアップガールズ(仮)', False],
+        Playlist(playlist_key='OLAK5uy_kFIc8YxoczUnmcpF3Cgrew3HahESCz2ls', db_key='鞘師里保'),
+        # ['OLAK5uy_kFIc8YxoczUnmcpF3Cgrew3HahESCz2ls', '鞘師里保', True],
+        Playlist('PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', db_key='犬神サーカス団', is_tweet=False),
+        # ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団', False],
+        Playlist(playlist_key='PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', db_key='つんく', display_name='つんく♂',
+                 is_tweet=False),
+        # ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', False],
+        Playlist(playlist_key='PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', db_key='佐藤優樹'),
+        # ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', True],
+        Playlist(playlist_key='PLFMni9aeqKTwb91a6lLvQiEMNEZXpD88v', db_key='ハロプロ25周年記念公開MV'),
+        # ['PLFMni9aeqKTwb91a6lLvQiEMNEZXpD88v', 'ハロプロ25周年記念公開MV', True],
+        Playlist(playlist_key='PLFMni9aeqKTw8G3gCcMDBUKwDCAts-Cj-', db_key='松浦亜弥'),
+        # ['PLFMni9aeqKTw8G3gCcMDBUKwDCAts-Cj-', '松浦亜弥', True],
+        Playlist(playlist_key='PLFMni9aeqKTxpeBpkYUe4TbQ2RtFiz8hJ', db_key='藤本美貴', is_tweet=False),
+        # ['PLFMni9aeqKTxpeBpkYUe4TbQ2RtFiz8hJ', '藤本美貴', False],
+        Playlist(playlist_key='PLFMni9aeqKTzwxJrS92a6zbxKQiYydGkG', db_key='後藤真希', is_tweet=False),
+        # ['PLFMni9aeqKTzwxJrS92a6zbxKQiYydGkG', '後藤真希', False],
+        Playlist(playlist_key='PLFMni9aeqKTxJqAbOc60917KKfOsAmjqD', db_key='中澤裕子', is_tweet=False),
+        # ['PLFMni9aeqKTxJqAbOc60917KKfOsAmjqD', '中澤裕子', False],
+        Playlist(playlist_key='PLFMni9aeqKTxNAXGrN4VW_qpYD1fLoI5H', db_key='メロン記念日'),
+        # ['PLFMni9aeqKTxNAXGrN4VW_qpYD1fLoI5H', 'メロン記念日', True],
+        Playlist(playlist_key='PLFMni9aeqKTzGddgeMhbXMhXgz8dMgaJs', db_key='太陽とシスコムーン'),
+        # ['PLFMni9aeqKTzGddgeMhbXMhXgz8dMgaJs', '太陽とシスコムーン', True],
+        Playlist(playlist_key='PLXok3xPFmG2DWOqD9q7yGm608F6gNjUIx', db_key='稲場愛香'),
+        # ['PLXok3xPFmG2DWOqD9q7yGm608F6gNjUIx', '稲場愛香', True],
+        Playlist(playlist_key='PLXok3xPFmG2DsiyGQD2A5Elihz05RVIR-', db_key='mlinemusic', display_name='M-line Music'),
+        # ['PLXok3xPFmG2DsiyGQD2A5Elihz05RVIR-', 'M-line Music', True],
+        Playlist(playlist_key='PLFMni9aeqKTwIf7DShjl6y2Lf2-MGUvd3', db_key='タンポポ', is_tweet=False),
+        # ['PLFMni9aeqKTwIf7DShjl6y2Lf2-MGUvd3', 'タンポポ', False],
+        Playlist(playlist_key='PLFMni9aeqKTw00DcNa2h05AdhzJCr-eiV', db_key='プッチモニ', is_tweet=False),
+        # ['PLFMni9aeqKTw00DcNa2h05AdhzJCr-eiV', 'プッチモニ', False],
+        Playlist(playlist_key='PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', db_key='ミニモニ。', hashtag='ミニモニ',
+                 is_tweet=False),
+        # ['PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', 'ミニモニ。', False],
+        Playlist(playlist_key='PLCpSIn0xlyXmU10v0Lh6dO7PcPUYESTq2', db_key='ME_I', display_name='ME:I')
+        # ['PLCpSIn0xlyXmU10v0Lh6dO7PcPUYESTq2', 'ME_I', True]
     ]
-
-
-# def playlists():
-#     return [
-#         ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
-#         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
-#         ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', False]
-#     ]
+    #         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
+    #         ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', False]
+    #     ]
 
 
 def trim_title(text: str, artist_name: str):
@@ -187,7 +269,7 @@ def html_base(name: str, content: str) -> str:
         font-size: 20px;
         transform: scale(1.5, 1.5) translateY(25%);
      }}
-     
+
      table tbody tr td:nth-of-type(1){{
         font-family: 'Noto Sans', sans-serif;
      }}
@@ -233,9 +315,11 @@ def frame_collector() -> dict[str, DataFrame]:
 
     connector = connect(SQLITE_DATABASE)
     cursor = connector.cursor()
-    table_name = [name[0] for name in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
-    tables: dict[str, DataFrame] = {name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index')
-                                    for name in table_name}
+    table_name = [name[0] for name in
+                  cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+    tables: dict[str, DataFrame] = {
+        name: read_sql(f"SELECT * FROM {pack_comma(name)}", connector, index_col='index')
+        for name in table_name}
 
     for dataframe_key in tables.keys():
         column_list = tables[dataframe_key].columns.tolist()[1:]
@@ -243,7 +327,8 @@ def frame_collector() -> dict[str, DataFrame]:
         title_list: Series = tables[dataframe_key].loc[:, 'タイトル']
         title_list = title_list.replace('0', None)
         num_arr: DataFrame = tables[dataframe_key][column_list]
-        tables[dataframe_key] = DataFrame(num_arr.to_numpy(), columns=column_list, index=index_list, dtype=Int64Dtype())
+        tables[dataframe_key] = DataFrame(num_arr.to_numpy(), columns=column_list, index=index_list,
+                                          dtype=Int64Dtype())
         tables[dataframe_key].loc[:, 'タイトル'] = title_list
         column_list = ['タイトル'] + [col for col in gen_date_array(column_list[0], column_list[-1])]
         sparse_dataframe = DataFrame(columns=column_list, dtype=Int64Dtype())

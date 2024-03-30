@@ -1,7 +1,7 @@
 from os import path, getcwd, makedirs
 from matplotlib_fontja import japanize
 from matplotlib import pyplot, style
-from const import frame_collector
+from const import frame_collector, playlists
 from pandas import DataFrame, to_datetime, DatetimeIndex
 from sys import stderr
 
@@ -39,7 +39,7 @@ def graph_gen() -> None:
         pyplot.legend(loc='upper left', borderaxespad=1)
         pyplot.xlabel('日付')
         pyplot.ylabel('再生回数')
-        pyplot.title(key)
+        pyplot.title(filter(lambda x: x.db_key == key, playlists()).__next__().display_name)
         # pyplot.show()
         pyplot.savefig(path.join(getcwd(), 'graph', key + '.png'))
         pyplot.close()
