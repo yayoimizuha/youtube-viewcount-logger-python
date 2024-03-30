@@ -29,7 +29,8 @@ def generate_txt() -> dict[str, (str, list[str])]:
         incr.sort_values(ascending=False, inplace=True)
         incr = incr[~incr.index.duplicated(keep='first')]
         print_str = str()
-        print_str += f'#hpytvc 昨日からの再生回数: #{key}\n'
+        hashtag = filter(lambda x: x.db_key == key, playlists())[0].hashtag
+        print_str += f'#hpytvc 昨日からの再生回数: #{hashtag}\n'
         for order, (name, count) in enumerate(list(incr.items())[:min(3, incr.size)]):
             # print(MEDAL[order], name, str(count) + '回', sep=' ')
             print_str += f'{MEDAL[order]}{name} {count}回\n'
@@ -93,12 +94,12 @@ if __name__ == '__main__':
                "拡大縮小したり、表示したい曲を選択して表示できたりして、毎日の画像ツイートより見やすくなっています！"
                "https://viewcount-logger-20043.web.app/", raw=True, media=[], v1=v1_api, v2=v2_api)
 
-    for playlist_id, key, is_tweet in playlists():
-        if is_tweet:
+    for playlist in playlists():
+        if playlist.is_tweet:
             try:
                 if tweet_counter > 50:
                     print("tweet limit exceeded!!")
                     break
-                pprint(tweet(*tweet_content[key], raw=False, v1=v1_api, v2=v2_api))
+                pprint(tweet(*tweet_content[playlist.db_key], raw=False, v1=v1_api, v2=v2_api))
             except TweepyException as e:
                 print(e)

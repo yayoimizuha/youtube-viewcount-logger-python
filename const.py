@@ -26,7 +26,10 @@ class Playlist:
         self.is_tweet = is_tweet
 
 
-def playlists():
+def playlists() -> list[Playlist]:
+    # def playlists():
+    #     return [
+    #         ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
     return [
         # ' <--- youtube playlist key --->  <- group name -> <- hashtag -> <- is tweet? ->'
         # Playlist(playlist_key='PLAAEA82D2950BC77D', db_key='モーニング娘。', hashtag='モーニング娘24',
@@ -100,8 +103,8 @@ def playlists():
         ['PL106616353F82EF27', '中島卓偉', True],
         # Playlist(playlist_key='PLFMni9aeqKTxaQnGrEBaf20ZtWGc2FGGt', db_key='KAN', is_tweet=False),
         ['PLFMni9aeqKTxaQnGrEBaf20ZtWGc2FGGt', 'KAN', False],
-        # Playlist(playlist_key='PLFMni9aeqKTwLp-YS0TdSAJNFp2QdF5et', db_key='hangryangryf', display_name='HANGRY&ANGRY',
-        #          is_tweet=False),
+        # Playlist(playlist_key='PLFMni9aeqKTwLp-YS0TdSAJNFp2QdF5et', db_key='hangryangryf',
+        # display_name='HANGRY&ANGRY', is_tweet=False),
         ['PLFMni9aeqKTwLp-YS0TdSAJNFp2QdF5et', 'HANGRY&ANGRY', False],
         # Playlist(playlist_key='PL6xCFVfh13DFK5Gsv_qy7Rlwcg_gzcf_a', db_key='里山里海',
         #          display_name='SATOYAMA SATOUMI movement'),
@@ -121,27 +124,38 @@ def playlists():
         ['OLAK5uy_kFIc8YxoczUnmcpF3Cgrew3HahESCz2ls', '鞘師里保', True],
         # Playlist('PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', db_key='犬神サーカス団', is_tweet=False),
         ['PLFMni9aeqKTwKr8lVnRSCHFcDiQEjFB_v', '犬神サーカス団', False],
-        # Playlist(playlist_key='PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr',db_key='つんく')
+        # Playlist(playlist_key='PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', db_key='つんく', display_name='つんく♂',is_tweet=False),
         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', False],
+        # Playlist(playlist_key='PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', db_key='佐藤優樹'),
         ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', True],
+        # Playlist(playlist_key='PLFMni9aeqKTwb91a6lLvQiEMNEZXpD88v', db_key='ハロプロ25周年記念公開MV'),
         ['PLFMni9aeqKTwb91a6lLvQiEMNEZXpD88v', 'ハロプロ25周年記念公開MV', True],
+        # Playlist(playlist_key='PLFMni9aeqKTw8G3gCcMDBUKwDCAts-Cj-', db_key='松浦亜弥'),
         ['PLFMni9aeqKTw8G3gCcMDBUKwDCAts-Cj-', '松浦亜弥', True],
+        # Playlist(playlist_key='PLFMni9aeqKTxpeBpkYUe4TbQ2RtFiz8hJ', db_key='藤本美貴', is_tweet=False),
         ['PLFMni9aeqKTxpeBpkYUe4TbQ2RtFiz8hJ', '藤本美貴', False],
+        # Playlist(playlist_key='PLFMni9aeqKTzwxJrS92a6zbxKQiYydGkG', db_key='後藤真希', is_tweet=False),
         ['PLFMni9aeqKTzwxJrS92a6zbxKQiYydGkG', '後藤真希', False],
+        # Playlist(playlist_key='PLFMni9aeqKTxJqAbOc60917KKfOsAmjqD', db_key='中澤裕子', is_tweet=False),
         ['PLFMni9aeqKTxJqAbOc60917KKfOsAmjqD', '中澤裕子', False],
+        # Playlist(playlist_key='PLFMni9aeqKTxNAXGrN4VW_qpYD1fLoI5H', db_key='メロン記念日'),
         ['PLFMni9aeqKTxNAXGrN4VW_qpYD1fLoI5H', 'メロン記念日', True],
+        # Playlist(playlist_key='PLFMni9aeqKTzGddgeMhbXMhXgz8dMgaJs', db_key='太陽とシスコムーン'),
         ['PLFMni9aeqKTzGddgeMhbXMhXgz8dMgaJs', '太陽とシスコムーン', True],
+        # Playlist(playlist_key='PLXok3xPFmG2DWOqD9q7yGm608F6gNjUIx', db_key='稲場愛香'),
         ['PLXok3xPFmG2DWOqD9q7yGm608F6gNjUIx', '稲場愛香', True],
+        # Playlist(playlist_key='PLXok3xPFmG2DsiyGQD2A5Elihz05RVIR-', db_key='mlinemusic', display_name='M-line Music'),
         ['PLXok3xPFmG2DsiyGQD2A5Elihz05RVIR-', 'M-line Music', True],
+        # Playlist(playlist_key='PLFMni9aeqKTwIf7DShjl6y2Lf2-MGUvd3', db_key='タンポポ', is_tweet=False),
         ['PLFMni9aeqKTwIf7DShjl6y2Lf2-MGUvd3', 'タンポポ', False],
+        # Playlist(playlist_key='PLFMni9aeqKTw00DcNa2h05AdhzJCr-eiV', db_key='プッチモニ', is_tweet=False),
         ['PLFMni9aeqKTw00DcNa2h05AdhzJCr-eiV', 'プッチモニ', False],
+        # Playlist(playlist_key='PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', db_key='ミニモニ。', hashtag='ミニモニ',
+        #          is_tweet=False),
         ['PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', 'ミニモニ。', False],
+        # Playlist(playlist_key='PLCpSIn0xlyXmU10v0Lh6dO7PcPUYESTq2', db_key='ME_I', display_name='ME:I'),
         ['PLCpSIn0xlyXmU10v0Lh6dO7PcPUYESTq2', 'ME_I', True]
     ]
-
-    # def playlists():
-    #     return [
-    #         ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
     #         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
     #         ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', False]
     #     ]
