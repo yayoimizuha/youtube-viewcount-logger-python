@@ -119,7 +119,7 @@ if __name__ == '__main__':
         if table_data.index.__len__() > 15:
             table_data = table_data.loc[table_data.index[:15], :]
         with open(join(getcwd(), 'html', key + '.html'), mode='w', encoding='utf-8') as f:
-            f.write(html_base(name=filter(lambda x: x.db_key == key, playlists())[0].display_name,
+            f.write(html_base(name=filter(lambda x: x.db_key == key, playlists()).__next__().display_name,
                               content=table_data.to_html(render_links=True, notebook=True, justify='center')))
         run([firefox_path, '--screenshot', join(getcwd(), 'table', f'{key}.png'),
              f'http://127.0.0.1:8888/html/{key}.html', '--window-size=3000,3000'], stdout=stdout, stderr=stderr)
