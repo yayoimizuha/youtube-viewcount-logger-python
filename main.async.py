@@ -150,3 +150,7 @@ run(runner())
 
 with open(join(getcwd(), 'tsvs', 'group_list.tsv'), mode='w', encoding='utf8') as f:
     f.writelines('\n'.join({playlist.db_key for playlist in playlists()}))
+
+with open(join(getcwd(), 'group_list.json'), mode='w', encoding='utf8') as f:
+    f.write(
+        json.dumps({playlist.db_key: playlist.display_name for playlist in playlists()}, indent=4, ensure_ascii=False))
