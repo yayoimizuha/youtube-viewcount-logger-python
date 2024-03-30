@@ -29,7 +29,7 @@ def generate_txt() -> dict[str, (str, list[str])]:
         incr.sort_values(ascending=False, inplace=True)
         incr = incr[~incr.index.duplicated(keep='first')]
         print_str = str()
-        hashtag = filter(lambda x: x.db_key == key, playlists())[0].hashtag
+        hashtag = filter(lambda x: x.db_key == key, playlists()).__next__().hashtag
         print_str += f'#hpytvc 昨日からの再生回数: #{hashtag}\n'
         for order, (name, count) in enumerate(list(incr.items())[:min(3, incr.size)]):
             # print(MEDAL[order], name, str(count) + '回', sep=' ')
