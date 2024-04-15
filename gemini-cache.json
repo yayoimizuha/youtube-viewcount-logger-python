@@ -12407,5 +12407,27 @@
     "singer": [],
     "edition": "1990.3.3 NHK HALL Live Version",
     "version": ""
+  },
+  "Sugar Bomb": {
+    "song_name": "Sugar Bomb",
+    "singer": [],
+    "edition": "",
+    "version": ""
+  },
+  "& ME (ME:I Ver.)": {
+    "song_name": "& ME",
+    "singer": [
+      "ME:I"
+    ],
+    "edition": "",
+    "version": "ME:I Ver."
+  },
+  "CHOPPY CHOPPY (ME:I Ver.)": {
+    "song_name": "CHOPPY CHOPPY",
+    "singer": [
+      "ME:I"
+    ],
+    "edition": "",
+    "version": "ME:I Ver."
   }
 }
