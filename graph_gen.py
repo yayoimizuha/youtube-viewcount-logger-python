@@ -39,6 +39,7 @@ def graph_gen() -> None:
         pyplot.legend(loc='upper left', borderaxespad=1)
         pyplot.xlabel('日付')
         pyplot.ylabel('再生回数')
+        pyplot.ylim(bottom=0)
         pyplot.title(filter(lambda x: x.db_key == key, playlists()).__next__().display_name)
         # pyplot.show()
         pyplot.savefig(path.join(getcwd(), 'graph', key + '.png'))
