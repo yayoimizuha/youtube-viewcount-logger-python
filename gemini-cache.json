@@ -12635,5 +12635,20 @@
     ],
     "edition": "",
     "version": ""
+  },
+  "DARKSIDE": {
+    "song_name": "DARKSIDE",
+    "singer": [],
+    "edition": "",
+    "version": ""
+  },
+  "DARKSIDE   /Riho Sayashi I 鞘師里保": {
+    "song_name": "DARKSIDE",
+    "singer": [
+      "Riho Sayashi",
+      "鞘師里保"
+    ],
+    "edition": "",
+    "version": ""
   }
 }
