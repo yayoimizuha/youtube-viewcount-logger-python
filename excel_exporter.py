@@ -14,14 +14,14 @@ def main():
     # valid_iso_format = lambda date
     as_excel_date: Callable[[str], int | str] = \
         lambda date: (datetime.fromisoformat(date) - datetime(1899, 12, 30)).days if '-' in date else date
+    default_font = '游ゴシック'
 
     connector = connect(join(getcwd(), 'save.sqlite'))
     cursor = connector.cursor()
     table_names = cursor.execute('SELECT name FROM sqlite_master WHERE type="table";').fetchall()
     excel_file: BytesIO = BytesIO()
     main_styler = Styler(horizontal_alignment=horizontal_alignments.left, date_format='YYYY-MM-DD',
-                         font_color=colors.black,
-                         underline=None)
+                         font_color=colors.black, underline=None, font=default_font)
     header_styler = Styler(number_format='YYYY年MM月DD日', date_format='YYYY年MM月DD日')
 
     with ExcelWriter(path=excel_file, mode='w') as writer:
@@ -32,7 +32,7 @@ def main():
             dataframe.rename(columns={'index': 'URL'}, inplace=True)
             dataframe['URL'] = dataframe['URL'].map(as_hyperlink)
             dataframe.columns = dataframe.columns.map(as_excel_date)
-            styleframe = StyleFrame(dataframe)
+            styleframe = StyleFrame(dataframe, styler_obj=Styler(font=default_font))
             styleframe.set_column_width(columns=dataframe.columns[2:], width=20)
             styleframe.set_column_width(columns='URL', width=37)
             styleframe.set_column_width(columns='タイトル', width=70)
