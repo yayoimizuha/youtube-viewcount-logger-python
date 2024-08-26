@@ -12738,5 +12738,25 @@
     ],
     "edition": "",
     "version": ""
+  },
+  "Cookie Party": {
+    "song_name": "Cookie Party",
+    "singer": [],
+    "edition": "",
+    "version": ""
+  },
+  "Our Diary": {
+    "song_name": "Our Diary",
+    "singer": [],
+    "edition": "",
+    "version": ""
+  },
+  "Imagine It (ME:I Ver.)": {
+    "song_name": "Imagine It",
+    "singer": [
+      "ME:I"
+    ],
+    "edition": "",
+    "version": "ME:I Ver."
   }
 }
