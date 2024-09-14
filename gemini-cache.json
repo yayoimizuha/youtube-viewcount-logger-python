@@ -12877,5 +12877,25 @@
     "singer": [],
     "edition": "シングル・ヴァージョン",
     "version": ""
+  },
+  "普通の幸せ": {
+    "song_name": "普通の幸せ",
+    "singer": [],
+    "edition": "",
+    "version": ""
+  },
+  "ライター志望 (2012 Remaster)": {
+    "song_name": "ライター志望",
+    "singer": [],
+    "edition": "2012 Remaster",
+    "version": ""
+  },
+  "森高千里「テリヤキ・バーガー」愛知県芸術劇場大ホール2023.11.12 / Chisato Moritaka \"Teriyaki Burger (Live, Nov. 12, 2023)”": {
+    "song_name": "テリヤキ・バーガー",
+    "singer": [
+      "森高千里"
+    ],
+    "edition": "",
+    "version": ""
   }
 }
