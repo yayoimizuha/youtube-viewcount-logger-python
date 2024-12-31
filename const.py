@@ -8,6 +8,7 @@ from sqlite3 import connect
 from pandas import DataFrame, read_sql, Series, Int64Dtype, NA, concat
 from unicodedata import normalize
 from typing import Optional
+from datetime import datetime,timezone,timedelta
 
 
 class Playlist:
@@ -24,16 +25,22 @@ class Playlist:
         else:
             self.display_name = display_name
         self.is_tweet = is_tweet
+    def __str__(self):
+        return str((self.display_name,self.db_key,self.hashtag))
+    def __repr__(self):
+        return self.__str__()
 
 
 def playlists() -> list[Playlist]:
     # def playlists():
     #     return [
     #         ['PLeUX-FlHsb-tGpXYdlTS8rjjqCLxUB-eh', '鈴木愛理', True],
+    year = str(datetime.now(timezone(timedelta(hours=+9))).year)[2:]
+
     return [
         # ' <--- youtube playlist key --->  <- group name -> <- hashtag -> <- is tweet? ->'
-        Playlist(playlist_key='PLAAEA82D2950BC77D', db_key='モーニング娘。', hashtag='モーニング娘24',
-                 display_name='モーニング娘。\'24'),
+        Playlist(playlist_key='PLAAEA82D2950BC77D', db_key='モーニング娘。', hashtag='モーニング娘' + year,
+                 display_name='モーニング娘。\'' + year),
         # ['PLAAEA82D2950BC77D', 'モーニング娘。', True],
         Playlist(playlist_key='PL0DCF7F78614F3AE6', db_key='アンジュルム'),
         # ['PL0DCF7F78614F3AE6', 'アンジュルム', True],
