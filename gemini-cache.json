@@ -12710,7 +12710,7 @@
   "ME:I (ミーアイ) ⊹ 'Hi-Five' Performance Video": {
     "song_name": "Hi-Five",
     "singer": [
-      "ME:I (ミーアイ)"
+      "ME:I"
     ],
     "edition": "Performance Video",
     "version": ""
@@ -13097,8 +13097,8 @@
     "singer": [
       "ME:I"
     ],
-    "edition": "Rock Arrange Ver.",
-    "version": "ME:I Ver."
+    "edition": "",
+    "version": "(ME:I Ver.) Rock Arrange Ver."
   },
   "モーニング娘。'24『勇敢なダンス』Promotion Edit": {
     "song_name": "勇敢なダンス",
@@ -13133,9 +13133,9 @@
   "ME:I (ミーアイ) ⊹ 'Tomorrow' Performance Video": {
     "song_name": "Tomorrow",
     "singer": [
-      "ME:I (ミーアイ)"
+      "ME:I"
     ],
-    "edition": "",
+    "edition": "Performance Video",
     "version": ""
   },
   "竹内朱莉『泣いてOVER』Promotion Edit": {
@@ -13151,16 +13151,14 @@
     "singer": [
       ""
     ],
-    "edition": "End Credit Version (From \"Moana 2\"/Japanese Soundtrack Version)",
-    "version": ""
+    "edition": "",
+    "version": "End Credit Version (From \"Moana 2\"/Japanese Soundtrack)"
   },
   "Memories (シングル・ヴァージョン) (2012 Remaster)": {
     "song_name": "Memories",
-    "singer": [
-      "Maroon 5"
-    ],
-    "edition": "シングル・ヴァージョン",
-    "version": "2012 Remaster"
+    "singer": [],
+    "edition": "",
+    "version": "シングル・ヴァージョン"
   },
   "Sweetie": {
     "song_name": "Sweetie",
@@ -13173,7 +13171,7 @@
     "singer": [
       "ME:I"
     ],
-    "edition": "",
+    "edition": "Track Video",
     "version": ""
   },
   "BEYOOOOONDS『Do-Did-Done』Promotion Edit": {
@@ -13201,9 +13199,9 @@
   "ME:I (ミーアイ) : 'Sweetie' LIVE Performance @ 2024 ME:ICONIC Sweet Holiday": {
     "song_name": "Sweetie",
     "singer": [
-      "ME:I (ミーアイ)"
+      "ME:I"
     ],
-    "edition": "",
+    "edition": "LIVE Performance",
     "version": ""
   },
   "森高千里「私がオバさんになっても（Zepp DiverCity TOKYO 2024. 12. 3）」/ Chisato Moritaka \"Watashi ga Obasan ni Nattemo\"": {
@@ -13331,11 +13329,9 @@
   },
   "ダーリン I LOVE YOU (Berryz工房 Ver.)": {
     "song_name": "ダーリン I LOVE YOU",
-    "singer": [
-      "Berryz工房"
-    ],
+    "singer": [],
     "edition": "",
-    "version": "Ver."
+    "version": "Berryz工房 Ver."
   },
   "我ら！Berryz仮面": {
     "song_name": "我ら！Berryz仮面",
@@ -13377,9 +13373,7 @@
   },
   "君の友達": {
     "song_name": "君の友達",
-    "singer": [
-      "AAA"
-    ],
+    "singer": [],
     "edition": "",
     "version": ""
   },
@@ -13435,9 +13429,7 @@
   },
   "雄叫びボーイ WAO！ (スパークVer.)": {
     "song_name": "雄叫びボーイ WAO",
-    "singer": [
-      "スパーク"
-    ],
+    "singer": [],
     "edition": "",
     "version": "スパークVer."
   },
@@ -13467,21 +13459,16 @@
     "version": ""
   },
   "パッション E-CHA E-CHA": {
-    "song_name": "パッション",
-    "singer": [
-      "E-CHA",
-      "E-CHA"
-    ],
+    "song_name": "パッション E-CHA E-CHA",
+    "singer": [],
     "edition": "",
     "version": ""
   },
   "青春劇場 (Berryz工房Ver.)": {
     "song_name": "青春劇場",
-    "singer": [
-      "Berryz工房"
-    ],
+    "singer": [],
     "edition": "",
-    "version": "Ver."
+    "version": "Berryz工房 Ver."
   },
   "ありがとう！おともだち。": {
     "song_name": "ありがとう！おともだち。",
@@ -13518,7 +13505,7 @@
     "version": "Instrumental"
   },
   "マジカルフューチャー！": {
-    "song_name": "マジカルフューチャー",
+    "song_name": "マジカルフューチャー！",
     "singer": [],
     "edition": "",
     "version": ""
@@ -13533,7 +13520,7 @@
     "version": ""
   },
   "すっちゃかめっちゃか～": {
-    "song_name": "すっちゃかめっちゃか",
+    "song_name": "すっちゃかめっちゃか～",
     "singer": [],
     "edition": "",
     "version": ""
@@ -13592,9 +13579,7 @@
   },
   "いつもいつでも": {
     "song_name": "いつもいつでも",
-    "singer": [
-      "back number"
-    ],
+    "singer": [],
     "edition": "",
     "version": ""
   },
@@ -13611,7 +13596,7 @@
     "version": ""
   },
   "～「進行はミチコ」の時間 (2) ～": {
-    "song_name": "進行はミチコ",
+    "song_name": "～「進行はミチコ」の時間 (2) ～",
     "singer": [],
     "edition": "",
     "version": ""
@@ -13623,10 +13608,8 @@
     "version": "Instrumental"
   },
   "かけがえのないあなたへ ～my precious treasure box～ (Instrumental)": {
-    "song_name": "かけがえのないあなたへ",
-    "singer": [
-      "my precious treasure box"
-    ],
+    "song_name": "かけがえのないあなたへ ～my precious treasure box～",
+    "singer": [],
     "edition": "",
     "version": "Instrumental"
   },
@@ -13643,22 +13626,20 @@
     "version": ""
   },
   "～「進行は…」～": {
-    "song_name": "進行は…",
+    "song_name": "～「進行は…」～",
     "singer": [],
     "edition": "",
     "version": ""
   },
   "みんな、ありがとう。": {
-    "song_name": "",
+    "song_name": "みんな、ありがとう。",
     "singer": [],
     "edition": "",
     "version": ""
   },
   "無添加かなこのテーマ": {
-    "song_name": "無添加",
-    "singer": [
-      "かなこ"
-    ],
+    "song_name": "無添加かなこのテーマ",
+    "singer": [],
     "edition": "",
     "version": ""
   },
@@ -13670,17 +13651,13 @@
   },
   "あなたなしでは生きてゆけない (04-13-15完熟Completion Ver.)": {
     "song_name": "あなたなしでは生きてゆけない",
-    "singer": [
-      "04-13-15完熟Completion"
-    ],
+    "singer": [],
     "edition": "",
-    "version": "Ver."
+    "version": "04-13-15完熟Completion Ver."
   },
   "かけがえのないあなたへ ～my precious treasure box～": {
-    "song_name": "かけがえのないあなたへ",
-    "singer": [
-      "my precious treasure box"
-    ],
+    "song_name": "かけがえのないあなたへ ～my precious treasure box～",
+    "singer": [],
     "edition": "",
     "version": ""
   },
@@ -13735,8 +13712,8 @@
   "Love & Peace＝パラダイス (Instrumental)": {
     "song_name": "Love & Peace＝パラダイス",
     "singer": [],
-    "edition": "Instrumental",
-    "version": ""
+    "edition": "",
+    "version": "Instrumental"
   },
   "青空が笑ってる": {
     "song_name": "青空が笑ってる",
@@ -13817,10 +13794,8 @@
     "version": ""
   },
   "OSOZAKI 娘": {
-    "song_name": "OSOZAKI",
-    "singer": [
-      "娘"
-    ],
+    "song_name": "OSOZAKI 娘",
+    "singer": [],
     "edition": "",
     "version": ""
   },
@@ -13894,9 +13869,7 @@
   },
   "家へ帰ろう sad ver.": {
     "song_name": "家へ帰ろう",
-    "singer": [
-      "sad"
-    ],
+    "singer": [],
     "edition": "",
     "version": "sad ver."
   },
@@ -13925,13 +13898,8 @@
     "version": ""
   },
   "純情警察K・I・S・S": {
-    "song_name": "純情警察",
-    "singer": [
-      "K",
-      "I",
-      "S",
-      "S"
-    ],
+    "song_name": "純情警察K・I・S・S",
+    "singer": [],
     "edition": "",
     "version": ""
   },
@@ -13950,8 +13918,8 @@
   "世界は サマー・パーティ (Instrumental)": {
     "song_name": "世界はサマー・パーティ",
     "singer": [],
-    "edition": "Instrumental",
-    "version": ""
+    "edition": "",
+    "version": "Instrumental"
   },
   "ハロー！ エスパー！ ハロー！": {
     "song_name": "ハロー！ エスパー！ ハロー！",
@@ -13972,7 +13940,7 @@
     "version": ""
   },
   "小遣いUP大作戦": {
-    "song_name": "",
+    "song_name": "小遣いUP大作戦",
     "singer": [],
     "edition": "",
     "version": ""
@@ -14002,26 +13970,20 @@
     "version": ""
   },
   "秘密のウ・タ・ヒ・メ": {
-    "song_name": "秘密のウタヒメ",
-    "singer": [
-      "ウタ"
-    ],
+    "song_name": "秘密のウ・タ・ヒ・メ",
+    "singer": [],
     "edition": "",
     "version": ""
   },
   "桜→入学式": {
-    "song_name": "桜",
-    "singer": [
-      "入学式"
-    ],
+    "song_name": "桜→入学式",
+    "singer": [],
     "edition": "",
     "version": ""
   },
   "我らジャンヌ (New Recording)": {
     "song_name": "我らジャンヌ",
-    "singer": [
-      "ジャンヌ"
-    ],
+    "singer": [],
     "edition": "New Recording",
     "version": ""
   },
@@ -14100,9 +14062,9 @@
     "version": ""
   },
   "単純すぎなの私…": {
-    "song_name": "単純すぎなの私",
+    "song_name": "単純すぎなの私…",
     "singer": [
-      "AAA"
+      "Berryz工房"
     ],
     "edition": "",
     "version": ""
@@ -14146,9 +14108,7 @@
   },
   "夢で ドゥーアップ": {
     "song_name": "夢でドゥーアップ",
-    "singer": [
-      "ドゥーアップ"
-    ],
+    "singer": [],
     "edition": "",
     "version": ""
   },
@@ -14185,7 +14145,7 @@
       "徳永千奈美",
       "須藤茉麻"
     ],
-    "edition": "Unreleased Cover",
-    "version": "Ver."
+    "edition": "",
+    "version": "Unreleased Cover Ver."
   }
 }
