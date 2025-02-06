@@ -2,5 +2,5 @@
 # shellcheck disable=SC2164
 cd /tmp/
 sudo apt install curl tar -y
-curl -sSL "https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=ja" | tar -xf -
+curl -sSL "https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=ja" | tar -Jxf -
 sudo mv firefox /opt
