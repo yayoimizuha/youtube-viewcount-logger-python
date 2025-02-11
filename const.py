@@ -162,7 +162,7 @@ def playlists() -> list[Playlist]:
         Playlist(playlist_key='PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', db_key='ミニモニ。', hashtag='ミニモニ',
                  is_tweet=False),
         # ['PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', 'ミニモニ。', False],
-        Playlist(playlist_key='OLAK5uy_l7b14j3zxTZMiJdO1fYFvhRI2NrHAGYow', db_key='ME_I', display_name='ME:I')
+        Playlist(playlist_key='PLHBlp1EugxwdY9abMZagocJvRfbc_gVMr', db_key='ME_I', display_name='ME:I')
         # ['PLCpSIn0xlyXmU10v0Lh6dO7PcPUYESTq2', 'ME_I', True]
     ]
     #         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
