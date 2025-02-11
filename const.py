@@ -51,6 +51,7 @@ def playlists() -> list[Playlist]:
         Playlist(playlist_key='PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', db_key='つばきファクトリー'),
         # ['PL0XLej3y4LDmLO0FHu8HBkldiggTt1Es4', 'つばきファクトリー', True],
         Playlist(playlist_key='PLHdMoq6t0XIA5JLPo-SyTTqEByvdu1cGA', db_key='ochanorma', display_name='OCHA NORMA'),
+        Playlist(playlist_key='PLc_REKUn8hhDbzMfjnIocF-siMz7TReb4', db_key='rosychronicle', display_name='ロージークロニクル'),
         # ['PLHdMoq6t0XIA5JLPo-SyTTqEByvdu1cGA', 'OCHA NORMA', True],
         Playlist(playlist_key='PLCpSIn0xlyXl0ceNf4rBZvmF2njxunqQC', db_key='ハロプロダンス部', is_tweet=False),
         # ['PLCpSIn0xlyXl0ceNf4rBZvmF2njxunqQC', 'ハロプロダンス部', False],
