@@ -75,7 +75,7 @@ def playlists() -> list[Playlist]:
         Playlist(playlist_key='PLFMni9aeqKTx6FGeICQu6AMh_h7XaiWrB', db_key='シャ乱Q'),
         Playlist(playlist_key='PLFMni9aeqKTxAMChTm-sad305266kliMy', db_key='LoVendoЯ', is_tweet=False),
         Playlist(playlist_key='PLFMni9aeqKTzQ054kNN0VAn_TC8HVIPvA', db_key='田﨑あさひ', is_tweet=False),
-        Playlist(playlist_key='PLXok3xPFmG2Akv9qLrdDW1ArlCiodq9Bi', db_key='小片リサ'),
+        # Playlist(playlist_key='PLXok3xPFmG2Akv9qLrdDW1ArlCiodq9Bi', db_key='小片リサ'),
         Playlist(playlist_key='PLXok3xPFmG2ASK8fo_GEwdk7JQALn0P_o', db_key='高橋愛・田中れいな・夏焼雅',
                  is_tweet=False),
         Playlist(playlist_key='PLFMni9aeqKTx6nJoI4lDcXIW0RnkIj-WC', db_key='吉川友', is_tweet=False),
