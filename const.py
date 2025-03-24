@@ -104,6 +104,7 @@ def playlists() -> list[Playlist]:
         Playlist(playlist_key='PLFMni9aeqKTxNAXGrN4VW_qpYD1fLoI5H', db_key='メロン記念日'),
         Playlist(playlist_key='PLFMni9aeqKTzGddgeMhbXMhXgz8dMgaJs', db_key='太陽とシスコムーン'),
         Playlist(playlist_key='PLXok3xPFmG2DWOqD9q7yGm608F6gNjUIx', db_key='稲場愛香'),
+        Playlist(playlist_key='PLXok3xPFmG2DiHcV0pWOnzcJn8wVx7jlL', db_key='譜久村聖'),
         Playlist(playlist_key='PLXok3xPFmG2DsiyGQD2A5Elihz05RVIR-', db_key='mlinemusic', display_name='M-line Music'),
         Playlist(playlist_key='PLFMni9aeqKTwIf7DShjl6y2Lf2-MGUvd3', db_key='タンポポ', is_tweet=False),
         Playlist(playlist_key='PLFMni9aeqKTw00DcNa2h05AdhzJCr-eiV', db_key='プッチモニ', is_tweet=False),
