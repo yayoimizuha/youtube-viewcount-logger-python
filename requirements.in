@@ -13,3 +13,4 @@ budoux
 tabulate
 google-generativeai
 selenium
+llvmlite>=0.43.0

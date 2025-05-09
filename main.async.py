@@ -56,6 +56,9 @@ async def list_playlist(playlist_key: str, artist_name: str, session: ClientSess
                          },
                  'resource_type': 'playlistItems'}
         resp = await (await session.get(query_builder(**query))).json()
+        if "error" in resp.keys():
+            print(resp, playlist_key)
+            break
         video_dict[artist_name] |= {item['snippet']['resourceId']['videoId'] for item in resp['items']}
         if 'nextPageToken' not in resp:
             break
@@ -88,6 +91,8 @@ async def runner() -> None:
     await gather(*[list_playlist(playlist.playlist_key, playlist.db_key, sess, video_dict) for playlist in playlists()],
                  return_exceptions=True)
     print(f"YouTube playlists index time: {time() - playlist_index_time:2.3f}s")
+    # print(video_dict)
+
 
     sql_index_time = time()
     connector = connect(SQLITE_DATABASE)
