@@ -298,3 +298,21 @@ def frame_collector() -> dict[str, DataFrame]:
         dump(tables, f)
 
     return tables
+
+
+def gen_playlists_sql():
+    insert_statements = []
+    for playlist in playlists():
+        insert_statements.append(
+            f"INSERT INTO __source__ (playlist_key, db_key, hashtag, screen_name, is_tweet) VALUES ("
+            f"'{playlist.playlist_key}', "
+            f"'{playlist.db_key}', "
+            f"'{playlist.hashtag}', "
+            f"'{playlist.display_name}', "
+            f"{int(playlist.is_tweet)}"  # Convert boolean to integer (0 or 1)
+            f");"
+        )
+    print("\n".join(insert_statements))
+
+if __name__ == '__main__':
+    gen_playlists_sql()
