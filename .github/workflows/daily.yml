@@ -178,6 +178,10 @@ jobs:
             save.sqlite
           key: ${{ github.sha }}-cache
 
+      - name: debug-ls
+        run: |
+          find . -maxdepth 2 -type f
+          pwd
 
       - name: convert SQLite to Excel
         run: python excel_exporter.py
