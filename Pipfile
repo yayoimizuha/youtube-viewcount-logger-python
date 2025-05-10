@@ -19,6 +19,7 @@ budoux = "*"
 tabulate = "*"
 google-generativeai = "*"
 selenium = "*"
+instaloader = "*"
 
 [dev-packages]
 autopep8 = "*"
