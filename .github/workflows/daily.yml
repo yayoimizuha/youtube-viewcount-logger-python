@@ -79,7 +79,7 @@ jobs:
 
 
       - name: Cache markdown data
-        uses: actions/cache@v4
+        uses: actions/cache/save@v4
         with:
           path: |
             markdown.pickle
@@ -171,7 +171,7 @@ jobs:
 
 
       - name: Restore markdown data
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             markdown.pickle

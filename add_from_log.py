@@ -1,7 +1,7 @@
 import re
 import sqlite3
 
-COLUMN_NAME = "2025-05-10"
+COLUMN_NAME = "2025-05-11"
 
 with open("scrape.log", mode="r", encoding="utf-8") as fp:
     found = dict(re.findall(r"(https://youtu\.be/[A-z0-9\-_]*)\s(\d*)\s回", fp.read()))
