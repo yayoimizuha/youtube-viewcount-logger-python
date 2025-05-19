@@ -88,11 +88,12 @@ async def runner() -> None:
     playlist_index_time = time()
     video_dict = dict()
     sess = ClientSession(trust_env=True)
-    await gather(*[list_playlist(playlist.playlist_key, playlist.db_key, sess, video_dict) for playlist in playlists()],
-                 return_exceptions=True)
+    await gather(
+        *[list_playlist(playlist.playlist_key, playlist.db_key, sess, video_dict) for playlist in playlists()
+          if playlist.playlist_key is not None],
+        return_exceptions=True)
     print(f"YouTube playlists index time: {time() - playlist_index_time:2.3f}s")
     # print(video_dict)
-
 
     sql_index_time = time()
     connector = connect(SQLITE_DATABASE)

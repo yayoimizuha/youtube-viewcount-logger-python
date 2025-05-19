@@ -92,7 +92,7 @@ if __name__ == '__main__':
     open_tabs = []
     for key, value in dataframes.items():
         print(key)
-        # if key != 'ME_I':
+        # if key != '小片リサ':
         #     continue
         # else:
         #     print(value.to_numpy())
