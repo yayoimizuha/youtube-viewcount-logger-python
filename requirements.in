@@ -14,3 +14,5 @@ tabulate
 google-generativeai
 selenium
 instaloader
+lxml
+beautifulsoup4
