@@ -14514,5 +14514,21 @@
     "singer": [],
     "edition": "",
     "version": ""
+  },
+  "宮本佳林『SUPER IDOL -Especial-(Single Ver.)』Music Video": {
+    "song_name": "SUPER IDOL -Especial-",
+    "singer": [
+      "宮本佳林"
+    ],
+    "edition": "Single",
+    "version": "Ver."
+  },
+  "ME:I (ミーアイ) ⊹ 'MUSE' Performance Video": {
+    "song_name": "MUSE",
+    "singer": [
+      "ME:I"
+    ],
+    "edition": "Performance Video",
+    "version": ""
   }
 }
