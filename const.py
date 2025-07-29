@@ -111,7 +111,7 @@ def playlists() -> list[Playlist]:
         Playlist(playlist_key='PLFMni9aeqKTwrRRpwWLL9U7QQqtPZaPS3', db_key='ミニモニ。', hashtag='ミニモニ',
                  is_tweet=False),
         Playlist(playlist_key='PLHBlp1EugxwdY9abMZagocJvRfbc_gVMr', db_key='ME_I', display_name='ME:I'),
-        Playlist(playlist_key='PLCpSIn0xlyXlLr0t1-wpYgHkLt_FUfgLw', db_key='ME_I', is_tweet=False)
+        Playlist(playlist_key='PLCpSIn0xlyXlLr0t1-wpYgHkLt_FUfgLw', db_key='ME_I', display_name='ME:I',is_tweet=False)
     ]
     #         ['PLFMni9aeqKTwvVpSgoB9GyIscELI5ECBr', 'つんく♂', True],
     #         ['PLXok3xPFmG2A9jkc4415xT1t_lTMyTtc3', '佐藤優樹', False]
