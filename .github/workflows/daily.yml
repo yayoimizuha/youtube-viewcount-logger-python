@@ -94,7 +94,7 @@ jobs:
       - name: tweet
         id: tweet-py
         run: |
-          python tweet.py 2>&1 | tee -a ./out.txt
+#          python tweet.py 2>&1 | tee -a ./out.txt
         continue-on-error: true
 
       - name: Scrape Instagram
