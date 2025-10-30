@@ -14847,5 +14847,27 @@
     "singer": [],
     "edition": "",
     "version": ""
+  },
+  "森高千里 『はだかにはならない』 【セルフカヴァー】": {
+    "song_name": "はだかにはならない",
+    "singer": [
+      "森高千里"
+    ],
+    "edition": "セルフカヴァー",
+    "version": ""
+  },
+  "森高千里 『SNOW AGAIN』 【セルフカヴァー】": {
+    "song_name": "SNOW AGAIN",
+    "singer": [
+      "森高千里"
+    ],
+    "edition": "セルフカヴァー",
+    "version": ""
+  },
+  "『銀色の夢』 at COTTON CLUB": {
+    "song_name": "銀色の夢",
+    "singer": [],
+    "edition": "at COTTON CLUB",
+    "version": ""
   }
 }
