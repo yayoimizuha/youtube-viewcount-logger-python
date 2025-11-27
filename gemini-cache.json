@@ -14926,5 +14926,43 @@
     "singer": [],
     "edition": "",
     "version": "Instrumental"
+  },
+  "Tokyo Rush (Kondo Wa More Better Yo! Version) [Live at Showa Women's University Hitomi Memorial...": {
+    "song_name": "Tokyo Rush",
+    "singer": [],
+    "edition": "",
+    "version": "Kondo Wa More Better Yo! Version"
+  },
+  "Ame (Kokon Tozai Version) [Live at Showa Women's University Hitomi Memorial Hall, 2024.7.2]": {
+    "song_name": "Ame",
+    "singer": [
+      ""
+    ],
+    "edition": "Live at Showa Women's University Hitomi Memorial Hall, 2024.7.2",
+    "version": "Kokon Tozai Version"
+  },
+  "Junanasai (Live Rock Alive Complete at Nakano Sunplaza, 1992.9.30) [Including MC]": {
+    "song_name": "Junanasai",
+    "singer": [],
+    "edition": "Live Rock Alive Complete at Nakano Sunplaza, 1992.9.30) [Including MC]",
+    "version": ""
+  },
+  "Ame (Rock Version) [Live at Mori No Hall 21, Matsudo, Dec. 5, 2021]": {
+    "song_name": "Ame",
+    "singer": [],
+    "edition": "Live at Mori No Hall 21, Matsudo, Dec. 5, 2021",
+    "version": "Rock Version"
+  },
+  "ROCK ALIVE (Live Rock Alive Complete at Nakano Sunplaza, 1992.9.30) [Including MC]": {
+    "song_name": "ROCK ALIVE",
+    "singer": [],
+    "edition": "Live Rock Alive Complete at Nakano Sunplaza, 1992.9.30 [Including MC]",
+    "version": ""
+  },
+  "RHYTHM To BASS (Live Rock Alive Complete at Nakano Sunplaza, 1992.9.30) [Including MC]": {
+    "song_name": "RHYTHM To BASS",
+    "singer": [],
+    "edition": "Live Rock Alive Complete at Nakano Sunplaza, 1992.9.30 [Including MC]",
+    "version": ""
   }
 }
